@@ -77,7 +77,7 @@ export default function SignupPage() {
     setLoading(true)
 
     // Redirect to login page and show success message
-    router.push("/")
+    router.push("/login")
     toast({
         title: "Account Created!",
         description: "You can now sign in with your new account.",
@@ -142,7 +142,7 @@ export default function SignupPage() {
             <CardTitle className="font-headline text-3xl">{t.title}</CardTitle>
             <CardDescription>
               {t.description}{" "}
-              <Link href="/" className="text-primary hover:underline">
+              <Link href="/login" className="text-primary hover:underline">
                 {t.signInLink}
               </Link>
             </CardDescription>

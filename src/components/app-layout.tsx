@@ -105,7 +105,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('userEmail');
         localStorage.removeItem('loginEvent');
     }
-    router.push("/");
+    router.push("/login");
   };
 
   return (
