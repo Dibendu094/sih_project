@@ -292,6 +292,34 @@ export const quizzes: Quiz = {
         { text: "What is 7 cubed (7³)?", options: ["21", "49", "147", "343"], correctAnswer: "343" },
     ],
   },
+   "math-quiz-challenge-math-9": {
+    questions: [
+      { text: "Solve the quadratic equation: x² - 5x + 6 = 0", options: ["x=2, x=3", "x=1, x=6", "x=-2, x=-3", "x=-1, x=-6"], correctAnswer: "x=2, x=3" },
+      { text: "What is the slope-intercept form of a linear equation?", options: ["y = mx + b", "ax + by = c", "y - y1 = m(x - x1)", "x/a + y/b = 1"], correctAnswer: "y = mx + b" },
+      { text: "Find the distance between points (1, 2) and (4, 6).", options: ["3", "4", "5", "6"], correctAnswer: "5" },
+      { text: "Simplify: (x^3)^4", options: ["x^7", "x^12", "4x^3", "3x^4"], correctAnswer: "x^12" },
+      { text: "What is the sum of the interior angles of a pentagon?", options: ["360°", "540°", "720°", "900°"], correctAnswer: "540°" },
+      { text: "If log₂(x) = 4, what is x?", options: ["8", "16", "32", "64"], correctAnswer: "16" },
+      { text: "What is the value of sin(90°)?", options: ["0", "0.5", "1", "-1"], correctAnswer: "1" },
+      { text: "Solve the system of equations: y = 2x and x + y = 9", options: ["x=3, y=6", "x=6, y=3", "x=2, y=4", "x=4, y=2"], correctAnswer: "x=3, y=6" },
+      { text: "Expand (x + 2)²", options: ["x² + 4", "x² + 2x + 4", "x² + 4x + 4", "x² + 4x"], correctAnswer: "x² + 4x + 4" },
+      { text: "What is the definition of a rational number?", options: ["A number that can be a fraction", "A non-repeating decimal", "A number that is not real", "The square root of a negative number"], correctAnswer: "A number that can be a fraction" },
+    ]
+  },
+  "math-quiz-challenge-math-10": {
+    questions: [
+      { text: "What is the derivative of x²?", options: ["2x", "x", "x/2", "x³"], correctAnswer: "2x" },
+      { text: "What is the integral of 2x dx?", options: ["x² + C", "2x² + C", "x + C", "x³/3 + C"], correctAnswer: "x² + C" },
+      { text: "What is i² where i is the imaginary unit?", options: ["1", "-1", "i", "-i"], correctAnswer: "-1" },
+      { text: "What is a matrix?", options: ["A single number", "A vector", "A rectangular array of numbers", "A type of graph"], correctAnswer: "A rectangular array of numbers" },
+      { text: "In trigonometry, what does SOH CAH TOA stand for?", options: ["A mnemonic for metric units", "A formula for area", "A way to remember trig ratios", "A theorem about triangles"], correctAnswer: "A way to remember trig ratios" },
+      { text: "What is the limit of (1/x) as x approaches infinity?", options: ["0", "1", "Infinity", "Does not exist"], correctAnswer: "0" },
+      { text: "What is the equation of a circle with center (h, k) and radius r?", options: ["(x-h)² + (y-k)² = r²", "(x+h)² + (y+k)² = r²", "x² + y² = r²", "y = ax² + bx + c"], correctAnswer: "(x-h)² + (y-k)² = r²" },
+      { text: "What is the dot product of vectors <1, 2> and <3, 4>?", options: ["10", "11", "12", "13"], correctAnswer: "11" },
+      { text: "What is the value of e, Euler's number, approximately?", options: ["2.718", "3.141", "1.618", "1.414"], correctAnswer: "2.718" },
+      { text: "What is a geometric series?", options: ["A series where terms have a common difference", "A series where terms have a common ratio", "A series of shapes", "A series that never ends"], correctAnswer: "A series where terms have a common ratio" },
+    ]
+  },
     "equation-solver-race-math-7": {
     questions: [
       { text: "Solve for x: x + 5 = 12", options: ["5", "6", "7", "8"], correctAnswer: "7" },
@@ -306,7 +334,35 @@ export const quizzes: Quiz = {
       { text: "Solve for g: g/3 = g - 6", options: ["7", "8", "9", "10"], correctAnswer: "9" },
     ]
   },
+  "equation-solver-race-math-9": {
+    questions: [
+      { text: "Solve for x: x² - 4 = 0", options: ["x=2", "x=4", "x=2, x=-2", "x=16"], correctAnswer: "x=2, x=-2" },
+      { text: "Solve for y: 2(y - 3) = y + 1", options: ["y=4", "y=5", "y=6", "y=7"], correctAnswer: "y=7" },
+      { text: "Solve the inequality: 3z > 15", options: ["z > 5", "z < 5", "z = 5", "z > 3"], correctAnswer: "z > 5" },
+      { text: "Solve for a: a/2 + a/3 = 5", options: ["a=6", "a=5", "a=10", "a=30"], correctAnswer: "a=6" },
+      { text: "Solve the system: 2x + y = 7 and x - y = -1", options: ["x=2, y=3", "x=3, y=1", "x=1, y=5", "x=4, y=-1"], correctAnswer: "x=2, y=3" },
+      { text: "Find the roots of x² + 2x - 8 = 0", options: ["x=2, x=-4", "x=-2, x=4", "x=2, x=4", "x=-2, x=-4"], correctAnswer: "x=2, x=-4" },
+      { text: "Solve for d: √(d - 1) = 3", options: ["d=4", "d=9", "d=10", "d=8"], correctAnswer: "d=10" },
+      { text: "Solve for e: |e - 5| = 2", options: ["e=7", "e=3", "e=7, e=3", "e=5"], correctAnswer: "e=7, e=3" },
+      { text: "Solve for f: 2^f = 32", options: ["f=4", "f=5", "f=6", "f=16"], correctAnswer: "f=5" },
+      { text: "Solve for g: log₃(g) = 2", options: ["g=6", "g=5", "g=8", "g=9"], correctAnswer: "g=9" },
+    ]
+  },
   "math-puzzle-adventure-math-7": {
+    questions: [
+      { text: "If a hen and a half lay an egg and a half in a day and a half, how many hens does it take to lay 6 eggs in 6 days?", options: ["1 hen", "1.5 hens", "2 hens", "3 hens"], correctAnswer: "1.5 hens" },
+      { text: "What has an eye, but cannot see?", options: ["A needle", "A potato", "A storm", "A hurricane"], correctAnswer: "A needle" },
+      { text: "I am an odd number. Take away one letter and I become even. What number am I?", options: ["Seven", "Eleven", "One", "Nine"], correctAnswer: "Seven" },
+      { text: "A man has a wolf, a goat, and a cabbage. He must cross a river with a boat that can only carry him and one other item. How does he do it?", options: ["Leave wolf and cabbage", "Take goat, return, take wolf, bring goat back, take cabbage, return, take goat", "Take wolf, return, take cabbage, return, take goat", "It's impossible"], correctAnswer: "Take goat, return, take wolf, bring goat back, take cabbage, return, take goat" },
+      { text: "What is the next number in the sequence: 1, 1, 2, 3, 5, 8, ...?", options: ["11", "12", "13", "14"], correctAnswer: "13" },
+      { text: "If you have a 3-gallon jug and a 5-gallon jug, how can you measure out exactly 4 gallons?", options: ["Fill 5, pour to 3, empty 3, pour 2 from 5 to 3, fill 5, pour to 3", "Fill 3, pour to 5, fill 3, pour to 5, empty 5, pour 1 from 3 to 5", "It's impossible", "Fill both and pour out 4 gallons"], correctAnswer: "Fill 5, pour to 3, empty 3, pour 2 from 5 to 3, fill 5, pour to 3" },
+      { text: "What is the missing number? 8, 6, 7, 5, 6, 4, ?", options: ["2", "3", "5", "6"], correctAnswer: "5" },
+      { text: "What has a neck without a head, and a body without legs?", options: ["A bottle", "A shirt", "A snake", "A river"], correctAnswer: "A bottle" },
+      { text: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", options: ["A dream", "A map", "A book", "A painting"], correctAnswer: "A map" },
+      { text: "What question can you never answer yes to?", options: ["Are you asleep yet?", "Are you lying?", "Is this statement false?", "All of the above"], correctAnswer: "Are you asleep yet?" },
+    ]
+  },
+  "math-puzzle-adventure-logic-7": {
     questions: [
       { text: "If a hen and a half lay an egg and a half in a day and a half, how many hens does it take to lay 6 eggs in 6 days?", options: ["1 hen", "1.5 hens", "2 hens", "3 hens"], correctAnswer: "1.5 hens" },
       { text: "What has an eye, but cannot see?", options: ["A needle", "A potato", "A storm", "A hurricane"], correctAnswer: "A needle" },
@@ -334,6 +390,20 @@ export const quizzes: Quiz = {
       { text: "Which element has the symbol 'K'?", options: ["Krypton", "Potassium", "Kryptonite", "Kelvin"], correctAnswer: "Potassium" },
     ]
   },
+  "periodic-table-explorer-science-10": {
+    questions: [
+      { text: "Which block of the periodic table are the alkaline earth metals in?", options: ["s-block", "p-block", "d-block", "f-block"], correctAnswer: "s-block" },
+      { text: "What is electronegativity?", options: ["The energy required to remove an electron", "The tendency of an atom to attract a bonding pair of electrons", "The total mass of the protons and neutrons", "The charge of an ion"], correctAnswer: "The tendency of an atom to attract a bonding pair of electrons" },
+      { text: "What is the trend for atomic radius across a period?", options: ["Increases", "Decreases", "Stays the same", "Increases then decreases"], correctAnswer: "Decreases" },
+      { text: "Which element is the most electronegative?", options: ["Fluorine", "Chlorine", "Oxygen", "Cesium"], correctAnswer: "Fluorine" },
+      { text: "What is the electron configuration of Neon (Ne, atomic number 10)?", options: ["1s²2s²2p⁶", "1s²2s²2p⁵", "1s²2s²2p⁶3s¹", "1s²2s²"], correctAnswer: "1s²2s²2p⁶" },
+      { text: "What type of element is Silicon (Si)?", options: ["Metal", "Nonmetal", "Metalloid", "Noble Gas"], correctAnswer: "Metalloid" },
+      { text: "Which group of elements is known for being largely unreactive?", options: ["Alkali Metals", "Halogens", "Transition Metals", "Noble Gases"], correctAnswer: "Noble Gases" },
+      { text: "What is the chemical symbol for Tungsten?", options: ["T", "Tu", "W", "Tg"], correctAnswer: "W" },
+      { text: "Which element is liquid at room temperature besides Mercury?", options: ["Bromine", "Gallium", "Cesium", "Francium"], correctAnswer: "Bromine" },
+      { text: "What are lanthanides and actinides?", options: ["Groups 1 and 2", "The p-block elements", "The inner transition metals", "The noble gases"], correctAnswer: "The inner transition metals" },
+    ]
+  },
   "biology-treasure-hunt-science-8": {
     questions: [
       { text: "What is the powerhouse of the cell?", options: ["Nucleus", "Ribosome", "Mitochondrion", "Chloroplast"], correctAnswer: "Mitochondrion" },
@@ -348,7 +418,35 @@ export const quizzes: Quiz = {
       { text: "What is the basic unit of life?", options: ["Atom", "Molecule", "Cell", "Organ"], correctAnswer: "Cell" },
     ],
   },
+   "biology-treasure-hunt-science-10": {
+    questions: [
+      { text: "What are the four main types of organic macromolecules in living organisms?", options: ["Carbohydrates, Lipids, Proteins, Nucleic Acids", "Water, Salt, Sugar, Fat", "Vitamins, Minerals, Proteins, Fats", "DNA, RNA, ATP, ADP"], correctAnswer: "Carbohydrates, Lipids, Proteins, Nucleic Acids" },
+      { text: "What is the role of ribosomes in a cell?", options: ["Energy production", "Waste disposal", "Protein synthesis", "Cell division"], correctAnswer: "Protein synthesis" },
+      { text: "Describe the function of the endoplasmic reticulum.", options: ["Modifies, sorts, and packages proteins and lipids", "Controls cell activities", "Site of photosynthesis", "Breaks down old cell parts"], correctAnswer: "Modifies, sorts, and packages proteins and lipids" },
+      { text: "What are the stages of mitosis, in order?", options: ["Prophase, Metaphase, Anaphase, Telophase", "Anaphase, Telophase, Prophase, Metaphase", "Metaphase, Prophase, Telophase, Anaphase", "Telophase, Anaphase, Metaphase, Prophase"], correctAnswer: "Prophase, Metaphase, Anaphase, Telophase" },
+      { text: "What is the difference between genotype and phenotype?", options: ["One is for plants, one for animals", "Genotype is genetic makeup, phenotype is physical appearance", "Genotype is dominant, phenotype is recessive", "There is no difference"], correctAnswer: "Genotype is genetic makeup, phenotype is physical appearance" },
+      { text: "What is homeostasis?", options: ["The process of cell division", "The breakdown of food", "Maintaining a stable internal environment", "The evolution of a species"], correctAnswer: "Maintaining a stable internal environment" },
+      { text: "What is the function of ATP?", options: ["Stores genetic information", "Carries oxygen", "Main energy currency of the cell", "Acts as an enzyme"], correctAnswer: "Main energy currency of the cell" },
+      { text: "What is a major difference between prokaryotic and eukaryotic cells?", options: ["Eukaryotic cells have a nucleus", "Prokaryotic cells are larger", "Eukaryotic cells lack ribosomes", "Prokaryotic cells have mitochondria"], correctAnswer: "Eukaryotic cells have a nucleus" },
+      { text: "What is the role of enzymes in biological reactions?", options: ["They are the reactants", "They slow down reactions", "They act as catalysts to speed up reactions", "They are the products"], correctAnswer: "They act as catalysts to speed up reactions" },
+      { text: "What is DNA transcription?", options: ["The synthesis of DNA from an RNA template", "The synthesis of an RNA molecule from a DNA template", "The synthesis of a protein from an mRNA template", "The replication of DNA"], correctAnswer: "The synthesis of an RNA molecule from aDNA template" },
+    ]
+  },
   "coding-quest-computer science-9": {
+    questions: [
+        { text: "What does HTML stand for?", options: ["HyperText Markup Language", "High-Level Text Machine Language", "Hyperlink and Text Markup Language", "Home Tool Markup Language"], correctAnswer: "HyperText Markup Language" },
+        { text: "Which of these is a programming language?", options: ["JPEG", "HTML", "Python", "CSS"], correctAnswer: "Python" },
+        { text: "What is a 'bug' in programming?", options: ["A feature", "An error in the code", "A type of comment", "A security measure"], correctAnswer: "An error in the code" },
+        { text: "What does CSS stand for?", options: ["Cascading Style Sheets", "Creative Style System", "Computer Style Sheets", "Colorful Style Sheets"], correctAnswer: "Cascading Style Sheets" },
+        { text: "Which symbol is used for comments in Python?", options: ["//", "/* */", "#", "<!-- -->"], correctAnswer: "#" },
+        { text: "What is a 'loop' in programming?", options: ["A way to store data", "A conditional statement", "A piece of code that repeats", "A function"], correctAnswer: "A piece of code that repeats" },
+        { text: "Which of the following is NOT a data type?", options: ["String", "Integer", "Variable", "Boolean"], correctAnswer: "Variable" },
+        { text: "What is an 'algorithm'?", options: ["A programming language", "A set of rules to solve a problem", "A type of computer hardware", "A software application"], correctAnswer: "A set of rules to solve a problem" },
+        { text: "What does 'git' do?", options: ["Runs code", "Styles web pages", "Manages code versions", "A text editor"], correctAnswer: "Manages code versions" },
+        { text: "What is the purpose of a 'function'?", options: ["To store a single value", "To group code for reuse", "To create a user interface", "To style text"], correctAnswer: "To group code for reuse" },
+    ],
+  },
+  "coding-quest-logic-9": {
     questions: [
         { text: "What does HTML stand for?", options: ["HyperText Markup Language", "High-Level Text Machine Language", "Hyperlink and Text Markup Language", "Home Tool Markup Language"], correctAnswer: "HyperText Markup Language" },
         { text: "Which of these is a programming language?", options: ["JPEG", "HTML", "Python", "CSS"], correctAnswer: "Python" },
@@ -376,7 +474,35 @@ export const quizzes: Quiz = {
         { text: "What happens to the density of most substances when they are heated?", options: ["It increases", "It decreases", "It stays the same", "It becomes zero"], correctAnswer: "It decreases" },
     ],
   },
+    "physics-experiment-simulator-science-12": {
+    questions: [
+      { text: "What does the equation E=mc² represent?", options: ["Kinetic energy", "Potential energy", "Mass-energy equivalence", "The law of gravity"], correctAnswer: "Mass-energy equivalence" },
+      { text: "According to special relativity, what happens to time for an object moving at very high speeds?", options: ["It speeds up", "It slows down (time dilation)", "It stops", "It reverses"], correctAnswer: "It slows down (time dilation)" },
+      { text: "What is quantum entanglement?", options: ["A type of chemical bond", "Particles linked in a way that their fates are intertwined, regardless of distance", "The uncertainty in a particle's position", "The wave-particle duality of matter"], correctAnswer: "Particles linked in a way that their fates are intertwined, regardless of distance" },
+      { text: "What is the significance of Planck's constant (h)?", options: ["It relates the energy of a photon to its frequency", "It's the speed of light", "It's the gravitational constant", "It's Avogadro's number"], correctAnswer: "It relates the energy of a photon to its frequency" },
+      { text: "What is a black hole?", options: ["A very dense star", "A region of spacetime where gravity is so strong that nothing can escape", "A wormhole to another universe", "A dark nebula"], correctAnswer: "A region of spacetime where gravity is so strong that nothing can escape" },
+      { text: "What are the four fundamental forces of nature?", options: ["Gravity, Friction, Tension, Normal", "Strong Nuclear, Weak Nuclear, Electromagnetism, Gravity", "Kinetic, Potential, Thermal, Chemical", "Push, Pull, Twist, Shear"], correctAnswer: "Strong Nuclear, Weak Nuclear, Electromagnetism, Gravity" },
+      { text: "What is the Heisenberg Uncertainty Principle?", options: ["Energy is always conserved", "It is impossible to know both the exact position and exact momentum of a particle at the same time", "Every action has an equal and opposite reaction", "The universe is expanding"], correctAnswer: "It is impossible to know both the exact position and exact momentum of a particle at the same time" },
+      { text: "What is dark matter?", options: ["Matter that does not emit light", "A theoretical form of matter that is believed to account for a large part of the total mass in the universe", "The material inside a black hole", "Anti-matter"], correctAnswer: "A theoretical form of matter that is believed to account for a large part of the total mass in the universe" },
+      { text: "What is the Standard Model of Particle Physics?", options: ["A model of the solar system", "A theory describing the fundamental particles and forces", "A model of atomic structure", "A theory of gravity"], correctAnswer: "A theory describing the fundamental particles and forces" },
+      { text: "What is redshift in cosmology?", options: ["The shift of light to shorter wavelengths", "The bending of light around a massive object", "The shift of light to longer wavelengths as objects move away from us", "The reflection of light from a red object"], correctAnswer: "The shift of light to longer wavelengths as objects move away from us" },
+    ]
+  },
   "math-puzzle-adventure-math-8": {
+    questions: [
+        { text: "How many degrees are in a right angle?", options: ["45", "90", "180", "360"], correctAnswer: "90" },
+        { text: "What is the Pythagorean theorem?", options: ["a+b=c", "a² + b² = c²", "E=mc²", "πr²"], correctAnswer: "a² + b² = c²" },
+        { text: "A bat and ball cost $1.10. The bat costs $1.00 more than the ball. How much is the ball?", options: ["$0.10", "$0.05", "$1.00", "$0.15"], correctAnswer: "$0.05" },
+        { text: "What month has 28 days?", options: ["February", "All of them", "March", "December"], correctAnswer: "All of them" },
+        { text: "I have two coins that total 30 cents. One of them is not a nickel. What are the two coins?", options: ["Two dimes and a nickel", "A quarter and a nickel", "Six nickels", "This is impossible"], correctAnswer: "A quarter and a nickel" },
+        { text: "What number comes next? 4, 9, 16, 25, ...", options: ["30", "36", "49", "64"], correctAnswer: "36" },
+        { text: "If there are 12 apples and you take away 4, how many do you have?", options: ["12", "8", "4", "0"], correctAnswer: "4" },
+        { text: "How many times can you subtract 10 from 100?", options: ["1", "10", "9", "As many as you want"], correctAnswer: "1" },
+        { text: "A farmer had 17 sheep. All but 9 died. How many are left?", options: ["17", "9", "8", "0"], correctAnswer: "9" },
+        { text: "Divide 30 by 1/2 and add 10. What is the answer?", options: ["25", "70", "45", "17.5"], correctAnswer: "70" },
+    ],
+  },
+  "math-puzzle-adventure-logic-8": {
     questions: [
         { text: "How many degrees are in a right angle?", options: ["45", "90", "180", "360"], correctAnswer: "90" },
         { text: "What is the Pythagorean theorem?", options: ["a+b=c", "a² + b² = c²", "E=mc²", "πr²"], correctAnswer: "a² + b² = c²" },
@@ -404,6 +530,20 @@ export const quizzes: Quiz = {
         { text: "Which layer of the atmosphere protects us from harmful UV radiation?", options: ["Troposphere", "Stratosphere", "Ozone Layer", "Mesosphere"], correctAnswer: "Ozone Layer" },
     ],
   },
+    "eco-environment-game-stem-7": {
+    questions: [
+        { text: "Which of these is a producer in an ecosystem?", options: ["Lion", "Grass", "Mushroom", "Human"], correctAnswer: "Grass" },
+        { text: "What is the largest planet in our solar system?", options: ["Earth", "Mars", "Jupiter", "Saturn"], correctAnswer: "Jupiter" },
+        { text: "What is the process of water turning into vapor called?", options: ["Condensation", "Precipitation", "Evaporation", "Collection"], correctAnswer: "Evaporation" },
+        { text: "Which of the following is a renewable resource?", options: ["Coal", "Oil", "Solar energy", "Natural gas"], correctAnswer: "Solar energy" },
+        { text: "What is the 3 R's of waste management?", options: ["Reduce, Reuse, Recycle", "Read, Write, Rhyme", "Run, Rest, Repeat", "Rock, Roll, Rhythm"], correctAnswer: "Reduce, Reuse, Recycle" },
+        { text: "What gas do plants absorb from the atmosphere?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], correctAnswer: "Carbon Dioxide" },
+        { text: "What is the main cause of global warming?", options: ["Deforestation", "Volcanic eruptions", "Greenhouse gas emissions", "Ozone layer depletion"], correctAnswer: "Greenhouse gas emissions" },
+        { text: "What is an animal that eats only plants called?", options: ["Carnivore", "Omnivore", "Herbivore", "Predator"], correctAnswer: "Herbivore" },
+        { text: "What is a group of fish called?", options: ["A flock", "A herd", "A school", "A pack"], correctAnswer: "A school" },
+        { text: "Which layer of the atmosphere protects us from harmful UV radiation?", options: ["Troposphere", "Stratosphere", "Ozone Layer", "Mesosphere"], correctAnswer: "Ozone Layer" },
+    ],
+  },
   "chemistry-lab-science-10": {
     questions: [
       { text: "What is the pH of a neutral substance like pure water?", options: ["0", "7", "14", "1"], correctAnswer: "7" },
@@ -416,6 +556,20 @@ export const quizzes: Quiz = {
       { text: "What are isotopes?", options: ["Atoms of the same element with different numbers of neutrons", "Atoms with the same number of neutrons but different numbers of protons", "Charged atoms", "Atoms that have formed a bond"], correctAnswer: "Atoms of the same element with different numbers of neutrons" },
       { text: "What is the chemical formula for sulfuric acid?", options: ["HCl", "H2SO4", "HNO3", "NaOH"], correctAnswer: "H2SO4" },
       { text: "What does a Geiger counter measure?", options: ["Acidity", "Temperature", "Pressure", "Radiation"], correctAnswer: "Radiation" },
+    ]
+  },
+   "chemistry-lab-science-11": {
+    questions: [
+      { text: "What is the molar mass of H₂O (Water)? (H=1, O=16)", options: ["17 g/mol", "18 g/mol", "19 g/mol", "2 g/mol"], correctAnswer: "18 g/mol" },
+      { text: "Balance the equation: __CH₄ + __O₂ -> __CO₂ + __H₂O", options: ["1, 2, 1, 2", "1, 1, 1, 1", "2, 1, 2, 1", "1, 2, 2, 1"], correctAnswer: "1, 2, 1, 2" },
+      { text: "What is an endothermic reaction?", options: ["A reaction that releases heat", "A reaction that absorbs heat", "A reaction that produces light", "A reaction that happens instantly"], correctAnswer: "A reaction that absorbs heat" },
+      { text: "According to Le Chatelier's principle, if you increase the pressure on the system 2SO₂(g) + O₂(g) ⇌ 2SO₃(g), which way will the equilibrium shift?", options: ["To the right (products)", "To the left (reactants)", "No change", "The reaction stops"], correctAnswer: "To the right (products)" },
+      { text: "What is the pH of a 0.01 M solution of HCl?", options: ["1", "2", "12", "13"], correctAnswer: "2" },
+      { text: "What type of bond is formed between two non-metal atoms?", options: ["Ionic", "Covalent", "Metallic", "Hydrogen"], correctAnswer: "Covalent" },
+      { text: "What is Avogadro's number?", options: ["6.022 x 10²³", "3.14159", "9.8 m/s²", "2.718"], correctAnswer: "6.022 x 10²³" },
+      { text: "What is the general formula for an alkane?", options: ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙHₙ"], correctAnswer: "CₙH₂ₙ₊₂" },
+      { text: "In an electrochemical cell, where does reduction occur?", options: ["Anode", "Cathode", "Salt bridge", "Wire"], correctAnswer: "Cathode" },
+      { text: "What is the name of the functional group -OH?", options: ["Carboxyl", "Carbonyl", "Hydroxyl", "Amine"], correctAnswer: "Hydroxyl" },
     ]
   },
   "logic-puzzle-mania-logic-7": {
@@ -432,7 +586,49 @@ export const quizzes: Quiz = {
       { text: "I am always hungry, I must always be fed. The finger I lick will soon turn red. What am I?", options: ["A baby", "A fire", "A stray cat", "A leech"], correctAnswer: "A fire" },
     ]
   },
+    "logic-puzzle-mania-logic-10": {
+    questions: [
+      { text: "What is the next number in the sequence: 1, 4, 9, 16, 25, ...?", options: ["36", "49", "64", "42"], correctAnswer: "36" },
+      { text: "A man builds a house with four sides, and it is rectangular in shape. Each side has a southern exposure. A big bear walks by. What color is the bear?", options: ["Brown", "Black", "White", "Grizzly"], correctAnswer: "White" },
+      { text: "What is it that's full of holes but can still hold water?", options: ["A net", "A sponge", "A sieve", "A leaky bucket"], correctAnswer: "A sponge" },
+      { text: "What has cities, but no houses; forests, but no trees; and water, but no fish?", options: ["A book", "A dream", "A map", "A computer"], correctAnswer: "A map" },
+      { text: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", options: ["A flag", "A whisper", "An echo", "A ghost"], correctAnswer: "An echo" },
+      { text: "If a plane crashes on the border between the U.S. and Canada, where do you bury the survivors?", options: ["U.S.", "Canada", "You don't bury survivors", "The nearest city"], correctAnswer: "You don't bury survivors" },
+      { text: "What has a thumb and four fingers but is not a hand?", options: ["A glove", "A footprint", "A monkey's paw", "A drawing"], correctAnswer: "A glove" },
+      { text: "What is always in front of you but can’t be seen?", options: ["The past", "The present", "The future", "The air"], correctAnswer: "The future" },
+      { text: "What can you catch but not throw?", options: ["A ball", "A fish", "A cold", "A frisbee"], correctAnswer: "A cold" },
+      { text: "What goes up but never comes down?", options: ["A balloon", "Smoke", "Your age", "A bird"], correctAnswer: "Your age" },
+    ]
+  },
   "math-science-trivia-stem-9": {
+    questions: [
+      { text: "What is the value of 'c' in E=mc²?", options: ["Mass", "Energy", "Speed of light", "A constant"], correctAnswer: "Speed of light" },
+      { text: "How many planets are in our solar system?", options: ["7", "8", "9", "10"], correctAnswer: "8" },
+      { text: "What is the square root of 144?", options: ["10", "11", "12", "13"], correctAnswer: "12" },
+      { text: "What is the hardest natural substance on Earth?", options: ["Gold", "Iron", "Diamond", "Quartz"], correctAnswer: "Diamond" },
+      { text: "What is the name of the theory of evolution?", options: ["Big Bang Theory", "Theory of Relativity", "Natural Selection", "Cell Theory"], correctAnswer: "Natural Selection" },
+      { text: "What is 25% of 200?", options: ["25", "50", "75", "100"], correctAnswer: "50" },
+      { text: "What is the most abundant gas in Earth's atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"], correctAnswer: "Nitrogen" },
+      { text: "Solve for x: 2x + 10 = 20", options: ["2", "5", "10", "15"], correctAnswer: "5" },
+      { text: "Which scientist proposed the three laws of motion?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"], correctAnswer: "Isaac Newton" },
+      { text: "What is the study of fossils called?", options: ["Biology", "Geology", "Paleontology", "Archeology"], correctAnswer: "Paleontology" },
+    ]
+  },
+  "math-science-trivia-math-9": {
+    questions: [
+      { text: "What is the value of 'c' in E=mc²?", options: ["Mass", "Energy", "Speed of light", "A constant"], correctAnswer: "Speed of light" },
+      { text: "How many planets are in our solar system?", options: ["7", "8", "9", "10"], correctAnswer: "8" },
+      { text: "What is the square root of 144?", options: ["10", "11", "12", "13"], correctAnswer: "12" },
+      { text: "What is the hardest natural substance on Earth?", options: ["Gold", "Iron", "Diamond", "Quartz"], correctAnswer: "Diamond" },
+      { text: "What is the name of the theory of evolution?", options: ["Big Bang Theory", "Theory of Relativity", "Natural Selection", "Cell Theory"], correctAnswer: "Natural Selection" },
+      { text: "What is 25% of 200?", options: ["25", "50", "75", "100"], correctAnswer: "50" },
+      { text: "What is the most abundant gas in Earth's atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"], correctAnswer: "Nitrogen" },
+      { text: "Solve for x: 2x + 10 = 20", options: ["2", "5", "10", "15"], correctAnswer: "5" },
+      { text: "Which scientist proposed the three laws of motion?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"], correctAnswer: "Isaac Newton" },
+      { text: "What is the study of fossils called?", options: ["Biology", "Geology", "Paleontology", "Archeology"], correctAnswer: "Paleontology" },
+    ]
+  },
+    "math-science-trivia-science-9": {
     questions: [
       { text: "What is the value of 'c' in E=mc²?", options: ["Mass", "Energy", "Speed of light", "A constant"], correctAnswer: "Speed of light" },
       { text: "How many planets are in our solar system?", options: ["7", "8", "9", "10"], correctAnswer: "8" },
@@ -460,6 +656,20 @@ export const quizzes: Quiz = {
       { text: "You want to grow a plant in a dark room. What color light would be best?", options: ["Green", "Blue and Red", "Yellow", "White"], correctAnswer: "Blue and Red" },
     ]
   },
+    "stem-adventure-game-stem-11": {
+    questions: [
+      { text: "You need to design a robot arm to lift a 5kg weight. What is more important to consider for the motor?", options: ["Speed", "Torque", "Color", "Size"], correctAnswer: "Torque" },
+      { text: "You are building a water filtration system. Which of these materials would be best for the final, finest filter layer?", options: ["Gravel", "Sand", "Activated Carbon", "Cotton balls"], correctAnswer: "Activated Carbon" },
+      { text: "To create a simple circuit to light an LED, you need a power source, the LED, and what other component to prevent the LED from burning out?", options: ["A switch", "A capacitor", "A resistor", "A transistor"], correctAnswer: "A resistor" },
+      { text: "You want to measure the pH of a soil sample. What would you use?", options: ["A thermometer", "A barometer", "A pH strip or meter", "A ruler"], correctAnswer: "A pH strip or meter" },
+      { text: "In a 'choose your own adventure' game, the story branches based on player choices. What programming concept does this represent?", options: ["Loops", "Variables", "Conditional statements (if/else)", "Functions"], correctAnswer: "Conditional statements (if/else)" },
+      { text: "You are designing a small-scale wind turbine. To maximize power output, the blades should have a shape based on what principle?", options: ["Aerodynamics (lift)", "Gravity", "Friction", "Magnetism"], correctAnswer: "Aerodynamics (lift)" },
+      { text: "You need to code a program that performs the same action on a list of 100 items. What is the most efficient way to do this?", options: ["Write the code 100 times", "Use a loop", "Use 100 different variables", "Create 100 functions"], correctAnswer: "Use a loop" },
+      { text: "To build a strong but lightweight structure, which engineering concept is often used?", options: ["Using solid blocks", "Using trusses and triangles", "Making it as heavy as possible", "Using only right angles"], correctAnswer: "Using trusses and triangles" },
+      { text: "You are observing a cell under a microscope. It has a cell wall and chloroplasts. What kind of cell is it?", options: ["Animal cell", "Bacterial cell", "Plant cell", "Fungal cell"], correctAnswer: "Plant cell" },
+      { text: "How does GPS (Global Positioning System) determine your location?", options: ["By communicating with cell towers", "By receiving signals from multiple satellites", "By using the Earth's magnetic field", "By connecting to the internet"], correctAnswer: "By receiving signals from multiple satellites" },
+    ]
+  },
   "speed-calculation-challenge-math-6": {
     questions: [
       { text: "What is 7 x 8?", options: ["49", "54", "56", "63"], correctAnswer: "56" },
@@ -473,7 +683,23 @@ export const quizzes: Quiz = {
       { text: "What is 38 + 47?", options: ["75", "85", "95", "105"], correctAnswer: "85" },
       { text: "What is 11 x 11?", options: ["111", "121", "131", "141"], correctAnswer: "121" },
     ]
+  },
+    "speed-calculation-challenge-math-9": {
+    questions: [
+      { text: "What is 1.5 x 20?", options: ["3", "30", "300", "21.5"], correctAnswer: "30" },
+      { text: "What is 3/4 of 80?", options: ["40", "50", "60", "70"], correctAnswer: "60" },
+      { text: "Calculate 15²", options: ["125", "215", "225", "250"], correctAnswer: "225" },
+      { text: "What is 5% of 300?", options: ["5", "10", "15", "30"], correctAnswer: "15" },
+      { text: "Solve for x: (2x)/3 = 4", options: ["5", "6", "8", "12"], correctAnswer: "6" },
+      { text: "What is 99 + 999?", options: ["1098", "1099", "1198", "1998"], correctAnswer: "1098" },
+      { text: "Find the average of 5, 10, and 15.", options: ["10", "15", "20", "30"], correctAnswer: "10" },
+      { text: "What is 2³ + 3²?", options: ["12", "17", "25", "36"], correctAnswer: "17" },
+      { text: "If a train travels at 80 km/h, how far does it go in 45 minutes?", options: ["45 km", "60 km", "75 km", "80 km"], correctAnswer: "60 km" },
+      { text: "What is 1 - 0.25?", options: ["0.75", "0.50", "0.25", "1.25"], correctAnswer: "0.75" },
+    ]
   }
 };
+
+    
 
     
