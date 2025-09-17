@@ -65,6 +65,30 @@
       "description": "Cover art for Ecosystem Engineers game",
       "imageUrl": "https://picsum.photos/seed/206/600/400",
       "imageHint": "lush forest"
+    },
+    {
+      "id": "game-cover-7",
+      "description": "Cover art for Math Quiz Challenge",
+      "imageUrl": "https://picsum.photos/seed/207/600/400",
+      "imageHint": "quiz numbers"
+    },
+    {
+      "id": "game-cover-8",
+      "description": "Cover art for Periodic Table Explorer",
+      "imageUrl": "https://picsum.photos/seed/208/600/400",
+      "imageHint": "chemistry lab"
+    },
+    {
+      "id": "game-cover-9",
+      "description": "Cover art for Logic Puzzle Mania",
+      "imageUrl": "https://picsum.photos/seed/209/600/400",
+      "imageHint": "brain puzzle"
+    },
+    {
+      "id": "game-cover-10",
+      "description": "Cover art for STEM Adventure Game",
+      "imageUrl": "https://picsum.photos/seed/210/600/400",
+      "imageHint": "adventure map"
     }
   ]
 }

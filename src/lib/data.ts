@@ -148,6 +148,38 @@ export const games: Game[] = [
     gradeLevels: [6, 7, 8, 9],
     imageId: "game-cover-6",
   },
+  {
+    id: "game-7",
+    title: "Math Quiz Challenge",
+    description: "Multiple-choice questions covering arithmetic, algebra, and geometry.",
+    subjects: ["Math"],
+    gradeLevels: [6, 7, 8, 9, 10, 11, 12],
+    imageId: "game-cover-7",
+  },
+  {
+    id: "game-8",
+    title: "Periodic Table Explorer",
+    description: "Interactive game to learn elements, symbols, and properties.",
+    subjects: ["Science"],
+    gradeLevels: [8, 9, 10, 11, 12],
+    imageId: "game-cover-8",
+  },
+  {
+    id: "game-9",
+    title: "Logic Puzzle Mania",
+    description: "Sudoku, pattern recognition, sequences, and riddles.",
+    subjects: ["Logic"],
+    gradeLevels: [6, 7, 8, 9, 10, 11, 12],
+    imageId: "game-cover-9",
+  },
+  {
+    id: "game-10",
+    title: "STEM Adventure Game",
+    description: "Choose-your-own-adventure style game with math and science challenges.",
+    subjects: ["STEM"],
+    gradeLevels: [6, 7, 8, 9, 10, 11, 12],
+    imageId: "game-cover-10",
+  },
 ];
 
 export const quizzes: Quiz = {
