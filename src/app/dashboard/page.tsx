@@ -124,6 +124,12 @@ export default function DashboardPage() {
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={performanceData}>
+                  <defs>
+                    <linearGradient id="colorPoints" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.2}/>
+                    </linearGradient>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis
                     dataKey="week"
@@ -161,7 +167,7 @@ export default function DashboardPage() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="points" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
+                  <Bar dataKey="points" fill="url(#colorPoints)" radius={[4, 4, 0, 0]}>
                      <LabelList dataKey="points" position="top" />
                   </Bar>
                 </BarChart>
