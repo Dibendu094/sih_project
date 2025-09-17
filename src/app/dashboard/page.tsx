@@ -26,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
+import { TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy, where, doc, limit, getDocs } from "firebase/firestore";
 import { format } from "date-fns";
@@ -172,7 +172,7 @@ export default function DashboardPage() {
             <GraduationCap className="ml-3 h-8 w-8" />
           </h1>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
           <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Points</CardTitle>
@@ -180,15 +180,6 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">{totalPoints}</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Badges</CardTitle>
-              <Star className="h-5 w-5 text-purple-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">{currentUserBadges}</div>
             </CardContent>
           </Card>
           <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
