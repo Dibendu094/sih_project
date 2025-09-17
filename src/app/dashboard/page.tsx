@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy, getDocs, where, doc } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, where, doc } from "firebase/firestore";
 import { format } from "date-fns";
 
 interface LeaderboardStudent {
@@ -99,20 +99,21 @@ export default function DashboardPage() {
           }
       });
       
-      // Fetch performance history for chart
-      const fetchPerformance = async () => {
-        setLoadingChart(true);
-        const historyQuery = query(collection(db, "performanceHistory"), where("userId", "==", userEmail), orderBy("timestamp", "asc"));
-        const querySnapshot = await getDocs(historyQuery);
+      // Fetch performance history for chart with real-time updates
+      setLoadingChart(true);
+      const historyQuery = query(collection(db, "performanceHistory"), where("userId", "==", userEmail), orderBy("timestamp", "asc"));
+      const unsubscribePerformance = onSnapshot(historyQuery, (querySnapshot) => {
         const history: { points: number, timestamp: { toDate: () => Date } | null }[] = [];
         querySnapshot.forEach((doc) => {
             history.push(doc.data() as { points: number, timestamp: { toDate: () => Date } | null });
         });
         setPerformanceData(processPerformanceData(history));
         setLoadingChart(false);
-      }
-      fetchPerformance();
-
+      }, (error) => {
+        console.error("Error fetching performance history: ", error);
+        setLoadingChart(false);
+      });
+      
       // Fetch leaderboard data
       const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
       const unsubscribeLeaderboard = onSnapshot(usersQuery, (snapshot) => {
@@ -140,6 +141,7 @@ export default function DashboardPage() {
       return () => {
           unsubscribeUser();
           unsubscribeLeaderboard();
+          unsubscribePerformance();
       };
     } else {
       setLoading(false);
@@ -294,3 +296,4 @@ export default function DashboardPage() {
     
 
     
+
