@@ -53,16 +53,18 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [loadingChart, setLoadingChart] = useState(true);
 
-  const processPerformanceData = (history: { points: number, timestamp: { toDate: () => Date } }[]) => {
+  const processPerformanceData = (history: { points: number, timestamp: { toDate: () => Date } | null }[]) => {
       const weeklyPoints: { [key: number]: number } = {};
       
       history.forEach(entry => {
-          const date = entry.timestamp.toDate();
-          const week = getWeek(date, { weekStartsOn: 1 }); // ISO week number
-          if (!weeklyPoints[week]) {
-              weeklyPoints[week] = 0;
+          if (entry.timestamp) {
+            const date = entry.timestamp.toDate();
+            const week = getWeek(date, { weekStartsOn: 1 }); // ISO week number
+            if (!weeklyPoints[week]) {
+                weeklyPoints[week] = 0;
+            }
+            weeklyPoints[week] += entry.points;
           }
-          weeklyPoints[week] += entry.points;
       });
 
       const chartData = Object.entries(weeklyPoints).map(([week, points]) => ({
@@ -100,9 +102,9 @@ export default function DashboardPage() {
         setLoadingChart(true);
         const historyQuery = query(collection(db, "performanceHistory"), where("userId", "==", userEmail), orderBy("timestamp", "asc"));
         const querySnapshot = await getDocs(historyQuery);
-        const history: { points: number, timestamp: { toDate: () => Date } }[] = [];
+        const history: { points: number, timestamp: { toDate: () => Date } | null }[] = [];
         querySnapshot.forEach((doc) => {
-            history.push(doc.data() as { points: number, timestamp: { toDate: () => Date } });
+            history.push(doc.data() as { points: number, timestamp: { toDate: () => Date } | null });
         });
         setPerformanceData(processPerformanceData(history));
         setLoadingChart(false);
@@ -286,5 +288,7 @@ export default function DashboardPage() {
   );
 
 }
+
+    
 
     
