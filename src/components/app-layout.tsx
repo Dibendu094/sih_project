@@ -58,7 +58,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </h1>
           </div>
         </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent className="justify-center">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
