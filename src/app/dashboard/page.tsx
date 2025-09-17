@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy, getDocs, where } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, getDocs, where, doc } from "firebase/firestore";
 import { getWeek } from "date-fns";
 
 interface LeaderboardStudent {
@@ -286,3 +286,5 @@ export default function DashboardPage() {
   );
 
 }
+
+    
