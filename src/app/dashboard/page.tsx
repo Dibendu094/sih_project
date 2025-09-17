@@ -27,7 +27,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
-import { students } from "@/lib/data";
 
 const performanceData = [
   { week: "1", points: 50 },
@@ -69,10 +68,6 @@ export default function DashboardPage() {
     if (storedUsername) {
       setUsername(storedUsername);
     }
-    const storedPoints = localStorage.getItem("totalPoints");
-    if (storedPoints) {
-      setTotalPoints(parseInt(storedPoints, 10));
-    }
     
     const handleStorageChange = () => {
         const storedPoints = localStorage.getItem('totalPoints');
@@ -83,6 +78,9 @@ export default function DashboardPage() {
 
     window.addEventListener('storage', handleStorageChange);
     
+    // Initial fetch
+    handleStorageChange();
+
     // This is a workaround to force re-render when navigating back to the page
     const interval = setInterval(handleStorageChange, 1000);
 
@@ -92,7 +90,17 @@ export default function DashboardPage() {
     };
   }, []);
   
-  const currentUserRank = leaderboardData.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()))?.rank || 2;
+  const currentUser = leaderboardData.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()));
+
+  const updatedLeaderboard = leaderboardData.map(student => {
+    if (currentUser && student.studentName === currentUser.studentName) {
+      return { ...student, totalPoints: totalPoints };
+    }
+    return student;
+  }).sort((a, b) => b.totalPoints - a.totalPoints)
+    .map((student, index) => ({ ...student, rank: index + 1 }));
+
+  const currentUserRank = updatedLeaderboard.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()))?.rank || 2;
   const currentUserBadges = leaderboardData.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()))?.badges || 5;
 
   return (
@@ -207,7 +215,7 @@ export default function DashboardPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {leaderboardData.map((student) => (
+                  {updatedLeaderboard.map((student) => (
                     <TableRow key={student.rank} className={student.studentName.toLowerCase().includes(username.toLowerCase()) ? 'bg-primary/20' : ''}>
                       <TableCell className="font-medium">
                         {student.studentName}
@@ -216,7 +224,7 @@ export default function DashboardPage() {
                         {student.class}
                       </TableCell>
                       <TableCell className="text-center">
-                        {student.studentName.toLowerCase().includes(username.toLowerCase()) ? totalPoints : student.totalPoints}
+                        {student.totalPoints}
                       </TableCell>
                       <TableCell className="text-center">{student.badges}</TableCell>
                       <TableCell className="text-right font-bold">
