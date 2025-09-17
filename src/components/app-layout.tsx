@@ -29,13 +29,29 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [username, setUsername] = React.useState("User");
+  const [initials, setInitials] = React.useState("U");
 
   React.useEffect(() => {
     document.documentElement.classList.add('dark');
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+        const name = storedUsername.trim();
+        setUsername(name);
+        const nameParts = name.split(' ');
+        if (nameParts.length > 1) {
+            setInitials((nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase());
+        } else if (name.length > 0) {
+            setInitials(name.substring(0, 2).toUpperCase());
+        }
+    }
   }, []);
 
   const handleLogout = () => {
     // In a real app, clear session/token here
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('username');
+    }
     router.push("/");
   };
 
@@ -107,12 +123,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="p-2 flex items-center gap-3 group-data-[collapsible=icon]:p-0">
              <Avatar className="h-8 w-8 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:rounded-md">
                 <AvatarFallback className="bg-primary text-primary-foreground font-bold group-data-[collapsible=icon]:rounded-md">
-                    RM
+                    {initials}
                 </AvatarFallback>
              </Avatar>
              <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-                <span className="font-semibold text-sidebar-foreground text-sm">Rajarshi Maity</span>
-                <span className="text-xs text-muted-foreground">Free</span>
+                <span className="font-semibold text-sidebar-foreground text-sm">{username}</span>
              </div>
           </div>
           <SidebarMenu>

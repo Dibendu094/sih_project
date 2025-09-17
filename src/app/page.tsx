@@ -19,7 +19,10 @@ export default function LoginPage() {
     e.preventDefault()
     if (username && password) {
       // In a real app, you'd perform authentication here.
-      // For this prototype, we'll just navigate to the home page.
+      // For this prototype, we'll store the username and navigate.
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('username', username);
+      }
       router.push("/home")
     } else {
       toast({
@@ -47,7 +50,7 @@ export default function LoginPage() {
               <Input
                 id="username"
                 type="text"
-                placeholder="teacher"
+                placeholder="Your name"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
