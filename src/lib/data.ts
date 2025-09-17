@@ -153,7 +153,7 @@ export const games: Game[] = [
     title: "Physics Playground",
     description: "Explore motion, forces, and energy through interactive experiments.",
     subjects: ["Science"],
-    gradeLevels: [9, 10],
+    gradeLevels: [9, 12],
     imageId: "game-cover-4",
     duration: 20,
     points: 150,
@@ -653,8 +653,22 @@ export const quizzes: Quiz = {
         { text: "What is the 'Sorites Paradox' (paradox of the heap)?", options: ["A paradox about motion", "A paradox that arises from vague predicates, like 'heap'", "A paradox about time travel", "A paradox about self-reference"], correctAnswer: "A paradox that arises from vague predicates, like 'heap'" },
         { text: "What is the difference between deductive and inductive reasoning?", options: ["Deduction moves from general to specific; induction moves from specific to general", "Deduction is for science, induction is for math", "They are the same", "Deduction is always true, induction is always false"], correctAnswer: "Deduction moves from general to specific; induction moves from specific to general" },
         { text: "What is a 'syllogism'?", options: ["A type of logical puzzle", "A form of reasoning in which a conclusion is drawn from two given or assumed propositions", "A statement that is always true", "A programming error"], correctAnswer: "A form of reasoning in which a conclusion is drawn from two given or assumed propositions" },
-        { text: "What is Fuzzy Logic?", options: ["A logic that is not clear", "A form of many-valued logic in which the truth values of variables may be any real number between 0 and 1", "A logic used for quantum computers", "A logic that contains errors"], correctAnswer: "A form of many-valued logic in which the truth values of variables may be any real number between 0 and 1" }
+        { text: "What is Fuzzy Logic?", options: ["A logic that is not clear", "A form of many-valued logic in which the truth values of variables may be any real number between 0 and 1", "A logic used for quantum computers", "A logic that contains errors"], correctAnswer: "A logic used for quantum computers" }
     ]
+  },
+  "physics-experiment-simulator-science-9": {
+    questions: [
+        { text: "What is Newton's first law of motion?", options: ["Energy is conserved", "Force = mass x acceleration", "An object in motion stays in motion", "For every action, there is an equal and opposite reaction"], correctAnswer: "An object in motion stays in motion" },
+        { text: "What is the chemical symbol for water?", options: ["H2O", "CO2", "O2", "NaCl"], correctAnswer: "H2O" },
+        { text: "What unit is used to measure electric current?", options: ["Volt", "Watt", "Ohm", "Ampere"], correctAnswer: "Ampere" },
+        { text: "What is the formula for calculating work?", options: ["Work = Force / Distance", "Work = Force x Distance", "Work = Mass x Acceleration", "Work = Power x Time"], correctAnswer: "Work = Force x Distance" },
+        { text: "Which color of light has the longest wavelength?", options: ["Violet", "Blue", "Green", "Red"], correctAnswer: "Red" },
+        { text: "What is the force that opposes motion between two surfaces?", options: ["Gravity", "Inertia", "Friction", "Magnetism"], correctAnswer: "Friction" },
+        { text: "What is the speed of light in a vacuum?", options: ["300,000 km/s", "150,000 km/s", "500,000 km/s", "1,000,000 km/s"], correctAnswer: "300,000 km/s" },
+        { text: "Which type of energy is stored in a battery?", options: ["Kinetic", "Potential", "Chemical", "Thermal"], correctAnswer: "Chemical" },
+        { text: "What is the main source of energy for the Earth?", options: ["The Moon", "Geothermal heat", "The Sun", "Fossil fuels"], correctAnswer: "The Sun" },
+        { text: "What happens to the density of most substances when they are heated?", options: ["It increases", "It decreases", "It stays the same", "It becomes zero"], correctAnswer: "It decreases" },
+    ],
   },
   "physics-experiment-simulator-science-10": {
     questions: [
@@ -789,7 +803,7 @@ export const quizzes: Quiz = {
       { text: "What is it that's full of holes but can still hold water?", options: ["A net", "A sponge", "A sieve", "A leaky bucket"], correctAnswer: "A sponge" },
       { text: "What has cities, but no houses; forests, but no trees; and water, but no fish?", options: ["A book", "A dream", "A map", "A computer"], correctAnswer: "A map" },
       { text: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", options: ["A flag", "A whisper", "An echo", "A ghost"], correctAnswer: "An echo" },
-      { text: "If a plane crashes on the border between the U.S. and Canada, where do you bury the survivors?", options: ["U.S.", "Canada", "You don't bury survivors", "The nearest city"], correctAnswer: "The nearest city" },
+      { text: "If a plane crashes on the border between the U.S. and Canada, where do you bury the survivors?", options: ["U.S.", "Canada", "You don't bury survivors", "The nearest city"], correctAnswer: "You don't bury survivors" },
       { text: "What has a thumb and four fingers but is not a hand?", options: ["A glove", "A footprint", "A monkey's paw", "A drawing"], correctAnswer: "A glove" },
       { text: "What is always in front of you but can’t be seen?", options: ["The past", "The present", "The future", "The air"], correctAnswer: "The future" },
       { text: "What can you catch but not throw?", options: ["A ball", "A fish", "A cold", "A frisbee"], correctAnswer: "A cold" },
@@ -899,5 +913,7 @@ export const quizzes: Quiz = {
     
 
     
+
+
 
 
