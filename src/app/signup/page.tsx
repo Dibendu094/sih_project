@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -5,8 +6,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
+import { doc, setDoc } from "firebase/firestore"
 
 import { cn } from "@/lib/utils"
+import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -44,33 +47,50 @@ export default function SignupPage() {
   const [dob, setDob] = useState<Date>()
   const [studentClass, setStudentClass] = useState("")
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     if (
-      username &&
-      email &&
-      motherName &&
-      fatherName &&
-      dob &&
-      studentClass &&
-      password
+      !username ||
+      !email ||
+      !motherName ||
+      !fatherName ||
+      !dob ||
+      !studentClass ||
+      !password
     ) {
-      // In a real app, you'd save this data to a database.
-      // For this prototype, we'll just log it and redirect.
-      console.log({
+      toast({
+        title: "Incomplete Form",
+        description: "Please fill out all the fields.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setLoading(true)
+    try {
+      // Use email as a simple unique ID for this prototype.
+      // In a real app, you'd use Firebase Authentication to create a proper user ID.
+      const userRef = doc(db, "users", email);
+      
+      await setDoc(userRef, {
         username,
         email,
         motherName,
         fatherName,
         dob: format(dob, "yyyy-MM-dd"),
-        studentClass,
-        password,
-      })
-      
+        studentClass: parseInt(studentClass, 10),
+        totalPoints: 0,
+        gamesCompleted: 0,
+        completedGames: [],
+        badges: 0,
+      });
+
       // Store username to be used across the app
       if (typeof window !== 'undefined') {
         localStorage.setItem('username', username);
+        localStorage.setItem('userEmail', email); // Save email to identify user
       }
 
       toast({
@@ -78,12 +98,15 @@ export default function SignupPage() {
         description: "Welcome to EduQuest! Taking you to the home page.",
       })
       router.push("/home")
-    } else {
-      toast({
-        title: "Incomplete Form",
-        description: "Please fill out all the fields.",
-        variant: "destructive",
-      })
+    } catch (error) {
+        console.error("Error creating account: ", error);
+        toast({
+            title: "Error",
+            description: "Could not create your account. Please try again.",
+            variant: "destructive"
+        })
+    } finally {
+        setLoading(false);
     }
   }
 
@@ -182,7 +205,7 @@ export default function SignupPage() {
                 </div>
                  <div className="space-y-2">
                   <Label htmlFor="class">Class</Label>
-                  <Select onValueChange={setStudentClass} value={studentClass}>
+                  <Select onValueChange={setStudentClass} value={studentClass} required>
                     <SelectTrigger id="class" className="w-full">
                       <SelectValue placeholder="Select class" />
                     </SelectTrigger>
@@ -209,8 +232,8 @@ export default function SignupPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full">
-              Sign Up
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Creating Account..." : "Sign Up"}
             </Button>
           </CardFooter>
         </form>

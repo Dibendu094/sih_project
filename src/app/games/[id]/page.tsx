@@ -27,6 +27,8 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, ArrowRight, PartyPopper } from "lucide-react";
 import Link from "next/link";
+import { db } from "@/lib/firebase";
+import { doc, updateDoc, increment, arrayUnion, getDoc } from "firebase/firestore";
 
 type GameState = "selection" | "playing" | "finished";
 
@@ -74,7 +76,7 @@ export default function GamePlayPage() {
     setSelectedAnswers(prev => ({...prev, [currentQuestionIndex]: answer}))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const answeredQuestions = Object.keys(selectedAnswers).length;
     if (answeredQuestions < currentQuestions.length) {
       const firstUnansweredIndex = currentQuestions.findIndex((_, index) => !selectedAnswers.hasOwnProperty(index));
@@ -99,30 +101,40 @@ export default function GamePlayPage() {
     setScore(finalScore);
     setGameState("finished");
     
-    if (typeof window !== 'undefined') {
-        // Update progress in localStorage
-        if (game && currentQuestions.length > 0) {
-            const pointsEarned = Math.round((finalScore / currentQuestions.length) * game.points);
-            
-            const currentTotalPoints = parseInt(localStorage.getItem('totalPoints') || '0', 10);
-            localStorage.setItem('totalPoints', String(currentTotalPoints + pointsEarned));
+    const userEmail = typeof window !== 'undefined' ? localStorage.getItem('userEmail') : null;
+    if (userEmail && game && currentQuestions.length > 0) {
+      const pointsEarned = Math.round((finalScore / currentQuestions.length) * game.points);
+      const userRef = doc(db, "users", userEmail);
 
-            const completedGames: string[] = JSON.parse(localStorage.getItem('completedGames') || '[]');
-            if (!completedGames.includes(game.id)) {
-                completedGames.push(game.id);
-                localStorage.setItem('completedGames', JSON.stringify(completedGames));
-                const currentCompletedCount = parseInt(localStorage.getItem('gamesCompleted') || '0', 10);
-                localStorage.setItem('gamesCompleted', String(currentCompletedCount + 1));
-            }
+      try {
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.data();
+        const alreadyCompleted = userData?.completedGames?.includes(game.id);
+
+        const updateData: any = {
+            totalPoints: increment(pointsEarned),
+        };
+
+        if (!alreadyCompleted) {
+            updateData.gamesCompleted = increment(1);
+            updateData.completedGames = arrayUnion(game.id);
         }
 
-        // Store quiz data for review
-        const quizReviewData = {
-          questions: currentQuestions,
-          selectedAnswers,
-          gameTitle: game?.title
-        };
-        localStorage.setItem('quizReviewData', JSON.stringify(quizReviewData));
+        await updateDoc(userRef, updateData);
+        
+        // Trigger a storage event to notify other tabs/pages (like dashboard)
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('lastGameCompleted', Date.now().toString());
+        }
+
+      } catch (error) {
+        console.error("Error updating score: ", error);
+        toast({
+          title: "Error",
+          description: "Could not save your score. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
 
 
@@ -133,6 +145,15 @@ export default function GamePlayPage() {
   }
 
   const handleReview = () => {
+     if (typeof window !== 'undefined' && game) {
+        // Store quiz data for review
+        const quizReviewData = {
+          questions: currentQuestions,
+          selectedAnswers,
+          gameTitle: game?.title
+        };
+        localStorage.setItem('quizReviewData', JSON.stringify(quizReviewData));
+     }
     router.push(`/games/${params.id}/review`);
   }
 

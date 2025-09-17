@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -10,28 +11,58 @@ import { Label } from "@/components/ui/label"
 import Logo from "@/components/logo"
 import { useToast } from "@/hooks/use-toast"
 import { Separator } from "@/components/ui/separator"
+import { getDoc, doc } from "firebase/firestore"
+import { db } from "@/lib/firebase"
 
 export default function LoginPage() {
   const router = useRouter()
   const { toast } = useToast()
-  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("") // Changed from username to email
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (username && password) {
-      // In a real app, you'd perform authentication here.
-      // For this prototype, we'll store the username and navigate.
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('username', username);
-      }
-      router.push("/home")
-    } else {
+    if (!email || !password) {
       toast({
         title: "Login Failed",
-        description: "Please enter both username and password.",
+        description: "Please enter both email and password.",
         variant: "destructive",
       })
+      return
+    }
+
+    setLoading(true);
+    try {
+      // For this prototype, we're fetching the user doc by email.
+      // A real app would use Firebase Authentication's signInWithEmailAndPassword.
+      const userRef = doc(db, "users", email);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        // NOTE: We are not checking the password. This is a prototype.
+        const userData = userSnap.data();
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('username', userData.username);
+          localStorage.setItem('userEmail', userData.email); // Store email for Firestore lookups
+        }
+        router.push("/home")
+      } else {
+        toast({
+          title: "Login Failed",
+          description: "No account found with that email. Please sign up.",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+        console.error("Login error:", error);
+        toast({
+          title: "Login Error",
+          description: "An error occurred during login. Please try again.",
+          variant: "destructive",
+        })
+    } finally {
+        setLoading(false);
     }
   }
 
@@ -48,13 +79,13 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-                id="username"
-                type="text"
-                placeholder="Your name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                id="email"
+                type="email"
+                placeholder="your.email@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -71,8 +102,8 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-4">
-            <Button type="submit" className="w-full">
-              Sign In
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Signing In..." : "Sign In"}
             </Button>
             <div className="relative">
               <Separator />

@@ -1,6 +1,7 @@
+
 "use client";
 
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AppLayout from "@/components/app-layout";
 import {
   Card,
@@ -27,6 +28,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
+import { db } from "@/lib/firebase";
+import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
 
 const performanceData = [
   { week: "1", points: 50 },
@@ -35,73 +38,62 @@ const performanceData = [
   { week: "4", points: 100 },
 ];
 
-const leaderboardData = [
-  {
-    rank: 1,
-    studentName: "Aman Gupta",
-    class: 11,
-    totalPoints: 200,
-    badges: 7,
-  },
-  {
-    rank: 2,
-    studentName: "Rahul Kumar",
-    class: 10,
-    totalPoints: 150,
-    badges: 5,
-  },
-  {
-    rank: 3,
-    studentName: "Anjali Singh",
-    class: 9,
-    totalPoints: 120,
-    badges: 4,
-  },
-];
+interface LeaderboardStudent {
+  id: string;
+  studentName: string;
+  class: number;
+  totalPoints: number;
+  badges: number;
+  rank?: number;
+}
 
 export default function DashboardPage() {
-  const [username, setUsername] = React.useState("Rahul");
-  const [totalPoints, setTotalPoints] = React.useState(0);
+  const [username, setUsername] = useState("User");
+  const [currentUserData, setCurrentUserData] = useState<LeaderboardStudent | null>(null);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardStudent[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
       setUsername(storedUsername);
     }
     
-    const handleStorageChange = () => {
-        const storedPoints = localStorage.getItem('totalPoints');
-        if (storedPoints) {
-            setTotalPoints(parseInt(storedPoints, 10));
+    const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
+
+    const unsubscribe = onSnapshot(usersQuery, (snapshot) => {
+        const users: LeaderboardStudent[] = [];
+        let rank = 1;
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            users.push({
+                id: doc.id,
+                studentName: data.username,
+                class: data.studentClass,
+                totalPoints: data.totalPoints,
+                badges: data.badges || 0, // Assuming badges are stored
+                rank: rank++,
+            });
+        });
+        
+        setLeaderboardData(users);
+
+        const currentUserEmail = localStorage.getItem("userEmail");
+        if(currentUserEmail) {
+            const user = users.find(u => u.id === currentUserEmail);
+            if(user){
+              setCurrentUserData(user);
+            }
         }
-    };
+        setLoading(false);
+    });
 
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Initial fetch
-    handleStorageChange();
-
-    // This is a workaround to force re-render when navigating back to the page
-    const interval = setInterval(handleStorageChange, 1000);
-
-    return () => {
-        window.removeEventListener('storage', handleStorageChange);
-        clearInterval(interval);
-    };
+    return () => unsubscribe();
   }, []);
-  
-  const currentUser = leaderboardData.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()));
 
-  const updatedLeaderboard = leaderboardData.map(student => {
-    if (currentUser && student.studentName === currentUser.studentName) {
-      return { ...student, totalPoints: totalPoints };
-    }
-    return student;
-  }).sort((a, b) => b.totalPoints - a.totalPoints)
-    .map((student, index) => ({ ...student, rank: index + 1 }));
-
-  const currentUserRank = updatedLeaderboard.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()))?.rank || 2;
-  const currentUserBadges = leaderboardData.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()))?.badges || 5;
+  const totalPoints = currentUserData?.totalPoints || 0;
+  const currentUserBadges = currentUserData?.badges || 0;
+  const currentUserRank = currentUserData?.rank || 0;
 
   return (
     <AppLayout>
@@ -215,8 +207,10 @@ export default function DashboardPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {updatedLeaderboard.map((student) => (
-                    <TableRow key={student.rank} className={student.studentName.toLowerCase().includes(username.toLowerCase()) ? 'bg-primary/20' : ''}>
+                  {loading ? (
+                     <TableRow><TableCell colSpan={5} className="text-center">Loading leaderboard...</TableCell></TableRow>
+                  ) : leaderboardData.map((student) => (
+                    <TableRow key={student.id} className={student.studentName.toLowerCase().includes(username.toLowerCase()) ? 'bg-primary/20' : ''}>
                       <TableCell className="font-medium">
                         {student.studentName}
                       </TableCell>

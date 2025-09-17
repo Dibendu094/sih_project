@@ -28,6 +28,10 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { placeholderImages } from '@/lib/placeholder-images.json';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { useToast } from '@/hooks/use-toast';
+
 
 const getSubjectIcon = (subject: string) => {
   const iconProps = { className: 'h-10 w-10 text-white' };
@@ -39,7 +43,7 @@ const getSubjectIcon = (subject: string) => {
     case 'computer science':
       return <BrainCircuit {...iconProps} />;
     case 'logic':
-      return <BrainCircuit {...iconProps} />;
+      return <BrainCircuit {...icon.props} />;
     case 'stem':
       return <TestTube {...iconProps} />;
     default:
@@ -123,47 +127,65 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
 
 
 export default function GamesPage() {
-  const allSubjects = ['All', ...new Set(games.flatMap((game) => game.subjects))].filter(subject => subject !== 'Logic');
+  const allSubjects = ['All', ...new Set(games.flatMap((game) => game.subjects))];
   
   const [activeSubject, setActiveSubject] = useState('All');
   const [totalPoints, setTotalPoints] = useState(0);
   const [gamesCompleted, setGamesCompleted] = useState(0);
   const [completedGamesList, setCompletedGamesList] = useState<string[]>([]);
   const [lastUpdated, setLastUpdated] = useState(0);
+  const { toast } = useToast();
 
+  const fetchUserData = async () => {
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      const userRef = doc(db, 'users', userEmail);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setTotalPoints(userData.totalPoints || 0);
+        setGamesCompleted(userData.gamesCompleted || 0);
+        setCompletedGamesList(userData.completedGames || []);
+      }
+    }
+    setLastUpdated(Date.now());
+  };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-        const handleStorageChange = () => {
-            setTotalPoints(parseInt(localStorage.getItem('totalPoints') || '0', 10));
-            setGamesCompleted(parseInt(localStorage.getItem('gamesCompleted') || '0', 10));
-            setCompletedGamesList(JSON.parse(localStorage.getItem('completedGames') || '[]'));
-            setLastUpdated(Date.now());
-        };
+    fetchUserData();
+    
+    const handleStorageChange = () => {
+        fetchUserData();
+    };
+    window.addEventListener('storage', handleStorageChange);
+    
+    const interval = setInterval(fetchUserData, 2000); // Poll for updates
 
-        handleStorageChange(); 
-
-        window.addEventListener('storage', handleStorageChange);
-        
-        // This is a workaround to force re-render when navigating back to the page
-        const interval = setInterval(handleStorageChange, 1000);
-
-        return () => {
-            window.removeEventListener('storage', handleStorageChange);
-            clearInterval(interval);
-        };
-    }
+    return () => {
+        window.removeEventListener('storage', handleStorageChange);
+        clearInterval(interval);
+    };
   }, []);
 
-  const handleResetProgress = () => {
-    if (typeof window !== 'undefined') {
-        localStorage.setItem('totalPoints', '0');
-        localStorage.setItem('gamesCompleted', '0');
-        localStorage.setItem('completedGames', '[]');
-        // Manually trigger a state update to re-render the component
-        setTotalPoints(0);
-        setGamesCompleted(0);
-        setCompletedGamesList([]);
+  const handleResetProgress = async () => {
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+        try {
+            const userRef = doc(db, 'users', userEmail);
+            await updateDoc(userRef, {
+                totalPoints: 0,
+                gamesCompleted: 0,
+                completedGames: [],
+            });
+            // Manually trigger a state update to re-render the component
+            setTotalPoints(0);
+            setGamesCompleted(0);
+            setCompletedGamesList([]);
+            toast({ title: "Progress Reset", description: "Your points and completed games have been reset." });
+        } catch (error) {
+            console.error("Error resetting progress:", error);
+            toast({ title: "Error", description: "Could not reset your progress.", variant: "destructive" });
+        }
     }
   };
 
