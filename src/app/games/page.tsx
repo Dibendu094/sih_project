@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   FlaskConical,
   Play,
+  RotateCcw,
   Star,
   TestTube,
   Timer,
@@ -153,6 +154,18 @@ export default function GamesPage() {
     }
   }, []);
 
+  const handleResetProgress = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('totalPoints', '0');
+        localStorage.setItem('gamesCompleted', '0');
+        localStorage.setItem('completedGames', '[]');
+        // Manually trigger a state update to re-render the component
+        setTotalPoints(0);
+        setGamesCompleted(0);
+        setCompletedGamesList([]);
+    }
+  };
+
   const filteredGames = games.filter(game => {
       const subjectMatch = activeSubject === 'All' || game.subjects.includes(activeSubject);
       return subjectMatch;
@@ -161,21 +174,28 @@ export default function GamesPage() {
   return (
     <AppLayout>
       <div className="space-y-8">
-        <div className="flex flex-col md:flex-row gap-4">
-            <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
-                <Trophy className="h-10 w-10 text-yellow-400" />
-                <div>
-                    <p className="text-3xl font-bold">{totalPoints}</p>
-                    <p className="text-muted-foreground">Total Points</p>
-                </div>
-            </Card>
-            <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
-                <Star className="h-10 w-10 text-purple-400" />
-                 <div>
-                    <p className="text-3xl font-bold">{gamesCompleted}</p>
-                    <p className="text-muted-foreground">Games Completed</p>
-                </div>
-            </Card>
+        <div className="space-y-4">
+            <div className="flex flex-col md:flex-row gap-4">
+                <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
+                    <Trophy className="h-10 w-10 text-yellow-400" />
+                    <div>
+                        <p className="text-3xl font-bold">{totalPoints}</p>
+                        <p className="text-muted-foreground">Total Points</p>
+                    </div>
+                </Card>
+                <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
+                    <Star className="h-10 w-10 text-purple-400" />
+                     <div>
+                        <p className="text-3xl font-bold">{gamesCompleted}</p>
+                        <p className="text-muted-foreground">Games Completed</p>
+                    </div>
+                </Card>
+            </div>
+            <div className="flex justify-end">
+                <Button variant="outline" onClick={handleResetProgress}>
+                    <RotateCcw className="mr-2 h-4 w-4" /> Reset Progress
+                </Button>
+            </div>
         </div>
 
         <Card className="p-6 bg-card/50 border-border/50">
