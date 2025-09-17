@@ -110,7 +110,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
             </div>
         </div>
 
-        <Button asChild className="w-full mt-auto bg-gradient-to-r from-primary/50 to-primary text-primary-foreground hover:from-primary/60 hover:to-primary/90 transition-all duration-300">
+        <Button asChild className="w-full mt-auto bg-gradient-to-r from-primary/50 to-primary text-primary-foreground transition-all duration-300 hover:scale-105 hover:from-primary/60 hover:to-primary/90 transform">
           <Link href={`/games/${game.id}`}>
             {completed ? 'Play Again' : 'Start Game'} <Play className="ml-2 h-4 w-4 fill-primary-foreground" />
           </Link>
