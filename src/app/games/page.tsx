@@ -43,7 +43,7 @@ const getSubjectIcon = (subject: string) => {
     case 'computer science':
       return <BrainCircuit {...iconProps} />;
     case 'logic':
-      return <BrainCircuit {...icon.props} />;
+      return <BrainCircuit {...iconProps} />;
     case 'stem':
       return <TestTube {...iconProps} />;
     default:
