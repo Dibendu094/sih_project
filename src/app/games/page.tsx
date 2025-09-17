@@ -128,12 +128,29 @@ export default function GamesPage() {
   const [totalPoints, setTotalPoints] = useState(0);
   const [gamesCompleted, setGamesCompleted] = useState(0);
   const [completedGamesList, setCompletedGamesList] = useState<string[]>([]);
+  const [lastUpdated, setLastUpdated] = useState(0);
+
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-        setTotalPoints(parseInt(localStorage.getItem('totalPoints') || '0', 10));
-        setGamesCompleted(parseInt(localStorage.getItem('gamesCompleted') || '0', 10));
-        setCompletedGamesList(JSON.parse(localStorage.getItem('completedGames') || '[]'));
+        const handleStorageChange = () => {
+            setTotalPoints(parseInt(localStorage.getItem('totalPoints') || '0', 10));
+            setGamesCompleted(parseInt(localStorage.getItem('gamesCompleted') || '0', 10));
+            setCompletedGamesList(JSON.parse(localStorage.getItem('completedGames') || '[]'));
+            setLastUpdated(Date.now());
+        };
+
+        handleStorageChange(); 
+
+        window.addEventListener('storage', handleStorageChange);
+        
+        // This is a workaround to force re-render when navigating back to the page
+        const interval = setInterval(handleStorageChange, 1000);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            clearInterval(interval);
+        };
     }
   }, []);
 
@@ -180,7 +197,7 @@ export default function GamesPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {filteredGames.map((game) => (
-            <GameCard key={game.id} game={game} completed={completedGamesList.includes(game.id)} />
+            <GameCard key={`${game.id}-${lastUpdated}`} game={game} completed={completedGamesList.includes(game.id)} />
           ))}
         </div>
       </div>

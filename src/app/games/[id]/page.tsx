@@ -86,7 +86,7 @@ export default function GamePlayPage() {
     
     // Update progress in localStorage
     if (game && typeof window !== 'undefined') {
-        const pointsEarned = Math.round(finalScore * game.points / currentQuestions.length);
+        const pointsEarned = Math.round((finalScore / currentQuestions.length) * game.points);
         
         const currentTotalPoints = parseInt(localStorage.getItem('totalPoints') || '0', 10);
         localStorage.setItem('totalPoints', String(currentTotalPoints + pointsEarned));
@@ -200,7 +200,7 @@ export default function GamePlayPage() {
                       <p className="text-sm text-muted-foreground">Your Score</p>
                       <p className="text-5xl font-bold text-foreground">{score} / {currentQuestions.length}</p>
                     </div>
-                    <p className="text-lg font-medium">You earned <span className="text-primary font-bold">{game && currentQuestions.length > 0 ? Math.round(score * game.points / currentQuestions.length) : 0}</span> points!</p>
+                    <p className="text-lg font-medium">You earned <span className="text-primary font-bold">{game && currentQuestions.length > 0 ? Math.round((score / currentQuestions.length) * game.points) : 0}</span> points!</p>
                     <div className="flex gap-4 pt-4">
                         <Button variant="outline" onClick={() => {
                           setGameState("selection");
