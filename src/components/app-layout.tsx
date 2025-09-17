@@ -68,6 +68,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/">
                   <Home />
+                  Home
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -79,6 +80,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/dashboard">
                   <LayoutDashboard />
+                  Dashboard
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -90,6 +92,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/games">
                   <Gamepad2 />
+                  Games
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -101,6 +104,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/students">
                   <Users />
+                  Students
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -111,6 +115,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem>
               <SidebarMenuButton onClick={handleLogout} tooltip="Logout">
                 <LogOut />
+                Logout
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
