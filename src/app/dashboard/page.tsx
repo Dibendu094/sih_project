@@ -29,7 +29,7 @@ import {
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy, getDocs, where, doc } from "firebase/firestore";
-import { getWeek } from "date-fns";
+import { format } from "date-fns";
 
 interface LeaderboardStudent {
   id: string;
@@ -41,7 +41,7 @@ interface LeaderboardStudent {
 }
 
 interface PerformanceData {
-  week: string;
+  day: string;
   points: number;
 }
 
@@ -54,24 +54,26 @@ export default function DashboardPage() {
   const [loadingChart, setLoadingChart] = useState(true);
 
   const processPerformanceData = (history: { points: number, timestamp: { toDate: () => Date } | null }[]) => {
-      const weeklyPoints: { [key: number]: number } = {};
+      const dailyPoints: { [key: string]: number } = {};
       
       history.forEach(entry => {
           if (entry.timestamp) {
             const date = entry.timestamp.toDate();
-            const week = getWeek(date, { weekStartsOn: 1 }); // ISO week number
-            if (!weeklyPoints[week]) {
-                weeklyPoints[week] = 0;
+            const day = format(date, "MMM d"); // Format as 'Jan 1', 'Jan 2'
+            if (!dailyPoints[day]) {
+                dailyPoints[day] = 0;
             }
-            weeklyPoints[week] += entry.points;
+            dailyPoints[day] += entry.points;
           }
       });
 
-      const chartData = Object.entries(weeklyPoints).map(([week, points]) => ({
-          week: `Week ${week}`,
+      const chartData = Object.entries(dailyPoints).map(([day, points]) => ({
+          day,
           points,
-      })).sort((a,b) => parseInt(a.week.split(' ')[1]) - parseInt(b.week.split(' ')[1]));
+      }));
       
+      // We don't need to sort as object keys insertion order is maintained for non-numeric keys.
+      // If we used a different format that could be interpreted as numeric, sorting would be needed.
       return chartData;
   };
 
@@ -190,7 +192,7 @@ export default function DashboardPage() {
         <div className="grid gap-8 md:grid-cols-2">
           <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
             <CardHeader>
-              <CardTitle>Weekly Performance</CardTitle>
+              <CardTitle>Daily Performance</CardTitle>
             </CardHeader>
             <CardContent>
                 {loadingChart ? (
@@ -206,7 +208,7 @@ export default function DashboardPage() {
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
                         <XAxis
-                            dataKey="week"
+                            dataKey="day"
                             tickLine={false}
                             axisLine={false}
                             tickMargin={10}
@@ -223,7 +225,7 @@ export default function DashboardPage() {
                             if (active && payload && payload.length) {
                                 return (
                                 <div className="rounded-lg border bg-background/90 backdrop-blur-sm p-2 shadow-lg">
-                                    <div className="font-bold text-foreground">{payload[0].payload.week}</div>
+                                    <div className="font-bold text-foreground">{payload[0].payload.day}</div>
                                     <div className="text-sm text-muted-foreground">
                                         Points: <span className="font-bold text-foreground">{payload[0].value}</span>
                                     </div>
