@@ -21,7 +21,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!username || !password) {
       toast({
@@ -34,53 +34,45 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    // Optimistically set username for welcome message and navigate
-    localStorage.setItem('username', username);
-    
-    router.push("/home");
-    
-    const verifyLogin = async () => {
-        try {
-          const usersRef = collection(db, "users");
-          const q = query(usersRef, where("username", "==", username));
-          const querySnapshot = await getDocs(q);
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("username", "==", username));
+      const querySnapshot = await getDocs(q);
 
-          if (!querySnapshot.empty) {
-            const userDoc = querySnapshot.docs[0];
-            const userData = userDoc.data();
-            
-            if (userData.password === password) {
-                // Login is valid, save email for other lookups and trigger update
-                if (typeof window !== 'undefined') {
-                  localStorage.setItem('userEmail', userDoc.id);
-                  // Trigger a storage event to let other pages know username is ready
-                  localStorage.setItem('loginEvent', Date.now().toString());
-                }
-            } else {
-                // Invalid password
-                throw new Error("Invalid username or password.");
-            }
-          } else {
-             // No user found
-            throw new Error("No account found with that username.");
+      if (querySnapshot.empty) {
+        throw new Error("No account found with that username.");
+      }
+      
+      const userDoc = querySnapshot.docs[0];
+      const userData = userDoc.data();
+
+      if (userData.password === password) {
+          // Login is valid
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('username', username);
+            localStorage.setItem('userEmail', userDoc.id);
+            // Trigger a storage event to let other pages know username is ready
+            localStorage.setItem('loginEvent', Date.now().toString());
           }
-        } catch (error: any) {
-            console.error("Login error:", error);
-            // If verification fails, clear local storage and redirect back
-            if (typeof window !== 'undefined') {
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('username');
-            }
-            router.push("/"); // Redirect back to login
-            toast({
-              title: "Login Failed",
-              description: error.message || "An error occurred during login. Please try again.",
-              variant: "destructive",
-            })
+          router.push("/home");
+      } else {
+          // Invalid password
+          throw new Error("Invalid username or password.");
+      }
+    } catch (error: any) {
+        console.error("Login error:", error);
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('username');
         }
-    };
-    
-    verifyLogin();
+        toast({
+          title: "Login Failed",
+          description: error.message || "An error occurred during login. Please try again.",
+          variant: "destructive",
+        })
+    } finally {
+        setLoading(false);
+    }
   }
 
   return (
