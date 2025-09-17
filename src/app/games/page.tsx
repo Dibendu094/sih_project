@@ -65,8 +65,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
 
   return (
     <Card className={cn(
-      "flex flex-col bg-card/50 border-border/50 transition-all duration-300 relative group overflow-hidden",
-      isMathQuiz && "text-white"
+      "flex flex-col bg-card/50 border-border/50 transition-all duration-300 relative group overflow-hidden"
     )}>
       {isMathQuiz && (
         <>
@@ -110,7 +109,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
             </div>
         </div>
 
-        <Button asChild className="w-full mt-auto bg-gradient-to-r from-primary/50 to-primary text-primary-foreground transition-all duration-300 hover:scale-105 hover:from-primary/60 hover:to-primary/90 transform">
+        <Button asChild className="w-full mt-auto bg-gradient-to-r from-primary/50 to-primary text-primary-foreground transition-transform duration-200 active:scale-95">
           <Link href={`/games/${game.id}`}>
             {completed ? 'Play Again' : 'Start Game'} <Play className="ml-2 h-4 w-4 fill-primary-foreground" />
           </Link>
