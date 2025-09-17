@@ -49,7 +49,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
     e.preventDefault()
     if (
       !username ||
@@ -69,46 +69,52 @@ export default function SignupPage() {
     }
 
     setLoading(true)
-    try {
-      // Use email as a simple unique ID for this prototype.
-      // In a real app, you'd use Firebase Authentication to create a proper user ID.
-      const userRef = doc(db, "users", email);
-      
-      await setDoc(userRef, {
-        username,
-        email,
-        motherName,
-        fatherName,
-        dob: format(dob, "yyyy-MM-dd"),
-        studentClass: parseInt(studentClass, 10),
-        password, // Storing password in plain text - NOT FOR PRODUCTION
-        totalPoints: 0,
-        gamesCompleted: 0,
-        completedGames: [],
-        badges: 0,
-      });
 
-      // Store username to be used across the app
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('username', username);
-        localStorage.setItem('userEmail', email); // Save email to identify user
-      }
-
-      toast({
-        title: "Account Created!",
-        description: "Welcome to EduQuest! Taking you to the home page.",
-      })
-      router.push("/home")
-    } catch (error) {
-        console.error("Error creating account: ", error);
-        toast({
-            title: "Error",
-            description: "Could not create your account. Please try again.",
-            variant: "destructive"
-        })
-    } finally {
-        setLoading(false);
+    // Optimistically navigate and set local storage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('username', username);
+      localStorage.setItem('userEmail', email);
     }
+    router.push("/home")
+    toast({
+        title: "Account Created!",
+        description: "Welcome to EduQuest!",
+    });
+
+    // Save data in the background
+    const saveData = async () => {
+        try {
+          const userRef = doc(db, "users", email);
+          
+          await setDoc(userRef, {
+            username,
+            email,
+            motherName,
+            fatherName,
+            dob: format(dob, "yyyy-MM-dd"),
+            studentClass: parseInt(studentClass, 10),
+            password, // Storing password in plain text - NOT FOR PRODUCTION
+            totalPoints: 0,
+            gamesCompleted: 0,
+            completedGames: [],
+            badges: 0,
+          });
+
+        } catch (error) {
+            console.error("Error creating account: ", error);
+            // Optionally, handle the error more gracefully, e.g., by notifying the user
+            // that their data might not have saved correctly.
+             toast({
+                title: "Sync Error",
+                description: "Could not save your account data to the server. Please check your connection.",
+                variant: "destructive"
+            })
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    saveData();
   }
 
   return (
