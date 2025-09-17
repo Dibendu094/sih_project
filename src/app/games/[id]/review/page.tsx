@@ -14,9 +14,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, Lightbulb, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { getQuestionExplanation, QuestionExplanationOutput } from "@/ai/flows/get-question-explanation";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface QuizReviewData {
   questions: Question[];
@@ -29,6 +31,8 @@ export default function ReviewPage() {
   const params = useParams();
   const [reviewData, setReviewData] = useState<QuizReviewData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [explanations, setExplanations] = useState<{ [key: number]: string }>({});
+  const [loadingExplanation, setLoadingExplanation] = useState<number | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -39,6 +43,35 @@ export default function ReviewPage() {
       setLoading(false);
     }
   }, []);
+
+  const handleExplain = async (index: number) => {
+    if (!reviewData) return;
+    const question = reviewData.questions[index];
+    if (explanations[index]) {
+        // Hide explanation if already visible
+        setExplanations(prev => {
+            const newExplanations = { ...prev };
+            delete newExplanations[index];
+            return newExplanations;
+        });
+        return;
+    }
+
+    setLoadingExplanation(index);
+    try {
+      const result = await getQuestionExplanation({
+        question: question.text,
+        correctAnswer: question.correctAnswer,
+      });
+      setExplanations(prev => ({...prev, [index]: result.explanation}));
+    } catch (error) {
+      console.error("Failed to get explanation:", error);
+      setExplanations(prev => ({...prev, [index]: "Sorry, I couldn't get an explanation right now."}));
+    } finally {
+      setLoadingExplanation(null);
+    }
+  };
+
 
   if (loading) {
     return (
@@ -116,7 +149,7 @@ export default function ReviewPage() {
                     );
                   })}
                 </CardContent>
-                 <CardFooter className="text-sm">
+                 <CardFooter className="flex flex-col items-start gap-4 text-sm">
                     {isCorrect ? (
                         <p className="text-green-500 font-semibold flex items-center gap-2">
                            <CheckCircle2 className="h-4 w-4" /> Your answer was correct!
@@ -125,6 +158,25 @@ export default function ReviewPage() {
                         <p className="text-red-500 font-semibold flex items-center gap-2">
                             <XCircle className="h-4 w-4" /> Your answer was incorrect. The correct answer was "{question.correctAnswer}".
                         </p>
+                    )}
+                    
+                    <Button variant="ghost" size="sm" onClick={() => handleExplain(index)} disabled={loadingExplanation === index}>
+                       {loadingExplanation === index ? (
+                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                       ) : (
+                           <Lightbulb className="mr-2 h-4 w-4" />
+                       )}
+                       {explanations[index] ? "Hide explanation" : "Need help? Explain"}
+                    </Button>
+
+                    {explanations[index] && (
+                        <Alert className="bg-accent/30 border-accent/50">
+                            <Lightbulb className="h-4 w-4" />
+                            <AlertTitle className="font-bold">Explanation</AlertTitle>
+                            <AlertDescription>
+                                {explanations[index]}
+                            </AlertDescription>
+                        </Alert>
                     )}
                  </CardFooter>
               </Card>

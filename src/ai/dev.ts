@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/teacher-insights-from-performance-data.ts';
 import '@/ai/flows/personalized-learning-paths.ts';
+import '@/ai/flows/get-question-explanation.ts';
