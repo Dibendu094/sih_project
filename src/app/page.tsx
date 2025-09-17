@@ -19,7 +19,7 @@ export default function LoginPage() {
     e.preventDefault()
     if (username && password) {
       // In a real app, you'd perform authentication here.
-      // For this prototype, we'll just navigate to the dashboard.
+      // For this prototype, we'll just navigate to the home page.
       router.push("/home")
     } else {
       toast({
