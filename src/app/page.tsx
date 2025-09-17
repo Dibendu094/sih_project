@@ -40,7 +40,7 @@ export default function LoginPage() {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        throw new Error("No account found with that username.");
+        throw new Error("Invalid username or password.");
       }
       
       const userDoc = querySnapshot.docs[0];
@@ -60,7 +60,6 @@ export default function LoginPage() {
           throw new Error("Invalid username or password.");
       }
     } catch (error: any) {
-        console.error("Login error:", error);
         if (typeof window !== 'undefined') {
             localStorage.removeItem('userEmail');
             localStorage.removeItem('username');
