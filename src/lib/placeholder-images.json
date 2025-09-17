@@ -32,37 +32,37 @@
     },
     {
       "id": "game-cover-1",
-      "description": "Cover art for Algebraic Adventures game",
+      "description": "Cover art for Equation Solver Race game",
       "imageUrl": "https://picsum.photos/seed/201/600/400",
       "imageHint": "fantasy landscape"
     },
     {
       "id": "game-cover-2",
-      "description": "Cover art for Cellular Explorer game",
+      "description": "Cover art for Biology Treasure Hunt game",
       "imageUrl": "https://picsum.photos/seed/202/600/400",
       "imageHint": "microscope abstract"
     },
     {
       "id": "game-cover-3",
-      "description": "Cover art for Code Crusaders game",
+      "description": "Cover art for Coding Quest game",
       "imageUrl": "https://picsum.photos/seed/203/600/400",
       "imageHint": "digital code"
     },
     {
       "id": "game-cover-4",
-      "description": "Cover art for Physics Force game",
+      "description": "Cover art for Physics Experiment Simulator game",
       "imageUrl": "https://picsum.photos/seed/204/600/400",
       "imageHint": "galaxy space"
     },
     {
       "id": "game-cover-5",
-      "description": "Cover art for Geometry Galaxy game",
+      "description": "Cover art for Math Puzzle Adventure game",
       "imageUrl": "https://picsum.photos/seed/205/600/400",
       "imageHint": "geometric pattern"
     },
     {
       "id": "game-cover-6",
-      "description": "Cover art for Ecosystem Engineers game",
+      "description": "Cover art for Eco & Environment Game",
       "imageUrl": "https://picsum.photos/seed/206/600/400",
       "imageHint": "lush forest"
     },
@@ -89,6 +89,18 @@
       "description": "Cover art for STEM Adventure Game",
       "imageUrl": "https://picsum.photos/seed/210/600/400",
       "imageHint": "adventure map"
+    },
+     {
+      "id": "game-cover-11",
+      "description": "Cover art for Math & Science Trivia",
+      "imageUrl": "https://picsum.photos/seed/211/600/400",
+      "imageHint": "trivia night"
+    },
+    {
+      "id": "game-cover-12",
+      "description": "Cover art for Speed Calculation Challenge",
+      "imageUrl": "https://picsum.photos/seed/212/600/400",
+      "imageHint": "stopwatch race"
     }
   ]
 }
