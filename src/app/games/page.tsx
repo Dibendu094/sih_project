@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { placeholderImages } from '@/lib/placeholder-images.json';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 
@@ -122,38 +122,25 @@ export default function GamesPage() {
   const [totalPoints, setTotalPoints] = useState(0);
   const [gamesCompleted, setGamesCompleted] = useState(0);
   const [completedGamesList, setCompletedGamesList] = useState<string[]>([]);
-  const [lastUpdated, setLastUpdated] = useState(0);
   const { toast } = useToast();
 
-  const fetchUserData = async () => {
+  useEffect(() => {
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
       const userRef = doc(db, 'users', userEmail);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        setTotalPoints(userData.totalPoints || 0);
-        setGamesCompleted(userData.gamesCompleted || 0);
-        setCompletedGamesList(userData.completedGames || []);
-      }
+      
+      const unsubscribe = onSnapshot(userRef, (doc) => {
+        if (doc.exists()) {
+          const userData = doc.data();
+          setTotalPoints(userData.totalPoints || 0);
+          setGamesCompleted(userData.gamesCompleted || 0);
+          setCompletedGamesList(userData.completedGames || []);
+        }
+      });
+      
+      // Cleanup the listener when the component unmounts
+      return () => unsubscribe();
     }
-    setLastUpdated(Date.now());
-  };
-
-  useEffect(() => {
-    fetchUserData();
-    
-    const handleStorageChange = () => {
-        fetchUserData();
-    };
-    window.addEventListener('storage', handleStorageChange);
-    
-    const interval = setInterval(fetchUserData, 2000); // Poll for updates
-
-    return () => {
-        window.removeEventListener('storage', handleStorageChange);
-        clearInterval(interval);
-    };
   }, []);
 
   const handleResetProgress = async () => {
@@ -166,10 +153,7 @@ export default function GamesPage() {
                 gamesCompleted: 0,
                 completedGames: [],
             });
-            // Manually trigger a state update to re-render the component
-            setTotalPoints(0);
-            setGamesCompleted(0);
-            setCompletedGamesList([]);
+            // State will update automatically via the onSnapshot listener
             toast({ title: "Progress Reset", description: "Your points and completed games have been reset." });
         } catch (error) {
             console.error("Error resetting progress:", error);
@@ -228,7 +212,7 @@ export default function GamesPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {filteredGames.map((game) => (
-            <GameCard key={`${game.id}-${lastUpdated}`} game={game} completed={completedGamesList.includes(game.id)} />
+            <GameCard key={game.id} game={game} completed={completedGamesList.includes(game.id)} />
           ))}
         </div>
       </div>
