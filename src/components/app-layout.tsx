@@ -43,7 +43,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     setIsClient(true);
-    document.documentElement.classList.add('dark');
     
     const updateUsername = () => {
         const storedUsername = localStorage.getItem("username");
