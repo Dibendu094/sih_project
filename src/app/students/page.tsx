@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User } from "lucide-react";
 
@@ -38,25 +38,33 @@ export default function StudentsPage() {
   useEffect(() => {
     const fetchStudents = async () => {
       setLoading(true);
-      const usersCollection = collection(db, "users");
-      const userSnapshot = await getDocs(usersCollection);
-      const userList = userSnapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          username: data.username,
-          studentClass: data.studentClass,
-          totalPoints: data.totalPoints,
-        };
-      });
-      setStudents(userList);
-      setLoading(false);
+      try {
+        const usersCollection = collection(db, "users");
+        const q = query(usersCollection, orderBy("username"));
+        const userSnapshot = await getDocs(q);
+        const userList = userSnapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            username: data.username,
+            studentClass: data.studentClass,
+            totalPoints: data.totalPoints || 0,
+          };
+        });
+        setStudents(userList);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+        // Optionally, show a toast notification to the user
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchStudents();
   }, []);
 
   const getInitials = (name: string) => {
+    if (!name) return 'U';
     const nameParts = name.split(' ');
     if (nameParts.length > 1) {
         return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
@@ -88,11 +96,11 @@ export default function StudentsPage() {
               <TableBody>
                 {loading ? (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center">
+                    <TableCell colSpan={4} className="text-center h-24">
                       Loading students...
                     </TableCell>
                   </TableRow>
-                ) : (
+                ) : students.length > 0 ? (
                   students.map((student) => (
                     <TableRow key={student.id}>
                       <TableCell>
@@ -114,6 +122,12 @@ export default function StudentsPage() {
                       </TableCell>
                     </TableRow>
                   ))
+                ) : (
+                   <TableRow>
+                    <TableCell colSpan={4} className="text-center h-24">
+                      No students found.
+                    </TableCell>
+                  </TableRow>
                 )}
               </TableBody>
             </Table>
