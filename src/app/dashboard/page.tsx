@@ -26,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Star, TrendingUp, GraduationCap } from "lucide-react";
+import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { students } from "@/lib/data";
 
 const performanceData = [
@@ -88,28 +88,28 @@ export default function DashboardPage() {
           </h1>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Card>
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Points</CardTitle>
-              <Star className="h-5 w-5 text-yellow-400" />
+              <Trophy className="h-5 w-5 text-yellow-400" />
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">{totalPoints}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Badges</CardTitle>
-              <Star className="h-5 w-5 text-yellow-400" />
+              <Star className="h-5 w-5 text-purple-400" />
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">{currentUserBadges}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Rank</CardTitle>
-              <TrendingUp className="h-5 w-5 text-primary" />
+              <TrendingUp className="h-5 w-5 text-green-400" />
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">#{currentUserRank}</div>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
           </Card>
         </div>
         <div className="grid gap-8 md:grid-cols-2">
-          <Card>
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
             <CardHeader>
               <CardTitle>Performance Chart</CardTitle>
             </CardHeader>
@@ -127,10 +127,10 @@ export default function DashboardPage() {
                   <defs>
                     <linearGradient id="colorPoints" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.2}/>
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
                   <XAxis
                     dataKey="week"
                     tickLine={false}
@@ -145,17 +145,17 @@ export default function DashboardPage() {
                     domain={[0, 120]}
                   />
                   <Tooltip
-                    cursor={{ fill: "hsl(var(--secondary))" }}
+                    cursor={{ fill: "hsl(var(--secondary) / 0.3)" }}
                     content={({ active, payload }) => {
                       if (active && payload && payload.length) {
                         return (
-                          <div className="rounded-lg border bg-background p-2 shadow-sm">
+                          <div className="rounded-lg border bg-background/90 backdrop-blur-sm p-2 shadow-lg">
                             <div className="grid grid-cols-2 gap-2">
                               <div className="flex flex-col">
                                 <span className="text-[0.70rem] uppercase text-muted-foreground">
                                   Points
                                 </span>
-                                <span className="font-bold text-muted-foreground">
+                                <span className="font-bold text-foreground">
                                   {payload[0].value}
                                 </span>
                               </div>
@@ -168,13 +168,13 @@ export default function DashboardPage() {
                     }}
                   />
                   <Bar dataKey="points" fill="url(#colorPoints)" radius={[4, 4, 0, 0]}>
-                     <LabelList dataKey="points" position="top" />
+                     <LabelList dataKey="points" position="top" className="fill-foreground" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
             <CardHeader>
               <CardTitle>Student Leaderboard</CardTitle>
             </CardHeader>
@@ -191,7 +191,7 @@ export default function DashboardPage() {
                 </TableHeader>
                 <TableBody>
                   {leaderboardData.map((student) => (
-                    <TableRow key={student.rank} className={student.studentName.toLowerCase().includes(username.toLowerCase()) ? 'bg-secondary' : ''}>
+                    <TableRow key={student.rank} className={student.studentName.toLowerCase().includes(username.toLowerCase()) ? 'bg-primary/20' : ''}>
                       <TableCell className="font-medium">
                         {student.studentName}
                       </TableCell>
