@@ -28,7 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, ArrowRight, PartyPopper } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
-import { doc, updateDoc, increment, arrayUnion, getDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, increment, arrayUnion, getDoc, addDoc, collection, serverTimestamp, writeBatch } from "firebase/firestore";
 
 type GameState = "selection" | "playing" | "finished";
 
@@ -45,6 +45,7 @@ export default function GamePlayPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
   const [score, setScore] = useState(0);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleStartGame = () => {
     if (!selectedGrade || !selectedSubject) {
@@ -99,16 +100,22 @@ export default function GamePlayPage() {
         }
     });
     setScore(finalScore);
-    setGameState("finished");
     
+    setIsSaving(true);
     const userEmail = typeof window !== 'undefined' ? localStorage.getItem('userEmail') : null;
     if (userEmail && game && currentQuestions.length > 0) {
       const pointsEarned = Math.round((finalScore / currentQuestions.length) * game.points);
-      const userRef = doc(db, "users", userEmail);
-
+      
       try {
-        // Save performance history
-        await addDoc(collection(db, "performanceHistory"), {
+        const userRef = doc(db, "users", userEmail);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.data();
+        const alreadyCompleted = userData?.completedGames?.includes(game.id);
+
+        const batch = writeBatch(db);
+
+        const performanceRef = doc(collection(db, "performanceHistory"));
+        batch.set(performanceRef, {
             userId: userEmail,
             gameId: game.id,
             points: pointsEarned,
@@ -116,11 +123,7 @@ export default function GamePlayPage() {
             totalQuestions: currentQuestions.length,
             timestamp: serverTimestamp(),
         });
-          
-        const userSnap = await getDoc(userRef);
-        const userData = userSnap.data();
-        const alreadyCompleted = userData?.completedGames?.includes(game.id);
-
+        
         const updateData: any = {
             totalPoints: increment(pointsEarned),
         };
@@ -130,13 +133,9 @@ export default function GamePlayPage() {
             updateData.completedGames = arrayUnion(game.id);
         }
 
-        await updateDoc(userRef, updateData);
+        batch.update(userRef, updateData);
+        await batch.commit();
         
-        // Trigger a storage event to notify other tabs/pages (like dashboard)
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('lastGameCompleted', Date.now().toString());
-        }
-
       } catch (error) {
         console.error("Error updating score: ", error);
         toast({
@@ -144,9 +143,14 @@ export default function GamePlayPage() {
           description: "Could not save your score. Please try again.",
           variant: "destructive",
         });
+      } finally {
+        setIsSaving(false);
       }
+    } else {
+        setIsSaving(false);
     }
-
+    
+    setGameState("finished");
 
     toast({
       title: "Quiz Complete!",
@@ -289,7 +293,9 @@ export default function GamePlayPage() {
                         Next <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                  ) : (
-                    <Button onClick={handleSubmit} className="bg-yellow-500 text-black hover:bg-yellow-500/90 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed" disabled={!allQuestionsAnswered}>Submit</Button>
+                    <Button onClick={handleSubmit} className="bg-yellow-500 text-black hover:bg-yellow-500/90 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed" disabled={!allQuestionsAnswered || isSaving}>
+                        {isSaving ? "Saving..." : "Submit"}
+                    </Button>
                  )}
             </CardFooter>
           )}

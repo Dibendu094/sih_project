@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import AppLayout from "@/components/app-layout";
 import {
   Card,
@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy, where, doc } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, where, doc, limit, getDocs } from "firebase/firestore";
 import { format } from "date-fns";
 
 interface LeaderboardStudent {
@@ -72,11 +72,26 @@ export default function DashboardPage() {
           points,
       }));
       
-      // We don't need to sort as object keys insertion order is maintained for non-numeric keys.
-      // If we used a different format that could be interpreted as numeric, sorting would be needed.
       return chartData;
   };
 
+  const updateUserRank = async (userEmail: string) => {
+    const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
+    const querySnapshot = await getDocs(usersQuery);
+    let rank = 1;
+    let found = false;
+    for (const doc of querySnapshot.docs) {
+        if (doc.id === userEmail) {
+            setCurrentUserData(prev => prev ? {...prev, rank: rank} : { id: doc.id, studentName: doc.data().username, class: doc.data().studentClass, totalPoints: doc.data().totalPoints, badges: doc.data().badges || 0, rank: rank });
+            found = true;
+            break;
+        }
+        rank++;
+    }
+    if (!found) {
+        setCurrentUserData(prev => prev ? {...prev, rank: undefined} : null);
+    }
+  };
 
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail");
@@ -84,28 +99,29 @@ export default function DashboardPage() {
     if (userEmail) {
       setUsername(localStorage.getItem("username") || "User");
       
-      // Fetch current user's data
       const userRef = doc(db, "users", userEmail);
       const unsubscribeUser = onSnapshot(userRef, (doc) => {
           if(doc.exists()){
               const data = doc.data();
-              setCurrentUserData({
-                  id: doc.id,
+              setCurrentUserData(prev => ({
+                  ...(prev || { id: doc.id, studentName: "", class: 0, badges: 0, rank: undefined }),
                   studentName: data.username,
-                  class: data.studentClass,
                   totalPoints: data.totalPoints,
                   badges: data.badges || 0,
-              });
+                  class: data.studentClass,
+              }));
+              updateUserRank(userEmail);
           }
       });
       
-      // Fetch performance history for chart with real-time updates
       setLoadingChart(true);
       const historyQuery = query(collection(db, "performanceHistory"), where("userId", "==", userEmail), orderBy("timestamp", "asc"));
       const unsubscribePerformance = onSnapshot(historyQuery, (querySnapshot) => {
         const history: { points: number, timestamp: { toDate: () => Date } | null }[] = [];
         querySnapshot.forEach((doc) => {
-            history.push(doc.data() as { points: number, timestamp: { toDate: () => Date } | null });
+            if(doc.data().timestamp) {
+                history.push(doc.data() as { points: number, timestamp: { toDate: () => Date } | null });
+            }
         });
         setPerformanceData(processPerformanceData(history));
         setLoadingChart(false);
@@ -114,27 +130,21 @@ export default function DashboardPage() {
         setLoadingChart(false);
       });
       
-      // Fetch leaderboard data
-      const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
-      const unsubscribeLeaderboard = onSnapshot(usersQuery, (snapshot) => {
+      const top10Query = query(collection(db, "users"), orderBy("totalPoints", "desc"), limit(10));
+      const unsubscribeLeaderboard = onSnapshot(top10Query, (snapshot) => {
           const users: LeaderboardStudent[] = [];
-          let rank = 1;
-          snapshot.forEach(doc => {
+          snapshot.forEach((doc, index) => {
               const data = doc.data();
-              const userData = {
+              users.push({
                   id: doc.id,
                   studentName: data.username,
                   class: data.studentClass,
                   totalPoints: data.totalPoints,
                   badges: data.badges || 0,
-                  rank: rank++,
-              };
-              users.push(userData);
-              if(userEmail === doc.id) {
-                  setCurrentUserData(prev => prev ? {...prev, rank: userData.rank} : null);
-              }
+                  rank: index + 1,
+              });
           });
-          setLeaderboardData(users.slice(0, 10));
+          setLeaderboardData(users);
           setLoading(false);
       });
 
@@ -149,9 +159,9 @@ export default function DashboardPage() {
     }
   }, []);
 
-  const totalPoints = currentUserData?.totalPoints || 0;
-  const currentUserBadges = currentUserData?.badges || 0;
-  const currentUserRank = currentUserData?.rank || 0;
+  const totalPoints = currentUserData?.totalPoints ?? 0;
+  const currentUserBadges = currentUserData?.badges ?? 0;
+  const currentUserRank = currentUserData?.rank ?? 0;
 
   return (
     <AppLayout>
@@ -290,10 +300,4 @@ export default function DashboardPage() {
       </div>
     </AppLayout>
   );
-
 }
-
-    
-
-    
-
