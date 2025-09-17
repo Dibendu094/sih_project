@@ -30,7 +30,11 @@ import { Button } from "./ui/button";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [theme, setTheme] = React.useState('light');
+  const [theme, setTheme] = React.useState('dark');
+
+  React.useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
