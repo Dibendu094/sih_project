@@ -83,24 +83,24 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === "/dashboard"}
-                tooltip="Dashboard"
-              >
-                <Link href="/dashboard">
-                  <LayoutDashboard />
-                  Dashboard
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
                 isActive={pathname.startsWith("/games")}
                 tooltip="Games"
               >
                 <Link href="/games">
                   <Gamepad2 />
                   Games
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === "/dashboard"}
+                tooltip="Dashboard"
+              >
+                <Link href="/dashboard">
+                  <LayoutDashboard />
+                  Dashboard
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
