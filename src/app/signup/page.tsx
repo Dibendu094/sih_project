@@ -70,15 +70,11 @@ export default function SignupPage() {
 
     setLoading(true)
 
-    // Optimistically navigate and set local storage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('username', username);
-      localStorage.setItem('userEmail', email);
-    }
-    router.push("/home")
+    // Redirect to login page and show success message
+    router.push("/")
     toast({
         title: "Account Created!",
-        description: "Welcome to EduQuest!",
+        description: "You can now sign in with your new account.",
     });
 
     // Save data in the background
