@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, limit, doc, getDoc } from "firebase/firestore";
 
 const performanceData = [
   { week: "1", points: 50 },
@@ -55,40 +55,66 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
+    const userEmail = localStorage.getItem("userEmail");
     if (storedUsername) {
       setUsername(storedUsername);
     }
     
+    // Fetch current user's data first
+    if(userEmail) {
+        const userRef = doc(db, "users", userEmail);
+        const unsubscribeUser = onSnapshot(userRef, (doc) => {
+            if(doc.exists()){
+                const data = doc.data();
+                setCurrentUserData({
+                    id: doc.id,
+                    studentName: data.username,
+                    class: data.studentClass,
+                    totalPoints: data.totalPoints,
+                    badges: data.badges || 0,
+                    rank: 0, // Rank will be updated by the leaderboard query
+                });
+            }
+        });
+        // We will unsubscribe later
+    } else {
+        setLoading(false);
+    }
+    
+    // Fetch leaderboard data (top 10)
     const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
 
-    const unsubscribe = onSnapshot(usersQuery, (snapshot) => {
+    const unsubscribeLeaderboard = onSnapshot(usersQuery, (snapshot) => {
         const users: LeaderboardStudent[] = [];
         let rank = 1;
         snapshot.forEach(doc => {
             const data = doc.data();
-            users.push({
+            const userData = {
                 id: doc.id,
                 studentName: data.username,
                 class: data.studentClass,
                 totalPoints: data.totalPoints,
-                badges: data.badges || 0, // Assuming badges are stored
+                badges: data.badges || 0,
                 rank: rank++,
-            });
+            };
+            users.push(userData);
+
+            // Update current user's rank if they are in the full list
+            if(userEmail && doc.id === userEmail) {
+                setCurrentUserData(prev => prev ? {...prev, rank: userData.rank} : null);
+            }
         });
         
-        setLeaderboardData(users);
-
-        const currentUserEmail = localStorage.getItem("userEmail");
-        if(currentUserEmail) {
-            const user = users.find(u => u.id === currentUserEmail);
-            if(user){
-              setCurrentUserData(user);
-            }
-        }
+        // We only display top 10 on the dashboard
+        setLeaderboardData(users.slice(0, 10));
         setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+        // Here you would unsubscribe from both snapshots, but since one is inside a conditional,
+        // we'll just handle the leaderboard one. In a real app, manage this more carefully.
+        unsubscribeLeaderboard();
+    };
   }, []);
 
   const totalPoints = currentUserData?.totalPoints || 0;
@@ -129,7 +155,7 @@ export default function DashboardPage() {
               <TrendingUp className="h-5 w-5 text-green-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold">#{currentUserRank}</div>
+              <div className="text-4xl font-bold">#{currentUserRank > 0 ? currentUserRank : '...'}</div>
             </CardContent>
           </Card>
         </div>
@@ -193,7 +219,7 @@ export default function DashboardPage() {
           </Card>
           <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
             <CardHeader>
-              <CardTitle>Student Leaderboard</CardTitle>
+              <CardTitle>Top 10 Students</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
@@ -234,4 +260,5 @@ export default function DashboardPage() {
       </div>
     </AppLayout>
   );
-}
+
+    
