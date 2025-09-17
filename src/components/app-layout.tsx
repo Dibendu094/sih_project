@@ -14,6 +14,7 @@ import {
   SidebarFooter,
   SidebarInset,
   SidebarTrigger,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import {
   Home,
@@ -21,11 +22,9 @@ import {
   Gamepad2,
   Users,
   LogOut,
-  Sun,
-  Moon,
 } from "lucide-react";
 import Logo from "./logo";
-import { Button } from "./ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -104,6 +103,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
+          <SidebarSeparator />
+          <div className="p-2 flex items-center gap-3 group-data-[collapsible=icon]:p-0">
+             <Avatar className="h-8 w-8 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:rounded-md">
+                <AvatarFallback className="bg-primary text-primary-foreground font-bold group-data-[collapsible=icon]:rounded-md">
+                    RM
+                </AvatarFallback>
+             </Avatar>
+             <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+                <span className="font-semibold text-sidebar-foreground text-sm">Rajarshi Maity</span>
+                <span className="text-xs text-muted-foreground">Free</span>
+             </div>
+          </div>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton onClick={handleLogout} tooltip="Logout">
