@@ -79,7 +79,7 @@ export default function StudentsPage() {
     <AppLayout>
       <div className="space-y-6">
         <h1 className="text-3xl font-bold font-headline">Students</h1>
-        <Card>
+        <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
           <CardHeader>
             <CardTitle>All Students</CardTitle>
           </CardHeader>

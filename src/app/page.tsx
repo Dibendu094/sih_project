@@ -76,7 +76,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
         <form onSubmit={handleLogin}>
           <CardHeader className="text-center">
             <div className="mx-auto mb-4">
@@ -95,6 +95,7 @@ export default function LoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
+                className="bg-background/70"
               />
             </div>
             <div className="space-y-2">
@@ -111,6 +112,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="bg-background/70"
               />
             </div>
           </CardContent>
@@ -120,7 +122,7 @@ export default function LoginPage() {
             </Button>
             <div className="relative">
               <Separator />
-              <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">OR</p>
+              <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card/80 px-2 text-xs text-muted-foreground">OR</p>
             </div>
              <Button asChild variant="outline" className="w-full">
                 <Link href="/signup">

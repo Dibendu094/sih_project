@@ -121,12 +121,12 @@ export default function SignupPage() {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-8">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
         <form onSubmit={handleSignup}>
           <CardHeader className="text-center">
              <div className="flex justify-end mb-4">
                 <Select onValueChange={(value: Language) => setLanguage(value)} value={language}>
-                    <SelectTrigger className="w-[120px]">
+                    <SelectTrigger className="w-[120px] bg-background/70">
                         <SelectValue placeholder="Language" />
                     </SelectTrigger>
                     <SelectContent>
@@ -157,6 +157,7 @@ export default function SignupPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
+                className="bg-background/70"
               />
             </div>
             <div className="space-y-2">
@@ -168,6 +169,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="bg-background/70"
               />
             </div>
              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -180,6 +182,7 @@ export default function SignupPage() {
                   value={motherName}
                   onChange={(e) => setMotherName(e.target.value)}
                   required
+                  className="bg-background/70"
                 />
               </div>
               <div className="space-y-2">
@@ -191,6 +194,7 @@ export default function SignupPage() {
                   value={fatherName}
                   onChange={(e) => setFatherName(e.target.value)}
                   required
+                  className="bg-background/70"
                 />
               </div>
             </div>
@@ -203,7 +207,7 @@ export default function SignupPage() {
                         id="dob"
                         variant={"outline"}
                         className={cn(
-                          "w-full justify-start text-left font-normal",
+                          "w-full justify-start text-left font-normal bg-background/70",
                           !dob && "text-muted-foreground"
                         )}
                       >
@@ -227,7 +231,7 @@ export default function SignupPage() {
                  <div className="space-y-2">
                   <Label htmlFor="class">{t.classLabel}</Label>
                   <Select onValueChange={setStudentClass} value={studentClass} required>
-                    <SelectTrigger id="class" className="w-full">
+                    <SelectTrigger id="class" className="w-full bg-background/70">
                       <SelectValue placeholder={t.classPlaceholder} />
                     </SelectTrigger>
                     <SelectContent>
@@ -249,6 +253,7 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="bg-background/70"
               />
             </div>
           </CardContent>

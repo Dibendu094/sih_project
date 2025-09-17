@@ -34,7 +34,7 @@ import { useToast } from '@/hooks/use-toast';
 
 
 const getSubjectIcon = (subject: string) => {
-  const iconProps = { className: 'h-10 w-10 text-white' };
+  const iconProps = { className: 'h-10 w-10 text-primary' };
   switch (subject.toLowerCase()) {
     case 'math':
       return <Calculator {...iconProps} />;
@@ -65,35 +65,33 @@ const getDifficultyColor = (difficulty: string) => {
 }
 
 const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
-  const isMathQuiz = game.id === 'math-quiz-challenge';
   const gameImage = placeholderImages.find(img => img.id === game.imageId);
 
   return (
     <Card className={cn(
-      "flex flex-col border-border/50 transition-all duration-300 relative group overflow-hidden",
-      completed ? "bg-card/20" : "bg-card/50"
+      "flex flex-col bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden"
     )}>
      
       {completed && (
-        <Badge variant="secondary" className="absolute top-3 right-3 bg-green-500/20 text-green-400 border-green-500/40 gap-1 z-20">
+        <Badge variant="secondary" className="absolute top-3 right-3 bg-green-500/20 text-green-400 border-green-500/40 gap-1 z-10">
             <CheckCircle2 className="h-3 w-3" />
             Completed
         </Badge>
       )}
-      <CardContent className="p-6 flex-grow flex flex-col z-20">
+      <CardContent className="p-6 flex-grow flex flex-col">
         <div className="flex items-center gap-4 mb-4">
-            <div className={cn("p-3 rounded-lg bg-primary/20", isMathQuiz && "bg-white/20")}>
+            <div className={cn("p-3 rounded-lg bg-primary/20")}>
                 {getSubjectIcon(game.subjects[0])}
             </div>
         </div>
         <h3 className="font-headline text-xl font-bold mb-2">{game.title}</h3>
         <div className="flex flex-wrap gap-2 mb-4">
-            <Badge variant={isMathQuiz ? "default" : "secondary"}>{game.subjects[0]}</Badge>
-            <Badge variant={isMathQuiz ? "default" : "secondary"}>Grade {game.gradeLevels.join('-')}</Badge>
+            <Badge variant="secondary">{game.subjects[0]}</Badge>
+            <Badge variant="secondary">Grade {game.gradeLevels.join('-')}</Badge>
             <Badge className={cn("border", getDifficultyColor(game.difficulty))}>{game.difficulty}</Badge>
         </div>
-        <p className={cn("text-muted-foreground text-sm flex-grow mb-4", isMathQuiz && "text-gray-300")}>{game.description}</p>
-        <div className={cn("flex justify-between items-center text-sm text-muted-foreground mb-6", isMathQuiz && "text-gray-300")}>
+        <p className="text-muted-foreground text-sm flex-grow mb-4">{game.description}</p>
+        <div className="flex justify-between items-center text-sm text-muted-foreground mb-6">
             <div className="flex items-center gap-2">
                 <Timer className="h-4 w-4" />
                 <span>{game.duration} min</span>
@@ -104,7 +102,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
             </div>
         </div>
 
-        <Button asChild className="w-full mt-auto bg-gradient-to-r from-primary/50 to-primary text-primary-foreground transition-transform duration-200 active:scale-95">
+        <Button asChild className="w-full mt-auto bg-primary text-primary-foreground transition-transform duration-200 active:scale-95">
           <Link href={`/games/${game.id}`}>
             {completed ? 'Play Again' : 'Start Game'} <Play className="ml-2 h-4 w-4 fill-primary-foreground" />
           </Link>
@@ -172,14 +170,14 @@ export default function GamesPage() {
       <div className="space-y-8">
         <div className="space-y-4">
             <div className="flex flex-col md:flex-row gap-4">
-                <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
+                <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg flex-1 flex items-center justify-center p-6 gap-4">
                     <Trophy className="h-10 w-10 text-yellow-400" />
                     <div>
                         <p className="text-3xl font-bold">{totalPoints}</p>
                         <p className="text-muted-foreground">Total Points</p>
                     </div>
                 </Card>
-                <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
+                <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg flex-1 flex items-center justify-center p-6 gap-4">
                     <Star className="h-10 w-10 text-purple-400" />
                      <div>
                         <p className="text-3xl font-bold">{gamesCompleted}</p>
@@ -194,7 +192,7 @@ export default function GamesPage() {
             </div>
         </div>
 
-        <Card className="p-6 bg-card/50 border-border/50">
+        <Card className="p-6 bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
             <h2 className="text-xl font-bold font-headline mb-4">Filter Games</h2>
             <div className="grid grid-cols-1 gap-6">
                 <div>

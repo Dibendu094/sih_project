@@ -82,7 +82,7 @@ export default function StudentProfilePage() {
 
         <div className="grid gap-8 md:grid-cols-3">
           <div className="md:col-span-1">
-             <Card>
+             <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
                 <CardContent className="pt-6 flex flex-col items-center text-center">
                     <Avatar className="h-24 w-24 mb-4">
                         <AvatarFallback className="text-3xl">{getInitials(student.username)}</AvatarFallback>
@@ -94,7 +94,7 @@ export default function StudentProfilePage() {
              </Card>
           </div>
           <div className="md:col-span-2">
-            <Card>
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
               <CardHeader>
                 <CardTitle>Student Information</CardTitle>
               </CardHeader>

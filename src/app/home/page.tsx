@@ -31,7 +31,7 @@ export default function HomePage() {
             Features of the Platform
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
               <CardHeader className="items-center text-center">
                 <div className="p-4 bg-primary/10 rounded-full mb-4">
                   <Gamepad2 className="h-8 w-8 text-primary" />
@@ -44,7 +44,7 @@ export default function HomePage() {
                 progress.
               </CardContent>
             </Card>
-            <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
               <CardHeader className="items-center text-center">
                  <div className="p-4 bg-primary/10 rounded-full mb-4">
                   <AreaChart className="h-8 w-8 text-primary" />
@@ -57,7 +57,7 @@ export default function HomePage() {
                 help students improve.
               </CardContent>
             </Card>
-            <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300">
               <CardHeader className="items-center text-center">
                  <div className="p-4 bg-primary/10 rounded-full mb-4">
                   <Languages className="h-8 w-8 text-primary" />
