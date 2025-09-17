@@ -65,7 +65,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
 
   return (
     <Card className={cn(
-      "flex flex-col bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group overflow-hidden hover:scale-105",
+      "flex flex-col bg-card/50 border-border/50 transition-all duration-300 relative group overflow-hidden",
       isMathQuiz && "text-white"
     )}>
       {isMathQuiz && (
