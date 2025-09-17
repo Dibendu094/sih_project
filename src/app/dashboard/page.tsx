@@ -62,7 +62,7 @@ const leaderboardData = [
 
 export default function DashboardPage() {
   const [username, setUsername] = React.useState("Rahul");
-  const [totalPoints, setTotalPoints] = React.useState(150);
+  const [totalPoints, setTotalPoints] = React.useState(0);
 
   React.useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -73,6 +73,23 @@ export default function DashboardPage() {
     if (storedPoints) {
       setTotalPoints(parseInt(storedPoints, 10));
     }
+    
+    const handleStorageChange = () => {
+        const storedPoints = localStorage.getItem('totalPoints');
+        if (storedPoints) {
+            setTotalPoints(parseInt(storedPoints, 10));
+        }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // This is a workaround to force re-render when navigating back to the page
+    const interval = setInterval(handleStorageChange, 1000);
+
+    return () => {
+        window.removeEventListener('storage', handleStorageChange);
+        clearInterval(interval);
+    };
   }, []);
   
   const currentUserRank = leaderboardData.find(u => u.studentName.toLowerCase().includes(username.toLowerCase()))?.rank || 2;
@@ -199,7 +216,7 @@ export default function DashboardPage() {
                         {student.class}
                       </TableCell>
                       <TableCell className="text-center">
-                        {student.totalPoints}
+                        {student.studentName.toLowerCase().includes(username.toLowerCase()) ? totalPoints : student.totalPoints}
                       </TableCell>
                       <TableCell className="text-center">{student.badges}</TableCell>
                       <TableCell className="text-right font-bold">
