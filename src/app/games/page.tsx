@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppLayout from '@/components/app-layout';
 import {
   Card,
@@ -127,6 +127,17 @@ export default function GamesPage() {
   
   const [activeSubject, setActiveSubject] = useState('All');
   const [activeGrade, setActiveGrade] = useState('All');
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [gamesCompleted, setGamesCompleted] = useState(0);
+  const [completedGamesList, setCompletedGamesList] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        setTotalPoints(parseInt(localStorage.getItem('totalPoints') || '0', 10));
+        setGamesCompleted(parseInt(localStorage.getItem('gamesCompleted') || '0', 10));
+        setCompletedGamesList(JSON.parse(localStorage.getItem('completedGames') || '[]'));
+    }
+  }, []);
 
   const filteredGames = games.filter(game => {
       const subjectMatch = activeSubject === 'All' || game.subjects.includes(activeSubject);
@@ -144,14 +155,14 @@ export default function GamesPage() {
             <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
                 <Trophy className="h-10 w-10 text-yellow-400" />
                 <div>
-                    <p className="text-3xl font-bold">330</p>
+                    <p className="text-3xl font-bold">{totalPoints}</p>
                     <p className="text-muted-foreground">Total Points</p>
                 </div>
             </Card>
             <Card className="bg-card/50 border-border/50 flex-1 flex items-center justify-center p-6 gap-4">
                 <Star className="h-10 w-10 text-purple-400" />
                  <div>
-                    <p className="text-3xl font-bold">2</p>
+                    <p className="text-3xl font-bold">{gamesCompleted}</p>
                     <p className="text-muted-foreground">Games Completed</p>
                 </div>
             </Card>
@@ -185,7 +196,7 @@ export default function GamesPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {filteredGames.map((game) => (
-            <GameCard key={game.id} game={game} completed={game.id === 'physics-experiment-simulator'} />
+            <GameCard key={game.id} game={game} completed={completedGamesList.includes(game.id)} />
           ))}
         </div>
       </div>

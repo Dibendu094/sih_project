@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import AppLayout from "@/components/app-layout";
 import { games, quizzes, Game, Question } from "@/lib/data";
@@ -83,6 +83,23 @@ export default function GamePlayPage() {
     });
     setScore(finalScore);
     setGameState("finished");
+    
+    // Update progress in localStorage
+    if (game && typeof window !== 'undefined') {
+        const pointsEarned = Math.round(finalScore * game.points / currentQuestions.length);
+        
+        const currentTotalPoints = parseInt(localStorage.getItem('totalPoints') || '0', 10);
+        localStorage.setItem('totalPoints', String(currentTotalPoints + pointsEarned));
+
+        const completedGames: string[] = JSON.parse(localStorage.getItem('completedGames') || '[]');
+        if (!completedGames.includes(game.id)) {
+            completedGames.push(game.id);
+            localStorage.setItem('completedGames', JSON.stringify(completedGames));
+            const currentCompletedCount = parseInt(localStorage.getItem('gamesCompleted') || '0', 10);
+            localStorage.setItem('gamesCompleted', String(currentCompletedCount + 1));
+        }
+    }
+
     toast({
       title: "Quiz Complete!",
       description: `You scored ${finalScore} out of ${currentQuestions.length}.`,
@@ -183,7 +200,7 @@ export default function GamePlayPage() {
                       <p className="text-sm text-muted-foreground">Your Score</p>
                       <p className="text-5xl font-bold text-foreground">{score} / {currentQuestions.length}</p>
                     </div>
-                    <p className="text-lg font-medium">You earned <span className="text-primary font-bold">{Math.round(score * game.points / currentQuestions.length)}</span> points!</p>
+                    <p className="text-lg font-medium">You earned <span className="text-primary font-bold">{game && currentQuestions.length > 0 ? Math.round(score * game.points / currentQuestions.length) : 0}</span> points!</p>
                     <div className="flex gap-4 pt-4">
                         <Button variant="outline" onClick={() => {
                           setGameState("selection");
