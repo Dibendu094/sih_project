@@ -33,74 +33,74 @@
     {
       "id": "game-cover-1",
       "description": "Cover art for Equation Solver Race game",
-      "imageUrl": "https://picsum.photos/seed/201/600/400",
-      "imageHint": "equation race"
+      "imageUrl": "https://picsum.photos/seed/301/600/400",
+      "imageHint": "math numbers"
     },
     {
       "id": "game-cover-2",
       "description": "Cover art for Biology Treasure Hunt game",
-      "imageUrl": "https://picsum.photos/seed/202/600/400",
-      "imageHint": "biology hunt"
+      "imageUrl": "https://picsum.photos/seed/302/600/400",
+      "imageHint": "jungle treasure"
     },
     {
       "id": "game-cover-3",
       "description": "Cover art for Coding Quest game",
-      "imageUrl": "https://picsum.photos/seed/203/600/400",
-      "imageHint": "coding quest"
+      "imageUrl": "https://picsum.photos/seed/303/600/400",
+      "imageHint": "code neon"
     },
     {
       "id": "game-cover-4",
       "description": "Cover art for Physics Experiment Simulator game",
-      "imageUrl": "https://picsum.photos/seed/204/600/400",
-      "imageHint": "physics simulator"
+      "imageUrl": "https://picsum.photos/seed/304/600/400",
+      "imageHint": "science lab"
     },
     {
       "id": "game-cover-5",
       "description": "Cover art for Math Puzzle Adventure game",
-      "imageUrl": "https://picsum.photos/seed/205/600/400",
-      "imageHint": "puzzle adventure"
+      "imageUrl": "https://picsum.photos/seed/305/600/400",
+      "imageHint": "fantasy puzzle"
     },
     {
       "id": "game-cover-6",
       "description": "Cover art for Eco & Environment Game",
-      "imageUrl": "https://picsum.photos/seed/206/600/400",
-      "imageHint": "eco game"
+      "imageUrl": "https://picsum.photos/seed/306/600/400",
+      "imageHint": "green planet"
     },
     {
       "id": "game-cover-7",
       "description": "Cover art for Math Quiz Challenge",
-      "imageUrl": "https://picsum.photos/seed/207/600/400",
-      "imageHint": "math quiz"
+      "imageUrl": "https://picsum.photos/seed/307/600/400",
+      "imageHint": "quiz show"
     },
     {
       "id": "game-cover-8",
       "description": "Cover art for Periodic Table Explorer",
-      "imageUrl": "https://picsum.photos/seed/208/600/400",
-      "imageHint": "periodic table"
+      "imageUrl": "https://picsum.photos/seed/308/600/400",
+      "imageHint": "chemistry elements"
     },
     {
       "id": "game-cover-9",
       "description": "Cover art for Logic Puzzle Mania",
-      "imageUrl": "https://picsum.photos/seed/209/600/400",
-      "imageHint": "logic puzzle"
+      "imageUrl": "https://picsum.photos/seed/309/600/400",
+      "imageHint": "brain maze"
     },
     {
       "id": "game-cover-10",
       "description": "Cover art for STEM Adventure Game",
-      "imageUrl": "https://picsum.photos/seed/210/600/400",
-      "imageHint": "stem adventure"
+      "imageUrl": "https://picsum.photos/seed/310/600/400",
+      "imageHint": "galaxy adventure"
     },
      {
       "id": "game-cover-11",
       "description": "Cover art for Math & Science Trivia",
-      "imageUrl": "https://picsum.photos/seed/211/600/400",
-      "imageHint": "science trivia"
+      "imageUrl": "https://picsum.photos/seed/311/600/400",
+      "imageHint": "trivia night"
     },
     {
       "id": "game-cover-12",
       "description": "Cover art for Speed Calculation Challenge",
-      "imageUrl": "https://picsum.photos/seed/212/600/400",
-      "imageHint": "speed challenge"
+      "imageUrl": "https://picsum.photos/seed/312/600/400",
+      "imageHint": "timer countdown"
     }
   ]
 }
