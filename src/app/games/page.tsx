@@ -121,7 +121,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
 
 
 export default function GamesPage() {
-  const allSubjects = ['All', ...new Set(games.flatMap((game) => game.subjects))];
+  const allSubjects = ['All', ...new Set(games.flatMap((game) => game.subjects))].filter(subject => subject !== 'Logic');
   
   const [activeSubject, setActiveSubject] = useState('All');
   const [totalPoints, setTotalPoints] = useState(0);
