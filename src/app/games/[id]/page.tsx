@@ -28,7 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, ArrowRight, PartyPopper } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
-import { doc, updateDoc, increment, arrayUnion, getDoc } from "firebase/firestore";
+import { doc, updateDoc, increment, arrayUnion, getDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 type GameState = "selection" | "playing" | "finished";
 
@@ -107,6 +107,16 @@ export default function GamePlayPage() {
       const userRef = doc(db, "users", userEmail);
 
       try {
+        // Save performance history
+        await addDoc(collection(db, "performanceHistory"), {
+            userId: userEmail,
+            gameId: game.id,
+            points: pointsEarned,
+            score: finalScore,
+            totalQuestions: currentQuestions.length,
+            timestamp: serverTimestamp(),
+        });
+          
         const userSnap = await getDoc(userRef);
         const userData = userSnap.data();
         const alreadyCompleted = userData?.completedGames?.includes(game.id);

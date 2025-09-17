@@ -10,14 +10,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LabelList,
 } from "recharts";
 import {
   Table,
@@ -29,14 +28,8 @@ import {
 } from "@/components/ui/table";
 import { Star, TrendingUp, GraduationCap, Trophy } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy, limit, doc, getDoc } from "firebase/firestore";
-
-const performanceData = [
-  { week: "1", points: 50 },
-  { week: "2", points: 75 },
-  { week: "3", points: 88 },
-  { week: "4", points: 100 },
-];
+import { collection, onSnapshot, query, orderBy, getDocs, where } from "firebase/firestore";
+import { getWeek } from "date-fns";
 
 interface LeaderboardStudent {
   id: string;
@@ -47,74 +40,107 @@ interface LeaderboardStudent {
   rank?: number;
 }
 
+interface PerformanceData {
+  week: string;
+  points: number;
+}
+
 export default function DashboardPage() {
   const [username, setUsername] = useState("User");
   const [currentUserData, setCurrentUserData] = useState<LeaderboardStudent | null>(null);
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardStudent[]>([]);
+  const [performanceData, setPerformanceData] = useState<PerformanceData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingChart, setLoadingChart] = useState(true);
+
+  const processPerformanceData = (history: { points: number, timestamp: { toDate: () => Date } }[]) => {
+      const weeklyPoints: { [key: number]: number } = {};
+      
+      history.forEach(entry => {
+          const date = entry.timestamp.toDate();
+          const week = getWeek(date, { weekStartsOn: 1 }); // ISO week number
+          if (!weeklyPoints[week]) {
+              weeklyPoints[week] = 0;
+          }
+          weeklyPoints[week] += entry.points;
+      });
+
+      const chartData = Object.entries(weeklyPoints).map(([week, points]) => ({
+          week: `Week ${week}`,
+          points,
+      })).sort((a,b) => parseInt(a.week.split(' ')[1]) - parseInt(b.week.split(' ')[1]));
+      
+      return chartData;
+  };
+
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
     const userEmail = localStorage.getItem("userEmail");
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
     
-    // Fetch current user's data first
-    if(userEmail) {
-        const userRef = doc(db, "users", userEmail);
-        const unsubscribeUser = onSnapshot(userRef, (doc) => {
-            if(doc.exists()){
-                const data = doc.data();
-                setCurrentUserData({
-                    id: doc.id,
-                    studentName: data.username,
-                    class: data.studentClass,
-                    totalPoints: data.totalPoints,
-                    badges: data.badges || 0,
-                    rank: 0, // Rank will be updated by the leaderboard query
-                });
-            }
+    if (userEmail) {
+      setUsername(localStorage.getItem("username") || "User");
+      
+      // Fetch current user's data
+      const userRef = doc(db, "users", userEmail);
+      const unsubscribeUser = onSnapshot(userRef, (doc) => {
+          if(doc.exists()){
+              const data = doc.data();
+              setCurrentUserData({
+                  id: doc.id,
+                  studentName: data.username,
+                  class: data.studentClass,
+                  totalPoints: data.totalPoints,
+                  badges: data.badges || 0,
+              });
+          }
+      });
+      
+      // Fetch performance history for chart
+      const fetchPerformance = async () => {
+        setLoadingChart(true);
+        const historyQuery = query(collection(db, "performanceHistory"), where("userId", "==", userEmail), orderBy("timestamp", "asc"));
+        const querySnapshot = await getDocs(historyQuery);
+        const history: { points: number, timestamp: { toDate: () => Date } }[] = [];
+        querySnapshot.forEach((doc) => {
+            history.push(doc.data() as { points: number, timestamp: { toDate: () => Date } });
         });
-        // We will unsubscribe later
+        setPerformanceData(processPerformanceData(history));
+        setLoadingChart(false);
+      }
+      fetchPerformance();
+
+      // Fetch leaderboard data
+      const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
+      const unsubscribeLeaderboard = onSnapshot(usersQuery, (snapshot) => {
+          const users: LeaderboardStudent[] = [];
+          let rank = 1;
+          snapshot.forEach(doc => {
+              const data = doc.data();
+              const userData = {
+                  id: doc.id,
+                  studentName: data.username,
+                  class: data.studentClass,
+                  totalPoints: data.totalPoints,
+                  badges: data.badges || 0,
+                  rank: rank++,
+              };
+              users.push(userData);
+              if(userEmail === doc.id) {
+                  setCurrentUserData(prev => prev ? {...prev, rank: userData.rank} : null);
+              }
+          });
+          setLeaderboardData(users.slice(0, 10));
+          setLoading(false);
+      });
+
+      return () => {
+          unsubscribeUser();
+          unsubscribeLeaderboard();
+      };
     } else {
-        setLoading(false);
+      setLoading(false);
+      setLoadingChart(false);
     }
-    
-    // Fetch leaderboard data (top 10)
-    const usersQuery = query(collection(db, "users"), orderBy("totalPoints", "desc"));
-
-    const unsubscribeLeaderboard = onSnapshot(usersQuery, (snapshot) => {
-        const users: LeaderboardStudent[] = [];
-        let rank = 1;
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            const userData = {
-                id: doc.id,
-                studentName: data.username,
-                class: data.studentClass,
-                totalPoints: data.totalPoints,
-                badges: data.badges || 0,
-                rank: rank++,
-            };
-            users.push(userData);
-
-            // Update current user's rank if they are in the full list
-            if(userEmail && doc.id === userEmail) {
-                setCurrentUserData(prev => prev ? {...prev, rank: userData.rank} : null);
-            }
-        });
-        
-        // We only display top 10 on the dashboard
-        setLeaderboardData(users.slice(0, 10));
-        setLoading(false);
-    });
-
-    return () => {
-        // Here you would unsubscribe from both snapshots, but since one is inside a conditional,
-        // we'll just handle the leaderboard one. In a real app, manage this more carefully.
-        unsubscribeLeaderboard();
-    };
   }, []);
 
   const totalPoints = currentUserData?.totalPoints || 0;
@@ -162,59 +188,57 @@ export default function DashboardPage() {
         <div className="grid gap-8 md:grid-cols-2">
           <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
             <CardHeader>
-              <CardTitle>Performance Chart</CardTitle>
+              <CardTitle>Weekly Performance</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={performanceData}>
-                  <defs>
-                    <linearGradient id="colorPoints" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
-                  <XAxis
-                    dataKey="week"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={10}
-                    label={{ value: "Week", position: "insideBottom", offset: -5 }}
-                  />
-                  <YAxis
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={10}
-                    domain={[0, 120]}
-                  />
-                  <Tooltip
-                    cursor={{ fill: "hsl(var(--secondary) / 0.3)" }}
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length) {
-                        return (
-                          <div className="rounded-lg border bg-background/90 backdrop-blur-sm p-2 shadow-lg">
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="flex flex-col">
-                                <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                  Points
-                                </span>
-                                <span className="font-bold text-foreground">
-                                  {payload[0].value}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      return null;
-                    }}
-                  />
-                  <Bar dataKey="points" fill="url(#colorPoints)" radius={[4, 4, 0, 0]}>
-                     <LabelList dataKey="points" position="top" className="fill-foreground" />
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+                {loadingChart ? (
+                     <div className="flex justify-center items-center h-[300px]">Loading chart...</div>
+                 ) : performanceData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <AreaChart data={performanceData}>
+                        <defs>
+                            <linearGradient id="colorPoints" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                            </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                        <XAxis
+                            dataKey="week"
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={10}
+                        />
+                        <YAxis
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={10}
+                            domain={[0, 'dataMax + 20']}
+                        />
+                        <Tooltip
+                            cursor={{ fill: "hsl(var(--secondary) / 0.3)" }}
+                            content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                                return (
+                                <div className="rounded-lg border bg-background/90 backdrop-blur-sm p-2 shadow-lg">
+                                    <div className="font-bold text-foreground">{payload[0].payload.week}</div>
+                                    <div className="text-sm text-muted-foreground">
+                                        Points: <span className="font-bold text-foreground">{payload[0].value}</span>
+                                    </div>
+                                </div>
+                                );
+                            }
+                            return null;
+                            }}
+                        />
+                        <Area type="monotone" dataKey="points" stroke="hsl(var(--primary))" fill="url(#colorPoints)" strokeWidth={2} />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                 ) : (
+                    <div className="flex justify-center items-center h-[300px] text-muted-foreground">
+                        Play some games to see your performance chart!
+                    </div>
+                 )}
             </CardContent>
           </Card>
           <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
@@ -236,7 +260,7 @@ export default function DashboardPage() {
                   {loading ? (
                      <TableRow><TableCell colSpan={5} className="text-center">Loading leaderboard...</TableCell></TableRow>
                   ) : leaderboardData.map((student) => (
-                    <TableRow key={student.id} className={student.studentName.toLowerCase().includes(username.toLowerCase()) ? 'bg-primary/20' : ''}>
+                    <TableRow key={student.id} className={student.id === currentUserData?.id ? 'bg-primary/20' : ''}>
                       <TableCell className="font-medium">
                         {student.studentName}
                       </TableCell>
@@ -261,4 +285,4 @@ export default function DashboardPage() {
     </AppLayout>
   );
 
-    
+}
