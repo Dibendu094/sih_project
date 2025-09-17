@@ -460,7 +460,91 @@ export const quizzes: Quiz = {
       { text: "What is DNA transcription?", options: ["The synthesis of DNA from an RNA template", "The synthesis of an RNA molecule from a DNA template", "The synthesis of a protein from an mRNA template", "The replication of DNA"], correctAnswer: "The synthesis of an RNA molecule from aDNA template" },
     ]
   },
-  "coding-quest-computer science-9": {
+  "coding-quest-computer-science-6": {
+    questions: [
+        { text: "What is an input device?", options: ["A speaker", "A monitor", "A keyboard", "A printer"], correctAnswer: "A keyboard" },
+        { text: "What is an output device?", options: ["A mouse", "A scanner", "A microphone", "A monitor"], correctAnswer: "A monitor" },
+        { text: "What does CPU stand for?", options: ["Computer Processing Unit", "Central Processing Unit", "Central Power Unit", "Computer Power Unit"], correctAnswer: "Central Processing Unit" },
+        { text: "What is the 'brain' of the computer?", options: ["Monitor", "Keyboard", "CPU", "Mouse"], correctAnswer: "CPU" },
+        { text: "Which of these stores data, even when the computer is off?", options: ["RAM", "CPU", "Hard Drive", "Monitor"], correctAnswer: "Hard Drive" },
+        { text: "What is the internet?", options: ["A single computer", "A global network of computers", "A software program", "A type of cable"], correctAnswer: "A global network of computers" },
+        { text: "What do you use a web browser for?", options: ["To write documents", "To access websites", "To play music", "To check email"], correctAnswer: "To access websites" },
+        { text: "What is a file?", options: ["A physical folder", "A collection of data stored on a computer", "A part of the CPU", "A type of computer"], correctAnswer: "A collection of data stored on a computer" },
+        { text: "What does 'double-click' mean?", options: ["Clicking twice slowly", "Clicking with two fingers", "Clicking the right mouse button", "Clicking twice quickly"], correctAnswer: "Clicking twice quickly" },
+        { text: "What is software?", options: ["The physical parts of a computer", "The programs and applications on a computer", "The computer screen", "The computer's power cord"], correctAnswer: "The programs and applications on a computer" }
+    ]
+  },
+  "coding-quest-logic-6": {
+    questions: [
+        { text: "If a red block is on top of a blue block, and the blue block is on top of a green block, which block is at the bottom?", options: ["Red", "Blue", "Green", "Cannot be determined"], correctAnswer: "Green" },
+        { text: "There are 5 birds on a branch. A cat scares 2 of them away. How many birds are left on the branch?", options: ["3", "5", "2", "0"], correctAnswer: "3" },
+        { text: "What is the next shape in the pattern: Circle, Square, Triangle, Circle, Square, ...?", options: ["Circle", "Square", "Triangle", "Star"], correctAnswer: "Triangle" },
+        { text: "If all cats are animals, and Felix is a cat, then Felix is a(n) ____.", options: ["Dog", "Animal", "Fish", "Bird"], correctAnswer: "Animal" },
+        { text: "You have a box of 10 crayons. 3 are red, 4 are blue, and 3 are yellow. Which color do you have the most of?", options: ["Red", "Blue", "Yellow", "They are equal"], correctAnswer: "Blue" },
+        { text: "A recipe needs 2 apples and 1 orange. If you want to make two batches, how many apples do you need?", options: ["2", "3", "4", "5"], correctAnswer: "4" },
+        { text: "Which number does not belong in this group? 2, 4, 6, 7, 8, 10", options: ["2", "6", "7", "10"], correctAnswer: "7" },
+        { text: "A train leaves the station at 1 PM. The trip takes 2 hours. What time does it arrive?", options: ["2 PM", "3 PM", "4 PM", "1 PM"], correctAnswer: "3 PM" },
+        { text: "If today is Wednesday, what day was it yesterday?", options: ["Monday", "Tuesday", "Thursday", "Friday"], correctAnswer: "Tuesday" },
+        { text: "You have three doors. Behind one door is a prize. You pick Door #1. The host opens Door #3 to show it's empty. Should you switch to Door #2?", options: ["Yes", "No", "It doesn't matter", "There is no prize"], correctAnswer: "Yes" }
+    ]
+  },
+  "coding-quest-computer-science-7": {
+    questions: [
+        { text: "What is RAM?", options: ["A type of permanent storage", "A programming language", "Random Access Memory, used for temporary data", "A computer's processor"], correctAnswer: "Random Access Memory, used for temporary data" },
+        { text: "What is a 'URL'?", options: ["A computer file", "A type of software", "The address of a website", "A CPU component"], correctAnswer: "The address of a website" },
+        { text: "What is binary code?", options: ["A code that uses 10 different digits", "A code made of pictures", "A code that uses only 1s and 0s", "A secret language"], correctAnswer: "A code that uses only 1s and 0s" },
+        { text: "What is an 'operating system'?", options: ["A game", "Software that manages all computer hardware and software", "A website", "A type of monitor"], correctAnswer: "Software that manages all computer hardware and software" },
+        { text: "Which of these is an example of an operating system?", options: ["Microsoft Word", "Google Chrome", "Windows", "Adobe Photoshop"], correctAnswer: "Windows" },
+        { text: "What is an 'icon' on a computer desktop?", options: ["A small picture that represents a file or program", "A text document", "The background image", "The clock"], correctAnswer: "A small picture that represents a file or program" },
+        { text: "What is 'Wi-Fi'?", options: ["A type of computer", "A wire that connects to the internet", "A way to connect to a network wirelessly", "A brand of laptop"], correctAnswer: "A way to connect to a network wirelessly" },
+        { text: "What is 'downloading'?", options: ["Sending a file from your computer to another", "Copying a file from the internet to your computer", "Deleting a file", "Printing a document"], correctAnswer: "Copying a file from the internet to your computer" },
+        { text: "What is an 'email'?", options: ["A physical letter", "A message sent electronically", "A type of website", "A video call"], correctAnswer: "A message sent electronically" },
+        { text: "What is a 'folder' or 'directory' used for?", options: ["To run programs", "To organize files", "To connect to the internet", "To change screen brightness"], correctAnswer: "To organize files" }
+    ]
+  },
+  "coding-quest-logic-7": {
+    questions: [
+        { text: "Four friends are in a line. Tom is behind Sam. Sam is not first. Lily is before Tom but after Anna. Who is first in line?", options: ["Sam", "Tom", "Lily", "Anna"], correctAnswer: "Anna" },
+        { text: "What comes next? 1, 2, 4, 8, 16, ...", options: ["20", "24", "32", "40"], correctAnswer: "32" },
+        { text: "If it takes 10 minutes to walk to the park, and you left at 3:30 PM, what time will you arrive?", options: ["3:40 PM", "3:45 PM", "4:00 PM", "3:50 PM"], correctAnswer: "3:40 PM" },
+        { text: "A dog is tied to a 10-foot rope. There is a bone 15 feet away. How can the dog get the bone?", options: ["The rope can stretch", "It can't", "The rope is not tied to anything", "The bone is also tied to a rope"], correctAnswer: "The rope is not tied to anything" },
+        { text: "You are in a race and you overtake the person in second place. What place are you in now?", options: ["First", "Second", "Third", "Last"], correctAnswer: "Second" },
+        { text: "Which word does not belong? Run, Jump, Sleep, Hop", options: ["Run", "Jump", "Sleep", "Hop"], correctAnswer: "Sleep" },
+        { text: "A recipe for 12 cookies needs 2 cups of flour. How many cups do you need for 24 cookies?", options: ["2", "3", "4", "6"], correctAnswer: "4" },
+        { text: "There are 3 doors. Red, Blue, Green. The prize is not behind the red door. It is not behind the green door. Which door has the prize?", options: ["Red", "Blue", "Green", "None"], correctAnswer: "Blue" },
+        { text: "If A = 1, B = 2, C = 3, what does the word 'CAB' equal?", options: ["312", "6", "321", "5"], correctAnswer: "6" },
+        { text: "What has one head, one foot, and four legs?", options: ["A monster", "A chair", "A bed", "A table"], correctAnswer: "A bed" }
+    ]
+  },
+  "coding-quest-computer-science-8": {
+    questions: [
+        { text: "What is an 'algorithm'?", options: ["A type of computer chip", "A step-by-step procedure for solving a problem", "A brand of software", "A computer virus"], correctAnswer: "A step-by-step procedure for solving a problem" },
+        { text: "What does HTML stand for?", options: ["HyperText Markup Language", "High-Tech Machine Learning", "Hyperlink and Text Management Logic", "Home Tool Markup Link"], correctAnswer: "HyperText Markup Language" },
+        { text: "In programming, what is a 'variable'?", options: ["A fixed value", "A container for storing data", "A type of loop", "A comment in the code"], correctAnswer: "A container for storing data" },
+        { text: "What is a 'loop' used for in programming?", options: ["To stop the program", "To make a decision", "To repeat a block of code", "To store data"], correctAnswer: "To repeat a block of code" },
+        { text: "Which of the following is considered a high-level programming language?", options: ["Assembly", "Machine Code", "Python", "Binary"], correctAnswer: "Python" },
+        { text: "What does 'debugging' mean?", options: ["Writing code faster", "Finding and fixing errors in code", "Adding comments to code", "Designing the user interface"], correctAnswer: "Finding and fixing errors in code" },
+        { text: "What is a 'conditional statement' (like if-else)?", options: ["It repeats code", "It stores a value", "It performs different actions based on a condition", "It defines a new function"], correctAnswer: "It performs different actions based on a condition" },
+        { text: "What is 'source code'?", options: ["The code that a computer directly executes", "The human-readable instructions written by a programmer", "A secret password", "The output of a program"], correctAnswer: "The human-readable instructions written by a programmer" },
+        { text: "What is the purpose of a 'compiler'?", options: ["To run the program", "To translate high-level code into machine code", "To find bugs", "To design the program's look"], correctAnswer: "To translate high-level code into machine code" },
+        { text: "What is a 'function' or 'method'?", options: ["A variable", "A loop", "A named block of reusable code", "A conditional statement"], correctAnswer: "A named block of reusable code" }
+    ]
+  },
+  "coding-quest-logic-8": {
+    questions: [
+        { text: "Two fathers and two sons went fishing. They each caught one fish. How many fish were caught in total?", options: ["4", "3", "2", "1"], correctAnswer: "3" },
+        { text: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", options: ["A globe", "A painting", "A map", "A dream"], correctAnswer: "A map" },
+        { text: "What is the next letter in the sequence: O, T, T, F, F, S, S, ...?", options: ["E", "N", "T", "O"], correctAnswer: "E" },
+        { text: "A man is on an island with a fox, a chicken, and a bag of grain. He has a boat that can only carry himself and one other item. How does he get all three across without anything being eaten?", options: ["It's impossible", "Fox, return, Grain, return with Fox, Chicken, return, Fox", "Chicken, return, Fox, return with Chicken, Grain, return, Chicken", "Grain, return, Chicken, return, Fox"], correctAnswer: "Chicken, return, Fox, return with Chicken, Grain, return, Chicken" },
+        { text: "What can be broken, but is never held?", options: ["A promise", "A window", "A heart", "A record"], correctAnswer: "A promise" },
+        { text: "If you have a bowl with six apples and you take away four, how many do you have?", options: ["6", "4", "2", "10"], correctAnswer: "4" },
+        { text: "Which number should come next in the pattern? 1, 1, 2, 3, 5, 8, ...", options: ["11", "12", "13", "14"], correctAnswer: "13" },
+        { text: "What gets wetter as it dries?", options: ["A towel", "A sponge", "Ice", "The ground"], correctAnswer: "A towel" },
+        { text: "Forward I am heavy, but backward I am not. What am I?", options: ["A scale", "A word", "A ton", "A truck"], correctAnswer: "A ton" },
+        { text: "There are three switches outside a closed room. One of them controls a light bulb inside. You can flip the switches as much as you want, but you can only enter the room once. How do you find out which switch controls the bulb?", options: ["Flip one, wait, flip another, enter", "Flip one on, wait, turn it off. Flip another on. Enter the room.", "Flip all three", "It's impossible to know"], correctAnswer: "Flip one on, wait, turn it off. Flip another on. Enter the room." }
+    ]
+  },
+  "coding-quest-computer-science-9": {
     questions: [
         { text: "What does HTML stand for?", options: ["HyperText Markup Language", "High-Level Text Machine Language", "Hyperlink and Text Markup Language", "Home Tool Markup Language"], correctAnswer: "HyperText Markup Language" },
         { text: "Which of these is a programming language?", options: ["JPEG", "HTML", "Python", "CSS"], correctAnswer: "Python" },
@@ -487,6 +571,90 @@ export const quizzes: Quiz = {
         { text: "What does 'git' do?", options: ["Runs code", "Styles web pages", "Manages code versions", "A text editor"], correctAnswer: "Manages code versions" },
         { text: "What is the purpose of a 'function'?", options: ["To store a single value", "To group code for reuse", "To create a user interface", "To style text"], correctAnswer: "To group code for reuse" },
     ],
+  },
+  "coding-quest-computer-science-10": {
+    questions: [
+        { text: "What is the primary purpose of a database?", options: ["To style webpages", "To store and retrieve data efficiently", "To perform complex calculations", "To run operating systems"], correctAnswer: "To store and retrieve data efficiently" },
+        { text: "What is an API?", options: ["Advanced Programming Interface", "Application Programming Interface", "Automated Program Interaction", "Application Process Integration"], correctAnswer: "Application Programming Interface" },
+        { text: "In Object-Oriented Programming, what is 'inheritance'?", options: ["A way to create a new class from an existing class", "A type of data structure", "A loop that never ends", "A method for debugging code"], correctAnswer: "A way to create a new class from an existing class" },
+        { text: "What is the difference between 'let' and 'const' in JavaScript?", options: ["They are the same", "'let' is for numbers, 'const' is for strings", "'const' variables cannot be reassigned, 'let' variables can", "'let' is global, 'const' is local"], correctAnswer: "'const' variables cannot be reassigned, 'let' variables can" },
+        { text: "What does 'DRY' stand for in software development?", options: ["Don't Rush Your-code", "Don't Repeat Yourself", "Data Recovery Yard", "Develop, Review, Yield"], correctAnswer: "Don't Repeat Yourself" },
+        { text: "What is a 'boolean' data type?", options: ["A number with a decimal", "A text string", "A value that can only be true or false", "A list of items"], correctAnswer: "A value that can only be true or false" },
+        { text: "Which data structure operates on a 'First-In, First-Out' (FIFO) basis?", options: ["Stack", "Queue", "Array", "Tree"], correctAnswer: "Queue" },
+        { text: "What is the time complexity of a binary search algorithm?", options: ["O(n)", "O(log n)", "O(n²)", "O(1)"], correctAnswer: "O(log n)" },
+        { text: "What is a 'version control system' like Git?", options: ["A code editor", "A database", "A tool for tracking changes in code", "A web server"], correctAnswer: "A tool for tracking changes in code" },
+        { text: "What is 'recursion' in programming?", options: ["A function that calls itself", "A loop that runs a fixed number of times", "A way to handle errors", "A type of variable"], correctAnswer: "A function that calls itself" }
+    ]
+  },
+  "coding-quest-logic-10": {
+    questions: [
+        { text: "Look at this series: 2, 1, (1/2), (1/4), ... What number should come next?", options: ["(1/3)", "(1/8)", "(2/8)", "(1/16)"], correctAnswer: "(1/8)" },
+        { text: "A ship is at anchor. Over the side hangs a rope ladder with its end just touching the water. The rungs are one foot apart and the tide rises at 6 inches per hour. How long will it be until the water covers the first three rungs?", options: ["6 hours", "4 hours", "Never", "2 hours"], correctAnswer: "Never" },
+        { text: "Which of the following is the 'odd one out': Cat, Dog, Lion, Horse, Cheetah", options: ["Dog", "Horse", "Lion", "Cat"], correctAnswer: "Horse" },
+        { text: "You have a 5-gallon jug and a 3-gallon jug. How can you measure exactly 4 gallons of water?", options: ["It's impossible", "Fill 5, pour into 3, empty 3, pour rest from 5 into 3, fill 5, top off 3", "Fill 3, pour into 5, fill 3, pour into 5", "Fill 5, pour out 1"], correctAnswer: "Fill 5, pour into 3, empty 3, pour rest from 5 into 3, fill 5, top off 3" },
+        { text: "A man says, 'The day before yesterday I was 25. Next year I will be 28.' This is true only one day in a year. What day is his birthday?", options: ["December 31st", "January 1st", "February 29th", "December 30th"], correctAnswer: "December 31st" },
+        { text: "What is the center of gravity?", options: ["A point in space", "The heaviest part of an object", "The point where the weight of an object is evenly dispersed", "The bottom of an object"], correctAnswer: "The point where the weight of an object is evenly dispersed" },
+        { text: "If you have 5 oranges in one hand and 6 in the other, what do you have?", options: ["11 oranges", "A difficult time", "Very big hands", "A snack"], correctAnswer: "Very big hands" },
+        { text: "What has an eye, but cannot see?", options: ["A potato", "A needle", "A hurricane", "All of the above"], correctAnswer: "All of the above" },
+        { text: "If you are running a race and pass the person in second place, what position are you in?", options: ["First", "Second", "Third", "Still second"], correctAnswer: "Second" },
+        { text: "What is black when you buy it, red when you use it, and gray when you throw it away?", options: ["A match", "Charcoal", "A steak", "A newspaper"], correctAnswer: "Charcoal" }
+    ]
+  },
+  "coding-quest-computer-science-11": {
+    questions: [
+        { text: "What is the difference between a stack and a queue?", options: ["A stack is FIFO, a queue is LIFO", "A stack is LIFO, a queue is FIFO", "They are identical", "A stack stores numbers, a queue stores text"], correctAnswer: "A stack is LIFO, a queue is FIFO" },
+        { text: "What is 'polymorphism' in OOP?", options: ["The ability of a class to have multiple constructors", "The ability of an object to take on many forms", "A type of data encryption", "A way to hide information"], correctAnswer: "The ability of an object to take on many forms" },
+        { text: "What is Big O notation used for?", options: ["To measure the exact runtime of an algorithm", "To describe the performance or complexity of an algorithm", "To write code comments", "To define variable names"], correctAnswer: "To describe the performance or complexity of an algorithm" },
+        { text: "What is the primary key in a relational database?", options: ["The first column of a table", "A unique identifier for a record in a table", "A key used for encryption", "A foreign user's ID"], correctAnswer: "A unique identifier for a record in a table" },
+        { text: "What is a 'hash collision'?", options: ["When two different inputs produce the same hash output", "A type of network error", "When a computer crashes", "A security vulnerability in passwords"], correctAnswer: "When two different inputs produce the same hash output" },
+        { text: "What is the difference between TCP and UDP?", options: ["TCP is faster than UDP", "UDP is connection-oriented, TCP is not", "TCP is connection-oriented and reliable, UDP is connectionless and faster", "They are protocols for different network layers"], correctAnswer: "TCP is connection-oriented and reliable, UDP is connectionless and faster" },
+        { text: "What is 'garbage collection' in programming languages like Java or C#?", options: ["A tool for cleaning up unused files", "A manual process of freeing memory", "The automatic process of freeing up memory that is no longer in use", "A way to delete variables"], correctAnswer: "The automatic process of freeing up memory that is no longer in use" },
+        { text: "What is a 'singleton' design pattern?", options: ["A pattern that restricts the instantiation of a class to one object", "A pattern for creating objects from a prototype", "A pattern that allows an object to alter its behavior when its internal state changes", "A class that can only have one method"], correctAnswer: "A pattern that restricts the instantiation of a class to one object" },
+        { text: "What is the purpose of an 'index' in a database?", options: ["To count the number of rows", "To provide a backup of the data", "To speed up the retrieval of rows from a table", "To enforce data types"], correctAnswer: "To speed up the retrieval of rows from a table" },
+        { text: "What is an 'associative array' (or dictionary/map)?", options: ["An array with only numbers", "A collection of key-value pairs", "An array that is sorted automatically", "A multidimensional array"], correctAnswer: "A collection of key-value pairs" }
+    ]
+  },
+  "coding-quest-logic-11": {
+    questions: [
+        { text: "All bloops are razzies. All razzies are lazzies. Therefore, all bloops are lazzies.", options: ["True", "False", "Cannot be determined", "Sometimes true"], correctAnswer: "True" },
+        { text: "If some A are B, and some B are C, does it follow that some A are C?", options: ["Yes, always", "No, not necessarily", "Only if A, B, and C are numbers", "Yes, but only if all B are C"], correctAnswer: "No, not necessarily" },
+        { text: "A statement is made: 'This statement is false.' Is the statement true or false?", options: ["True", "False", "It is a paradox", "Both true and false"], correctAnswer: "It is a paradox" },
+        { text: "Which number is the odd one out? 41, 43, 47, 51, 53", options: ["41", "47", "51", "53"], correctAnswer: "51" },
+        { text: "In a village, the barber shaves everyone who does not shave themselves. Who shaves the barber?", options: ["The barber shaves himself", "Another barber shaves him", "No one shaves the barber", "This is a paradox (Barber's Paradox)"], correctAnswer: "This is a paradox (Barber's Paradox)" },
+        { text: "What is the next item in the sequence: Z, Y, X, U, T, S, P, O, N, ...?", options: ["M", "K", "L", "I"], correctAnswer: "K" },
+        { text: "There are 10 socks in a drawer: 5 pairs of black, 3 pairs of white, and 2 pairs of grey. You pick socks in the dark. How many must you pick to be sure of having a matching pair?", options: ["3", "4", "11", "6"], correctAnswer: "4" },
+        { text: "If 'A implies B', what is the contrapositive?", options: ["'B implies A'", "'Not A implies Not B'", "'Not B implies Not A'", "'A implies Not B'"], correctAnswer: "'Not B implies Not A'" },
+        { text: "Which conclusion follows from: 'No humans are perfect. All students are humans.'?", options: ["All students are perfect.", "No students are perfect.", "Some students are perfect.", "No conclusion can be drawn."], correctAnswer: "No students are perfect." },
+        { text: "You have 12 coins, one of which is counterfeit (either lighter or heavier). Using a balance scale, what is the minimum number of weighings to find the fake coin?", options: ["2", "3", "4", "6"], correctAnswer: "3" }
+    ]
+  },
+  "coding-quest-computer-science-12": {
+    questions: [
+        { text: "What is dynamic programming?", options: ["Programming with a dynamic UI", "A method for solving complex problems by breaking them down into simpler subproblems", "A language that doesn't require compiling", "A way to manage database transactions"], correctAnswer: "A method for solving complex problems by breaking them down into simpler subproblems" },
+        { text: "What is the main difference between a process and a thread?", options: ["Processes are for networking, threads are for CPU tasks", "A process is a program in execution, and a thread is a path of execution within a process", "They are the same thing", "Threads are heavyweight, processes are lightweight"], correctAnswer: "A process is a program in execution, and a thread is a path of execution within a process" },
+        { text: "What is a 'race condition' in concurrent programming?", options: ["When two threads are competing to finish first", "An error caused by unpredictable timing of operations by multiple threads", "A security exploit", "A type of sorting algorithm"], correctAnswer: "An error caused by unpredictable timing of operations by multiple threads" },
+        { text: "Explain the concept of 'sharding' in the context of databases.", options: ["Encrypting a database", "Creating a backup of a database", "Horizontally partitioning data into smaller, more manageable parts", "A type of SQL join"], correctAnswer: "Horizontally partitioning data into smaller, more manageable parts" },
+        { text: "What is the CAP theorem in distributed systems?", options: ["A system can only have two of the three: Consistency, Availability, and Partition tolerance", "A system must have Capacity, Availability, and Performance", "A security principle for APIs", "A data compression algorithm"], correctAnswer: "A system can only have two of the three: Consistency, Availability, and Partition tolerance" },
+        { text: "What is the purpose of a load balancer?", options: ["To balance the electrical load on a server", "To distribute network traffic across multiple servers", "To balance the memory usage of an application", "To secure a network from attacks"], correctAnswer: "To distribute network traffic across multiple servers" },
+        { text: "What is a 'memory leak'?", options: ["When a program loses data from memory", "A security flaw that exposes memory contents", "When a program fails to release memory it no longer needs", "When the physical RAM is damaged"], correctAnswer: "When a program fails to release memory it no longer needs" },
+        { text: "What is the difference between a microservices architecture and a monolithic architecture?", options: ["Microservices are for small apps, monoliths are for large ones", "A monolith is one large application, while microservices are a collection of small, independent services", "Microservices use less code", "There is no difference in architecture, only in programming language"], correctAnswer: "A monolith is one large application, while microservices are a collection of small, independent services" },
+        { text: "What is a 'deadlock'?", options: ["A situation where two or more threads are blocked forever, waiting for each other", "A thread that has been terminated", "An error that crashes the entire system", "A computer that will not turn on"], correctAnswer: "A situation where two or more threads are blocked forever, waiting for each other" },
+        { text: "What is 'idempotence' in the context of APIs?", options: ["An API that is only accessible by one user", "An operation that can be applied multiple times without changing the result beyond the initial application", "An API that automatically caches responses", "An API that requires a unique ID for every request"], correctAnswer: "An operation that can be applied multiple times without changing the result beyond the initial application" }
+    ]
+  },
+  "coding-quest-logic-12": {
+    questions: [
+        { text: "What is Gödel's Incompleteness Theorem?", options: ["A theorem about geometry", "A theorem stating that in any consistent formal system, there are true statements that cannot be proven", "A theorem about the limits of computation", "A theorem proving the consistency of arithmetic"], correctAnswer: "A theorem stating that in any consistent formal system, there are true statements that cannot be proven" },
+        { text: "What is the 'P vs NP' problem?", options: ["A problem about physics", "The question of whether every problem whose solution can be quickly verified can also be quickly solved", "A problem in number theory", "A problem about networking protocols"], correctAnswer: "The question of whether every problem whose solution can be quickly verified can also be quickly solved" },
+        { text: "What is a 'Turing Machine'?", options: ["A physical computer built by Alan Turing", "A type of encryption machine", "A mathematical model of computation that defines an abstract machine", "A quantum computer"], correctAnswer: "A mathematical model of computation that defines an abstract machine" },
+        { text: "In modal logic, what does the 'necessity' operator (□) typically mean?", options: ["That a statement is possible", "That a statement is true in all possible worlds", "That a statement is false", "That a statement is contingent"], correctAnswer: "That a statement is true in all possible worlds" },
+        { text: "What is the 'Halting Problem'?", options: ["The problem of determining if a computer has enough power to run a program", "The problem of determining, from a description of an arbitrary computer program and an input, whether the program will finish running or continue to run forever", "The problem of stopping a program that is in an infinite loop", "The problem of preventing a computer from overheating"], correctAnswer: "The problem of determining, from a description of an arbitrary computer program and an input, whether the program will finish running or continue to run forever" },
+        { text: "What is Occam's Razor?", options: ["A principle stating that 'entities should not be multiplied without necessity'", "A tool for precise cutting", "A logical paradox", "A mathematical formula"], correctAnswer: "A principle stating that 'entities should not be multiplied without necessity'" },
+        { text: "What is the 'Sorites Paradox' (paradox of the heap)?", options: ["A paradox about motion", "A paradox that arises from vague predicates, like 'heap'", "A paradox about time travel", "A paradox about self-reference"], correctAnswer: "A paradox that arises from vague predicates, like 'heap'" },
+        { text: "What is the difference between deductive and inductive reasoning?", options: ["Deduction moves from general to specific; induction moves from specific to general", "Deduction is for science, induction is for math", "They are the same", "Deduction is always true, induction is always false"], correctAnswer: "Deduction moves from general to specific; induction moves from specific to general" },
+        { text: "What is a 'syllogism'?", options: ["A type of logical puzzle", "A form of reasoning in which a conclusion is drawn from two given or assumed propositions", "A statement that is always true", "A programming error"], correctAnswer: "A form of reasoning in which a conclusion is drawn from two given or assumed propositions" },
+        { text: "What is Fuzzy Logic?", options: ["A logic that is not clear", "A form of many-valued logic in which the truth values of variables may be any real number between 0 and 1", "A logic used for quantum computers", "A logic that contains errors"], correctAnswer: "A form of many-valued logic in which the truth values of variables may be any real number between 0 and 1" }
+    ]
   },
   "physics-experiment-simulator-science-10": {
     questions: [
@@ -621,7 +789,7 @@ export const quizzes: Quiz = {
       { text: "What is it that's full of holes but can still hold water?", options: ["A net", "A sponge", "A sieve", "A leaky bucket"], correctAnswer: "A sponge" },
       { text: "What has cities, but no houses; forests, but no trees; and water, but no fish?", options: ["A book", "A dream", "A map", "A computer"], correctAnswer: "A map" },
       { text: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", options: ["A flag", "A whisper", "An echo", "A ghost"], correctAnswer: "An echo" },
-      { text: "If a plane crashes on the border between the U.S. and Canada, where do you bury the survivors?", options: ["U.S.", "Canada", "You don't bury survivors", "The nearest city"], correctAnswer: "You don't bury survivors" },
+      { text: "If a plane crashes on the border between the U.S. and Canada, where do you bury the survivors?", options: ["U.S.", "Canada", "You don't bury survivors", "The nearest city"], correctAnswer: "The nearest city" },
       { text: "What has a thumb and four fingers but is not a hand?", options: ["A glove", "A footprint", "A monkey's paw", "A drawing"], correctAnswer: "A glove" },
       { text: "What is always in front of you but can’t be seen?", options: ["The past", "The present", "The future", "The air"], correctAnswer: "The future" },
       { text: "What can you catch but not throw?", options: ["A ball", "A fish", "A cold", "A frisbee"], correctAnswer: "A cold" },
@@ -731,4 +899,5 @@ export const quizzes: Quiz = {
     
 
     
+
 
