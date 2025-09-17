@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -127,7 +128,7 @@ export default function GamePlayPage() {
                         <SelectValue placeholder="Select a grade" />
                       </SelectTrigger>
                       <SelectContent>
-                        {game.gradeLevels.map((grade) => (
+                        {Array.from({ length: game.gradeLevels[1] - game.gradeLevels[0] + 1 }, (_, i) => game.gradeLevels[0] + i).map((grade) => (
                           <SelectItem key={grade} value={String(grade)}>
                             Grade {grade}
                           </SelectItem>
@@ -177,7 +178,7 @@ export default function GamePlayPage() {
                     <h2 className="text-2xl font-bold font-headline">Congratulations!</h2>
                     <p className="text-muted-foreground">You've completed the quiz.</p>
                     <p className="text-4xl font-bold">{score} / {currentQuestions.length}</p>
-                    <p className="text-lg">You earned {score * 100} points!</p>
+                    <p className="text-lg">You earned {score * game.points / currentQuestions.length} points!</p>
                     <div className="flex gap-4">
                         <Button variant="outline" onClick={() => setGameState("selection")}>Play Again</Button>
                         <Button asChild>
