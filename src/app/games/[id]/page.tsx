@@ -74,6 +74,20 @@ export default function GamePlayPage() {
   }
 
   const handleSubmit = () => {
+    const answeredQuestions = Object.keys(selectedAnswers).length;
+    if (answeredQuestions < currentQuestions.length) {
+      const firstUnansweredIndex = currentQuestions.findIndex((_, index) => !selectedAnswers.hasOwnProperty(index));
+      toast({
+        title: "Quiz Incomplete",
+        description: `Please answer all ${currentQuestions.length} questions before submitting.`,
+        variant: "destructive",
+      });
+       if (firstUnansweredIndex !== -1) {
+        setCurrentQuestionIndex(firstUnansweredIndex);
+      }
+      return;
+    }
+
     let finalScore = 0;
     currentQuestions.forEach((q, index) => {
         const selectedAnswer = selectedAnswers[index];
@@ -106,7 +120,9 @@ export default function GamePlayPage() {
     });
   }
 
-  const progressValue = currentQuestions.length > 0 ? ((currentQuestionIndex + 1) / currentQuestions.length) * 100 : 0;
+  const progressValue = currentQuestions.length > 0 ? ((Object.keys(selectedAnswers).length) / currentQuestions.length) * 100 : 0;
+  const allQuestionsAnswered = Object.keys(selectedAnswers).length === currentQuestions.length;
+
 
   if (!game) {
     return (
@@ -177,7 +193,7 @@ export default function GamePlayPage() {
             {gameState === "playing" && currentQuestion && (
               <div className="space-y-6">
                  <Progress value={progressValue} className="w-full h-2 bg-secondary/50" />
-                 <p className="text-sm text-muted-foreground font-medium">Question {currentQuestionIndex + 1} of {currentQuestions.length}</p>
+                 <p className="text-sm text-muted-foreground font-medium">Question {currentQuestionIndex + 1} of {currentQuestions.length} ({Object.keys(selectedAnswers).length} answered)</p>
                 <h3 className="text-xl font-semibold leading-snug">{currentQuestion.text}</h3>
                 <RadioGroup onValueChange={handleAnswerSelect} value={selectedAnswers[currentQuestionIndex]} className="space-y-3">
                     {currentQuestion.options.map((option, index) => (
@@ -225,7 +241,7 @@ export default function GamePlayPage() {
                         Next <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                  ) : (
-                    <Button onClick={handleSubmit} className="bg-yellow-500 text-black hover:bg-yellow-500/90">Submit</Button>
+                    <Button onClick={handleSubmit} className="bg-yellow-500 text-black hover:bg-yellow-500/90 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed" disabled={!allQuestionsAnswered}>Submit</Button>
                  )}
             </CardFooter>
           )}
