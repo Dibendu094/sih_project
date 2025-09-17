@@ -54,7 +54,7 @@ export default function GamePlayPage() {
     }
     const quizKey = `${game?.id}-${selectedSubject.toLowerCase()}-${selectedGrade}`;
     const quiz = quizzes[quizKey];
-    if (quiz) {
+    if (quiz && quiz.questions.length > 0) {
       setCurrentQuestions(quiz.questions);
       setCurrentQuestionIndex(0);
       setSelectedAnswers({});
@@ -76,7 +76,8 @@ export default function GamePlayPage() {
   const handleSubmit = () => {
     let finalScore = 0;
     currentQuestions.forEach((q, index) => {
-        if(selectedAnswers[index] === q.correctAnswer) {
+        const selectedAnswer = selectedAnswers[index];
+        if(selectedAnswer && selectedAnswer === q.correctAnswer) {
             finalScore++;
         }
     });
@@ -88,8 +89,7 @@ export default function GamePlayPage() {
     });
   }
 
-  const progressValue =
-    ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+  const progressValue = currentQuestions.length > 0 ? ((currentQuestionIndex + 1) / currentQuestions.length) * 100 : 0;
 
   if (!game) {
     return (
@@ -109,8 +109,8 @@ export default function GamePlayPage() {
 
   return (
     <AppLayout>
-      <div className="flex justify-center items-start">
-        <Card className="w-full max-w-2xl">
+      <div className="flex justify-center items-start py-8">
+        <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm border-border/50 shadow-xl">
           <CardHeader>
             <CardTitle className="font-headline text-3xl">{game.title}</CardTitle>
           </CardHeader>
@@ -122,9 +122,9 @@ export default function GamePlayPage() {
                 </CardDescription>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="grade-select">Grade Level</Label>
+                    <Label htmlFor="grade-select" className="mb-2 block">Grade Level</Label>
                     <Select onValueChange={setSelectedGrade} value={selectedGrade}>
-                      <SelectTrigger id="grade-select">
+                      <SelectTrigger id="grade-select" className="bg-background/70">
                         <SelectValue placeholder="Select a grade" />
                       </SelectTrigger>
                       <SelectContent>
@@ -137,9 +137,9 @@ export default function GamePlayPage() {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="subject-select">Subject</Label>
+                    <Label htmlFor="subject-select" className="mb-2 block">Subject</Label>
                     <Select onValueChange={setSelectedSubject} value={selectedSubject}>
-                      <SelectTrigger id="subject-select">
+                      <SelectTrigger id="subject-select" className="bg-background/70">
                         <SelectValue placeholder="Select a subject" />
                       </SelectTrigger>
                       <SelectContent>
@@ -152,35 +152,45 @@ export default function GamePlayPage() {
                     </Select>
                   </div>
                 </div>
-                <Button onClick={handleStartGame} className="w-full">
+                <Button onClick={handleStartGame} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6">
                   Start Game
                 </Button>
               </div>
             )}
             {gameState === "playing" && currentQuestion && (
               <div className="space-y-6">
-                 <Progress value={progressValue} className="w-full" />
-                 <p className="text-sm text-muted-foreground">Question {currentQuestionIndex + 1} of {currentQuestions.length}</p>
-                <h3 className="text-xl font-semibold">{currentQuestion.text}</h3>
-                <RadioGroup onValueChange={handleAnswerSelect} value={selectedAnswers[currentQuestionIndex]}>
+                 <Progress value={progressValue} className="w-full h-2 bg-secondary/50" />
+                 <p className="text-sm text-muted-foreground font-medium">Question {currentQuestionIndex + 1} of {currentQuestions.length}</p>
+                <h3 className="text-xl font-semibold leading-snug">{currentQuestion.text}</h3>
+                <RadioGroup onValueChange={handleAnswerSelect} value={selectedAnswers[currentQuestionIndex]} className="space-y-3">
                     {currentQuestion.options.map((option, index) => (
-                        <div key={index} className="flex items-center space-x-2 rounded-md border p-4 hover:bg-accent/50 has-[[data-state=checked]]:bg-accent/80">
+                        <div key={index} className="flex items-center space-x-3 rounded-lg border border-border/50 p-4 transition-colors hover:bg-accent/50 has-[[data-state=checked]]:bg-accent/80 has-[[data-state=checked]]:border-primary/50">
                             <RadioGroupItem value={option} id={`option-${index}`} />
-                            <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">{option}</Label>
+                            <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer text-base">
+                                {option}
+                            </Label>
                         </div>
                     ))}
                 </RadioGroup>
               </div>
             )}
             {gameState === "finished" && (
-                 <div className="text-center space-y-4 flex flex-col items-center">
-                    <PartyPopper className="h-16 w-16 text-accent" />
-                    <h2 className="text-2xl font-bold font-headline">Congratulations!</h2>
-                    <p className="text-muted-foreground">You've completed the quiz.</p>
-                    <p className="text-4xl font-bold">{score} / {currentQuestions.length}</p>
-                    <p className="text-lg">You earned {score * game.points / currentQuestions.length} points!</p>
-                    <div className="flex gap-4">
-                        <Button variant="outline" onClick={() => setGameState("selection")}>Play Again</Button>
+                 <div className="text-center space-y-4 flex flex-col items-center p-8">
+                    <PartyPopper className="h-20 w-20 text-yellow-400" strokeWidth={1.5} />
+                    <h2 className="text-3xl font-bold font-headline">Congratulations!</h2>
+                    <p className="text-muted-foreground text-lg">You've completed the quiz.</p>
+                    <div className="bg-accent/30 border border-accent/50 rounded-lg p-6 my-4">
+                      <p className="text-sm text-muted-foreground">Your Score</p>
+                      <p className="text-5xl font-bold text-foreground">{score} / {currentQuestions.length}</p>
+                    </div>
+                    <p className="text-lg font-medium">You earned <span className="text-primary font-bold">{Math.round(score * game.points / currentQuestions.length)}</span> points!</p>
+                    <div className="flex gap-4 pt-4">
+                        <Button variant="outline" onClick={() => {
+                          setGameState("selection");
+                          setCurrentQuestionIndex(0);
+                          setSelectedAnswers({});
+                          setScore(0);
+                        }}>Play Again</Button>
                         <Button asChild>
                             <Link href="/games">Choose Another Game</Link>
                         </Button>
@@ -189,7 +199,7 @@ export default function GamePlayPage() {
             )}
           </CardContent>
           {gameState === 'playing' && (
-            <CardFooter className="flex justify-between">
+            <CardFooter className="flex justify-between border-t border-border/50 pt-6">
                 <Button variant="outline" onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))} disabled={currentQuestionIndex === 0}>
                     <ArrowLeft className="h-4 w-4 mr-2" /> Back
                 </Button>
@@ -198,7 +208,7 @@ export default function GamePlayPage() {
                         Next <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                  ) : (
-                    <Button onClick={handleSubmit} className="bg-accent text-accent-foreground hover:bg-accent/90">Submit</Button>
+                    <Button onClick={handleSubmit} className="bg-yellow-500 text-black hover:bg-yellow-500/90">Submit</Button>
                  )}
             </CardFooter>
           )}

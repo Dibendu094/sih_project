@@ -252,14 +252,44 @@ export const games: Game[] = [
 export const quizzes: Quiz = {
   "math-quiz-challenge-math-6": {
     questions: [
-      { text: "What is 5x + 3 = 23? Find x.", options: ["3", "4", "5", "6"], correctAnswer: "4" },
-      { text: "Solve for y: 2y - 7 = 11.", options: ["7", "8", "9", "10"], correctAnswer: "9" },
+      { text: "What is 12 x 8?", options: ["84", "96", "108", "72"], correctAnswer: "96" },
+      { text: "Find the missing number: 6, 12, 18, ?, 30", options: ["22", "24", "26", "28"], correctAnswer: "24" },
+      { text: "How many sides does a hexagon have?", options: ["5", "6", "7", "8"], correctAnswer: "6" },
+      { text: "What is 3/4 as a decimal?", options: ["0.50", "0.75", "0.25", "0.80"], correctAnswer: "0.75" },
+      { text: "A bus travels 60 km in 1 hour. How far will it travel in 3 hours?", options: ["120 km", "150 km", "180 km", "200 km"], correctAnswer: "180 km" },
+      { text: "What is the perimeter of a square with a side length of 5 cm?", options: ["15 cm", "20 cm", "25 cm", "30 cm"], correctAnswer: "20 cm" },
+      { text: "Solve for x: x - 9 = 15", options: ["24", "6", "16", "25"], correctAnswer: "24" },
+      { text: "Which number is a prime number?", options: ["9", "15", "17", "21"], correctAnswer: "17" },
+      { text: "What is 20% of 50?", options: ["5", "10", "15", "20"], correctAnswer: "10" },
+      { text: "Round 5.67 to the nearest whole number.", options: ["5", "6", "5.7", "5.6"], correctAnswer: "6" },
     ],
   },
   "math-quiz-challenge-math-7": {
     questions: [
+      { text: "What is 5x + 3 = 23? Find x.", options: ["3", "4", "5", "6"], correctAnswer: "4" },
+      { text: "Solve for y: 2y - 7 = 11.", options: ["7", "8", "9", "10"], correctAnswer: "9" },
       { text: "If a rectangle has a length of 8 and a width of 5, what is its area?", options: ["13", "30", "40", "45"], correctAnswer: "40" },
       { text: "What is the value of π (pi) rounded to two decimal places?", options: ["3.12", "3.14", "3.16", "3.18"], correctAnswer: "3.14" },
+      { text: "What is the square root of 64?", options: ["6", "7", "8", "9"], correctAnswer: "8" },
+      { text: "Convert 0.5 to a fraction.", options: ["1/4", "1/2", "3/4", "2/5"], correctAnswer: "1/2" },
+      { text: "What is the next number in the sequence: 2, 5, 8, 11, ...?", options: ["13", "14", "15", "16"], correctAnswer: "14" },
+      { text: "How many degrees are in a triangle?", options: ["90", "180", "270", "360"], correctAnswer: "180" },
+      { text: "If a t-shirt costs $15 and is on sale for 20% off, what is the sale price?", options: ["$10", "$12", "$13.50", "$3"], correctAnswer: "$12" },
+      { text: "Simplify the expression: 3(x + 4) - 2x", options: ["x + 12", "5x + 12", "x + 4", "5x + 4"], correctAnswer: "x + 12" },
+    ],
+  },
+  "math-quiz-challenge-math-8": {
+     questions: [
+        { text: "How many degrees are in a right angle?", options: ["45", "90", "180", "360"], correctAnswer: "90" },
+        { text: "What is the Pythagorean theorem?", options: ["a+b=c", "a² + b² = c²", "E=mc²", "πr²"], correctAnswer: "a² + b² = c²" },
+        { text: "Solve for x: 3x - 5 = 10", options: ["3", "4", "5", "6"], correctAnswer: "5" },
+        { text: "What is the area of a circle with a radius of 5?", options: ["10π", "15π", "25π", "50π"], correctAnswer: "25π" },
+        { text: "What is the slope of the line y = 2x + 3?", options: ["1", "2", "3", "5"], correctAnswer: "2" },
+        { text: "Factor the expression: x² - 9", options: ["(x-3)(x-3)", "(x+3)(x+3)", "(x-3)(x+3)", "x(x-9)"], correctAnswer: "(x-3)(x+3)" },
+        { text: "What is the probability of flipping a coin and getting heads?", options: ["1/4", "1/3", "1/2", "1"], correctAnswer: "1/2" },
+        { text: "If a car travels 120 miles in 2 hours, what is its average speed?", options: ["50 mph", "60 mph", "70 mph", "80 mph"], correctAnswer: "60 mph" },
+        { text: "What is |-8|?", options: ["-8", "8", "0", "16"], correctAnswer: "8" },
+        { text: "What is 7 cubed (7³)?", options: ["21", "49", "147", "343"], correctAnswer: "343" },
     ],
   },
   "biology-treasure-hunt-science-8": {
