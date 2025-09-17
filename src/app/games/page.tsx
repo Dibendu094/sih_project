@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { games, Game } from '@/lib/data';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import {
   ArrowRight,
@@ -25,6 +26,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { placeholderImages } from '@/lib/placeholder-images.json';
 
 const getSubjectIcon = (subject: string) => {
   const iconProps = { className: 'h-10 w-10 text-white' };
@@ -57,30 +59,47 @@ const getDifficultyColor = (difficulty: string) => {
     }
 }
 
-
 const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
+  const isMathQuiz = game.id === 'math-quiz-challenge';
+  const gameImage = placeholderImages.find(img => img.id === game.imageId);
+
   return (
-    <Card className="flex flex-col bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group">
-       {completed && (
-        <Badge variant="secondary" className="absolute top-3 right-3 bg-green-500/20 text-green-400 border-green-500/40 gap-1">
+    <Card className={cn(
+      "flex flex-col bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group overflow-hidden",
+      isMathQuiz && "text-white"
+    )}>
+      {isMathQuiz && (
+        <>
+          <Image
+            src="https://storage.googleapis.com/aifirebase/project-152114639798.appspot.com/4zYmMvTq_math_quiz_bg.png"
+            alt="Math Quiz Background"
+            fill
+            className="object-cover z-0"
+          />
+          <div className="absolute inset-0 bg-black/50 z-10"></div>
+        </>
+      )}
+
+      {completed && (
+        <Badge variant="secondary" className="absolute top-3 right-3 bg-green-500/20 text-green-400 border-green-500/40 gap-1 z-20">
             <CheckCircle2 className="h-3 w-3" />
             Completed
         </Badge>
       )}
-      <CardContent className="p-6 flex-grow flex flex-col">
+      <CardContent className="p-6 flex-grow flex flex-col z-20">
         <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 rounded-lg bg-primary/20">
+            <div className={cn("p-3 rounded-lg bg-primary/20", isMathQuiz && "bg-white/20")}>
                 {getSubjectIcon(game.subjects[0])}
             </div>
         </div>
         <h3 className="font-headline text-xl font-bold mb-2">{game.title}</h3>
         <div className="flex flex-wrap gap-2 mb-4">
-            <Badge variant="secondary">{game.subjects[0]}</Badge>
-            <Badge variant="secondary">Grade {game.gradeLevels.join('-')}</Badge>
+            <Badge variant={isMathQuiz ? "default" : "secondary"}>{game.subjects[0]}</Badge>
+            <Badge variant={isMathQuiz ? "default" : "secondary"}>Grade {game.gradeLevels.join('-')}</Badge>
             <Badge className={cn("border", getDifficultyColor(game.difficulty))}>{game.difficulty}</Badge>
         </div>
-        <p className="text-muted-foreground text-sm flex-grow mb-4">{game.description}</p>
-        <div className="flex justify-between items-center text-sm text-muted-foreground mb-6">
+        <p className={cn("text-muted-foreground text-sm flex-grow mb-4", isMathQuiz && "text-gray-300")}>{game.description}</p>
+        <div className={cn("flex justify-between items-center text-sm text-muted-foreground mb-6", isMathQuiz && "text-gray-300")}>
             <div className="flex items-center gap-2">
                 <Timer className="h-4 w-4" />
                 <span>{game.duration} min</span>
@@ -100,6 +119,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
     </Card>
   );
 };
+
 
 export default function GamesPage() {
   const allSubjects = ['All', ...new Set(games.flatMap((game) => game.subjects))];
