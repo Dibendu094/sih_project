@@ -20,7 +20,7 @@ export default function LoginPage() {
     if (username && password) {
       // In a real app, you'd perform authentication here.
       // For this prototype, we'll just navigate to the dashboard.
-      router.push("/dashboard")
+      router.push("/home")
     } else {
       toast({
         title: "Login Failed",

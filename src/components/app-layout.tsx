@@ -60,6 +60,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </SidebarHeader>
         <SidebarContent className="justify-center">
           <SidebarMenu>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === "/home"}
+                tooltip="Home"
+              >
+                <Link href="/home">
+                  <Home />
+                  Home
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
