@@ -123,10 +123,8 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
 
 export default function GamesPage() {
   const allSubjects = ['All', ...new Set(games.flatMap((game) => game.subjects))];
-  const allGrades = ['All', '6-8', '9-10', '11-12'];
   
   const [activeSubject, setActiveSubject] = useState('All');
-  const [activeGrade, setActiveGrade] = useState('All');
   const [totalPoints, setTotalPoints] = useState(0);
   const [gamesCompleted, setGamesCompleted] = useState(0);
   const [completedGamesList, setCompletedGamesList] = useState<string[]>([]);
@@ -141,11 +139,7 @@ export default function GamesPage() {
 
   const filteredGames = games.filter(game => {
       const subjectMatch = activeSubject === 'All' || game.subjects.includes(activeSubject);
-      const gradeMatch = activeGrade === 'All' || (
-          game.gradeLevels[0] >= parseInt(activeGrade.split('-')[0]) &&
-          game.gradeLevels[game.gradeLevels.length-1] <= parseInt(activeGrade.split('-')[1])
-      );
-      return subjectMatch && gradeMatch;
+      return subjectMatch;
   });
 
   return (
@@ -170,23 +164,13 @@ export default function GamesPage() {
 
         <Card className="p-6 bg-card/50 border-border/50">
             <h2 className="text-xl font-bold font-headline mb-4">Filter Games</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
                 <div>
                     <h3 className="text-sm font-semibold text-muted-foreground mb-2">Subject</h3>
                     <div className="flex flex-wrap gap-2">
                         {allSubjects.map(subject => (
                             <Button key={subject} variant={activeSubject === subject ? 'default' : 'secondary'} size="sm" onClick={() => setActiveSubject(subject)}>
                                 {subject}
-                            </Button>
-                        ))}
-                    </div>
-                </div>
-                 <div>
-                    <h3 className="text-sm font-semibold text-muted-foreground mb-2">Grade Level</h3>
-                    <div className="flex flex-wrap gap-2">
-                        {allGrades.map(grade => (
-                            <Button key={grade} variant={activeGrade === grade ? 'default' : 'secondary'} size="sm" onClick={() => setActiveGrade(grade)}>
-                                {grade}
                             </Button>
                         ))}
                     </div>
