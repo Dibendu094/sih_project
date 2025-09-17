@@ -21,26 +21,26 @@ import {
   Gamepad2,
   Users,
   LogOut,
-  BookOpen,
+  Sun,
+  Moon,
 } from "lucide-react";
 import Logo from "./logo";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar-1');
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [theme, setTheme] = React.useState('light');
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
 
   const handleLogout = () => {
     // In a real app, clear session/token here
@@ -127,7 +127,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="flex-1">
             
           </div>
-          
+          <div>
+            <Button variant="ghost" size="icon" onClick={toggleTheme}>
+              {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </div>
         </header>
         <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
       </SidebarInset>
