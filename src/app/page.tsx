@@ -21,7 +21,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || !password) {
       toast({
@@ -33,44 +33,56 @@ export default function LoginPage() {
     }
 
     setLoading(true);
-    try {
-      const userRef = doc(db, "users", email);
-      const userSnap = await getDoc(userRef);
 
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        // IMPORTANT: Storing and checking passwords in plain text is highly insecure.
-        // This is for prototype purposes only. Use Firebase Authentication in a real app.
-        if (userData.password === password) {
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('username', userData.username);
-              localStorage.setItem('userEmail', userData.email); // Store email for Firestore lookups
+    // Optimistically navigate and set local storage
+    // We'll verify in the background
+    localStorage.setItem('userEmail', email);
+    
+    // We can't get username without fetching, so we'll set a temporary one or handle it on the dashboard
+    // For now, let's just push to home
+    router.push("/home");
+    
+    const verifyLogin = async () => {
+        try {
+          const userRef = doc(db, "users", email);
+          const userSnap = await getDoc(userRef);
+
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+            if (userData.password === password) {
+                // Login is valid, update username in local storage
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('username', userData.username);
+                  // Trigger a storage event to let other pages know username is ready
+                  localStorage.setItem('loginEvent', Date.now().toString());
+                }
+            } else {
+                // Invalid password
+                throw new Error("Invalid email or password.");
             }
-            router.push("/home");
-        } else {
+          } else {
+             // No user found
+            throw new Error("No account found with that email.");
+          }
+        } catch (error: any) {
+            console.error("Login error:", error);
+            // If verification fails, clear local storage and redirect back
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('username');
+            }
+            router.push("/"); // Redirect back to login
             toast({
               title: "Login Failed",
-              description: "Invalid email or password.",
+              description: error.message || "An error occurred during login. Please try again.",
               variant: "destructive",
-            });
+            })
+        } finally {
+            // No need to set loading to false here, as we've already navigated
         }
-      } else {
-        toast({
-          title: "Login Failed",
-          description: "No account found with that email. Please sign up.",
-          variant: "destructive",
-        })
-      }
-    } catch (error) {
-        console.error("Login error:", error);
-        toast({
-          title: "Login Error",
-          description: "An error occurred during login. Please try again.",
-          variant: "destructive",
-        })
-    } finally {
-        setLoading(false);
-    }
+    };
+    
+    verifyLogin();
   }
 
   return (

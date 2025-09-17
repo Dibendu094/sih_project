@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -34,17 +35,33 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     document.documentElement.classList.add('dark');
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-        const name = storedUsername.trim();
-        setUsername(name);
-        const nameParts = name.split(' ');
-        if (nameParts.length > 1) {
-            setInitials((nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase());
-        } else if (name.length > 0) {
-            setInitials(name.substring(0, 2).toUpperCase());
+    
+    const updateUsername = () => {
+        const storedUsername = localStorage.getItem("username");
+        if (storedUsername) {
+            const name = storedUsername.trim();
+            setUsername(name);
+            const nameParts = name.split(' ');
+            if (nameParts.length > 1) {
+                setInitials((nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase());
+            } else if (name.length > 0) {
+                setInitials(name.substring(0, 2).toUpperCase());
+            }
+        } else {
+           setUsername("User");
+           setInitials("U");
         }
     }
+
+    updateUsername();
+
+    // Listen for the custom login event
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'loginEvent' || e.key === 'username') {
+            updateUsername();
+        }
+    });
+
   }, []);
 
   const handleLogout = () => {
@@ -52,6 +69,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (typeof window !== 'undefined') {
         localStorage.removeItem('username');
         localStorage.removeItem('userEmail');
+        localStorage.removeItem('loginEvent');
     }
     router.push("/");
   };
