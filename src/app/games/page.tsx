@@ -73,18 +73,7 @@ const GameCard = ({ game, completed }: { game: Game, completed?: boolean }) => {
       "flex flex-col border-border/50 transition-all duration-300 relative group overflow-hidden",
       completed ? "bg-card/20" : "bg-card/50"
     )}>
-      {isMathQuiz && (
-        <>
-          <Image
-            src="https://storage.googleapis.com/aifirebase/project-152114639798.appspot.com/4zYmMvTq_math_quiz_bg.png"
-            alt="Math Quiz Background"
-            fill
-            className="object-cover z-0"
-          />
-          <div className="absolute inset-0 bg-black/50 z-10"></div>
-        </>
-      )}
-
+     
       {completed && (
         <Badge variant="secondary" className="absolute top-3 right-3 bg-green-500/20 text-green-400 border-green-500/40 gap-1 z-20">
             <CheckCircle2 className="h-3 w-3" />
