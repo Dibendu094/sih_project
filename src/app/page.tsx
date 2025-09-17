@@ -11,22 +11,22 @@ import { Label } from "@/components/ui/label"
 import Logo from "@/components/logo"
 import { useToast } from "@/hooks/use-toast"
 import { Separator } from "@/components/ui/separator"
-import { getDoc, doc } from "firebase/firestore"
+import { getDocs, query, collection, where } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 
 export default function LoginPage() {
   const router = useRouter()
   const { toast } = useToast()
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email || !password) {
+    if (!username || !password) {
       toast({
         title: "Login Failed",
-        description: "Please enter both email and password.",
+        description: "Please enter both username and password.",
         variant: "destructive",
       })
       return
@@ -34,35 +34,35 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    // Optimistically navigate and set local storage
-    // We'll verify in the background
-    localStorage.setItem('userEmail', email);
+    // Optimistically set username for welcome message and navigate
+    localStorage.setItem('username', username);
     
-    // We can't get username without fetching, so we'll set a temporary one or handle it on the dashboard
-    // For now, let's just push to home
     router.push("/home");
     
     const verifyLogin = async () => {
         try {
-          const userRef = doc(db, "users", email);
-          const userSnap = await getDoc(userRef);
+          const usersRef = collection(db, "users");
+          const q = query(usersRef, where("username", "==", username));
+          const querySnapshot = await getDocs(q);
 
-          if (userSnap.exists()) {
-            const userData = userSnap.data();
+          if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            const userData = userDoc.data();
+            
             if (userData.password === password) {
-                // Login is valid, update username in local storage
+                // Login is valid, save email for other lookups and trigger update
                 if (typeof window !== 'undefined') {
-                  localStorage.setItem('username', userData.username);
+                  localStorage.setItem('userEmail', userDoc.id);
                   // Trigger a storage event to let other pages know username is ready
                   localStorage.setItem('loginEvent', Date.now().toString());
                 }
             } else {
                 // Invalid password
-                throw new Error("Invalid email or password.");
+                throw new Error("Invalid username or password.");
             }
           } else {
              // No user found
-            throw new Error("No account found with that email.");
+            throw new Error("No account found with that username.");
           }
         } catch (error: any) {
             console.error("Login error:", error);
@@ -77,8 +77,6 @@ export default function LoginPage() {
               description: error.message || "An error occurred during login. Please try again.",
               variant: "destructive",
             })
-        } finally {
-            // No need to set loading to false here, as we've already navigated
         }
     };
     
@@ -98,13 +96,13 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="your.email@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
