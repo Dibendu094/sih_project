@@ -51,6 +51,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     // In a real app, clear session/token here
     if (typeof window !== 'undefined') {
         localStorage.removeItem('username');
+        localStorage.removeItem('userEmail');
     }
     router.push("/");
   };

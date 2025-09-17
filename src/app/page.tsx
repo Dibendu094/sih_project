@@ -17,7 +17,7 @@ import { db } from "@/lib/firebase"
 export default function LoginPage() {
   const router = useRouter()
   const { toast } = useToast()
-  const [email, setEmail] = useState("") // Changed from username to email
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false);
 
@@ -34,19 +34,26 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      // For this prototype, we're fetching the user doc by email.
-      // A real app would use Firebase Authentication's signInWithEmailAndPassword.
       const userRef = doc(db, "users", email);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
-        // NOTE: We are not checking the password. This is a prototype.
         const userData = userSnap.data();
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('username', userData.username);
-          localStorage.setItem('userEmail', userData.email); // Store email for Firestore lookups
+        // IMPORTANT: Storing and checking passwords in plain text is highly insecure.
+        // This is for prototype purposes only. Use Firebase Authentication in a real app.
+        if (userData.password === password) {
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('username', userData.username);
+              localStorage.setItem('userEmail', userData.email); // Store email for Firestore lookups
+            }
+            router.push("/home");
+        } else {
+            toast({
+              title: "Login Failed",
+              description: "Invalid email or password.",
+              variant: "destructive",
+            });
         }
-        router.push("/home")
       } else {
         toast({
           title: "Login Failed",
@@ -90,7 +97,12 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <Link href="#" className="ml-auto inline-block text-sm underline">
+                    Forgot your password?
+                  </Link>
+              </div>
               <Input
                 id="password"
                 type="password"

@@ -81,6 +81,7 @@ export default function SignupPage() {
         fatherName,
         dob: format(dob, "yyyy-MM-dd"),
         studentClass: parseInt(studentClass, 10),
+        password, // Storing password in plain text - NOT FOR PRODUCTION
         totalPoints: 0,
         gamesCompleted: 0,
         completedGames: [],
