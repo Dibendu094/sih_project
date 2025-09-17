@@ -36,6 +36,9 @@ import {
 } from "@/components/ui/select"
 import Logo from "@/components/logo"
 import { useToast } from "@/hooks/use-toast"
+import { translations } from "@/lib/translations"
+
+type Language = "en" | "hi" | "or";
 
 export default function SignupPage() {
   const router = useRouter()
@@ -48,6 +51,9 @@ export default function SignupPage() {
   const [studentClass, setStudentClass] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [language, setLanguage] = useState<Language>("en");
+
+  const t = translations[language].signup;
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault()
@@ -118,35 +124,47 @@ export default function SignupPage() {
       <Card className="w-full max-w-md">
         <form onSubmit={handleSignup}>
           <CardHeader className="text-center">
+             <div className="flex justify-end mb-4">
+                <Select onValueChange={(value: Language) => setLanguage(value)} value={language}>
+                    <SelectTrigger className="w-[120px]">
+                        <SelectValue placeholder="Language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="hi">हिन्दी</SelectItem>
+                        <SelectItem value="or">ଓଡ଼ିଆ</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
             <div className="mx-auto mb-4">
               <Logo />
             </div>
-            <CardTitle className="font-headline text-3xl">Create an Account</CardTitle>
+            <CardTitle className="font-headline text-3xl">{t.title}</CardTitle>
             <CardDescription>
-              Join the learning adventure. Already have an account?{" "}
+              {t.description}{" "}
               <Link href="/" className="text-primary hover:underline">
-                Sign In
+                {t.signInLink}
               </Link>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">{t.usernameLabel}</Label>
               <Input
                 id="username"
                 type="text"
-                placeholder="Choose a username"
+                placeholder={t.usernamePlaceholder}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t.emailLabel}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="your.email@example.com"
+                placeholder={t.emailPlaceholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -154,22 +172,22 @@ export default function SignupPage() {
             </div>
              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="motherName">Mother's Name</Label>
+                <Label htmlFor="motherName">{t.motherNameLabel}</Label>
                 <Input
                   id="motherName"
                   type="text"
-                  placeholder="Mother's first name"
+                  placeholder={t.motherNamePlaceholder}
                   value={motherName}
                   onChange={(e) => setMotherName(e.target.value)}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="fatherName">Father's Name</Label>
+                <Label htmlFor="fatherName">{t.fatherNameLabel}</Label>
                 <Input
                   id="fatherName"
                   type="text"
-                  placeholder="Father's first name"
+                  placeholder={t.fatherNamePlaceholder}
                   value={fatherName}
                   onChange={(e) => setFatherName(e.target.value)}
                   required
@@ -178,7 +196,7 @@ export default function SignupPage() {
             </div>
              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="dob">Date of Birth</Label>
+                  <Label htmlFor="dob">{t.dobLabel}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -190,7 +208,7 @@ export default function SignupPage() {
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                        {dob ? format(dob, "PPP") : <span>{t.dobPlaceholder}</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
@@ -207,15 +225,15 @@ export default function SignupPage() {
                   </Popover>
                 </div>
                  <div className="space-y-2">
-                  <Label htmlFor="class">Class</Label>
+                  <Label htmlFor="class">{t.classLabel}</Label>
                   <Select onValueChange={setStudentClass} value={studentClass} required>
                     <SelectTrigger id="class" className="w-full">
-                      <SelectValue placeholder="Select class" />
+                      <SelectValue placeholder={t.classPlaceholder} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 7 }, (_, i) => 6 + i).map(grade => (
                         <SelectItem key={grade} value={String(grade)}>
-                          Class {grade}
+                          {t.classPrefix} {grade}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -223,11 +241,11 @@ export default function SignupPage() {
                 </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t.passwordLabel}</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Create a strong password"
+                placeholder={t.passwordPlaceholder}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -236,7 +254,7 @@ export default function SignupPage() {
           </CardContent>
           <CardFooter>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating Account..." : "Sign Up"}
+              {loading ? t.creatingAccountButton : t.signUpButton}
             </Button>
           </CardFooter>
         </form>
